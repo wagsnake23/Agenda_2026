@@ -21,23 +21,53 @@ interface CalendarDayProps {
     isWeekend: boolean;
   } | null;
   onDayClick: (day: number) => void;
+  agendamentos?: any[];
+  onViewAgendamento?: (date: string) => void;
+  month?: number;
+  year?: number;
+  selectedPeriod?: { start: string, end: string } | null;
 }
 
-const CalendarDay: React.FC<CalendarDayProps> = ({ dayData, onDayClick }) => {
+const CalendarDay: React.FC<CalendarDayProps> = ({
+  dayData,
+  onDayClick,
+  agendamentos = [],
+  onViewAgendamento,
+  month,
+  year,
+  selectedPeriod,
+}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const { mode } = useCalendarMode();
 
-  if (!dayData) {
+  if (!dayData || month === undefined || year === undefined) {
     return <div className="w-full h-full rounded-[13px]" />;
   }
 
-  const isSpecialDay =
-    dayData.isHoliday || dayData.isBirthday || dayData.specialEmojiIcon;
+  // Formatar data do dia atual para comparação
+  const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayData.day).padStart(2, '0')}`;
 
-  const handleClick = () => {
+  // Verificar se há agendamentos começando hoje
+  const temAgendamentoHoje = agendamentos.some(a => a.dataInicio === dateStr);
+
+  // Verificar se o dia está no período selecionado para destaque
+  const isSelected = !!(selectedPeriod && dateStr >= selectedPeriod.start && dateStr <= selectedPeriod.end);
+
+  const isSpecialDay =
+    dayData.isHoliday || dayData.isBirthday || dayData.specialEmojiIcon || temAgendamentoHoje || isSelected;
+
+  const handleClick = (e: React.MouseEvent) => {
+    // Se estiver selecionado, permite clicar para ver detalhes se houver agendamento, 
+    // ou apenas segue o fluxo normal
+    if (temAgendamentoHoje && onViewAgendamento) {
+      e.stopPropagation();
+      onViewAgendamento(dateStr);
+      return;
+    }
+
     if (!isSpecialDay) return;
 
     setIsClicked(true);
@@ -88,6 +118,9 @@ const CalendarDay: React.FC<CalendarDayProps> = ({ dayData, onDayClick }) => {
         // Base 3D
         "shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)]",
 
+        // Higlight de período selecionado (Regras do Usuário)
+        isSelected && "bg-[#FFFDDF] border border-orange-400/60 shadow-[0_0_12px_rgba(251,146,60,0.4)] z-10",
+
         // =========================
         // MODO ADM
         // =========================
@@ -95,18 +128,20 @@ const CalendarDay: React.FC<CalendarDayProps> = ({ dayData, onDayClick }) => {
           ? dayData.isWeekend || dayData.isHoliday
             ? "border border-red-300/45"
             : "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)]"
-          : "border-none",
+          : !isSelected && "border-none",
 
         // =========================
         // CORES DE FUNDO
         // =========================
-        dayData.colors.bg === "bg-calendar-blue"
-          ? "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8]"
-          : dayData.colors.bg === "bg-calendar-green"
-            ? "bg-gradient-to-br from-[#2ecc71] to-[#27ae60]"
-            : dayData.colors.bg === "bg-calendar-yellow"
-              ? "bg-gradient-to-br from-[#fde047] to-[#f59e0b]"
-              : dayData.colors.bg,
+        !isSelected && (
+          dayData.colors.bg === "bg-calendar-blue"
+            ? "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8]"
+            : dayData.colors.bg === "bg-calendar-green"
+              ? "bg-gradient-to-br from-[#2ecc71] to-[#27ae60]"
+              : dayData.colors.bg === "bg-calendar-yellow"
+                ? "bg-gradient-to-br from-[#fde047] to-[#f59e0b]"
+                : dayData.colors.bg
+        ),
 
         // 👇 COR DO TEXTO PRESERVADA
         dayData.colors.text,
@@ -133,9 +168,19 @@ const CalendarDay: React.FC<CalendarDayProps> = ({ dayData, onDayClick }) => {
         backfaceVisibility: "hidden",
       }}
     >
-      <span className="tracking-[0.3px]">
-        {String(dayData.day).padStart(2, "0")}
-      </span>
+      <div className="flex flex-col items-center justify-center relative">
+        {temAgendamentoHoje && (
+          <span
+            className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] md:text-[12px] leading-none animate-in zoom-in-50 duration-300"
+            title="Agendamento"
+          >
+            🏖️
+          </span>
+        )}
+        <span className="tracking-[0.3px]">
+          {String(dayData.day).padStart(2, "0")}
+        </span>
+      </div>
 
       {birthdayEmoji && (
         <span className="absolute bottom-0.5 left-0.5 text-xs md:text-sm leading-none text-inherit">

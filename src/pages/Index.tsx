@@ -96,6 +96,23 @@ const Index = () => {
               className="w-12 h-12 drop-shadow-lg object-contain pointer-events-auto"
             />
           </div>
+
+          {/* Botão de Agendamento - Alinhado à Direita */}
+          <div className="ml-auto relative z-[101]">
+            <button
+              onClick={() => {
+                const event = new CustomEvent('open-agendamento-drawer');
+                window.dispatchEvent(event);
+              }}
+              className="px-6 py-2.5 bg-[#FDE047] text-[#0B1221] font-black uppercase text-sm rounded-xl
+                         shadow-[0_4px_0_#A16207,0_8px_15px_rgba(0,0,0,0.3)]
+                         hover:bg-[#FACC15] hover:shadow-[0_2px_0_#A16207,0_4px_10px_rgba(0,0,0,0.3)]
+                         hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none
+                         transition-all duration-150 cursor-pointer"
+            >
+              Agendamento
+            </button>
+          </div>
         </header>
 
         {/* Wrapper de Escala apenas para Desktop - Ajustado items-center para centralizar no mobile */}

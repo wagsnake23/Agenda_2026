@@ -13,6 +13,7 @@ import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useHolidayMessages } from '@/hooks/use-holiday-messages';
 import { useMoonPhases } from '@/hooks/use-moon-phases';
 import CalendarCard from './calendar/CalendarCard';
+import DrawerAgendamento, { Agendamento } from './calendar/DrawerAgendamento';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import {
@@ -40,6 +41,85 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const [api, setApi] = useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = useState(0);
   const { mode, setMode } = useCalendarMode();
+
+  // Estados de Agendamento
+  const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerMode, setDrawerMode] = useState<'create' | 'view'>('create');
+  const [selectedDrawerDate, setSelectedDrawerDate] = useState<string | undefined>();
+  const [selectedPeriod, setSelectedPeriod] = useState<{ start: string, end: string } | null>(null);
+
+  const toggleHighlightPeriod = (period: { start: string, end: string } | null) => {
+    if (!period) {
+      setSelectedPeriod(null);
+      return;
+    }
+
+    if (selectedPeriod?.start === period.start && selectedPeriod?.end === period.end) {
+      setSelectedPeriod(null);
+    } else {
+      setSelectedPeriod(period);
+
+      // Navegar para o mês inicial do período
+      const startDate = new Date(period.start + 'T12:00:00');
+      const startMonth = startDate.getMonth();
+      const startYear = startDate.getFullYear();
+
+      onMonthChange(startMonth);
+      onYearChange(startYear);
+    }
+  };
+
+  // Carregar do localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('agendamentos');
+    if (saved) {
+      try {
+        setAgendamentos(JSON.parse(saved));
+      } catch (e) {
+        console.error("Erro ao carregar agendamentos:", e);
+      }
+    }
+  }, []);
+
+  const salvarAgendamento = (novo: Omit<Agendamento, 'id'>) => {
+    const agendamento: Agendamento = {
+      ...novo,
+      id: Date.now().toString(),
+    };
+    const atualizados = [...agendamentos, agendamento];
+    setAgendamentos(atualizados);
+    localStorage.setItem('agendamentos', JSON.stringify(atualizados));
+  };
+
+  const excluirAgendamento = (id: string) => {
+    const atualizados = agendamentos.filter(a => a.id !== id);
+    setAgendamentos(atualizados);
+    localStorage.setItem('agendamentos', JSON.stringify(atualizados));
+  };
+
+  const editarAgendamento = (editado: Agendamento) => {
+    const atualizados = agendamentos.map(a => a.id === editado.id ? editado : a);
+    setAgendamentos(atualizados);
+    localStorage.setItem('agendamentos', JSON.stringify(atualizados));
+  };
+
+  const handleOpenCreateDrawer = () => {
+    setDrawerMode('create');
+    setSelectedDrawerDate(new Date().toISOString().split('T')[0]);
+    setIsDrawerOpen(true);
+  };
+
+  const handleOpenViewDrawer = (date: string) => {
+    setDrawerMode('view');
+    setSelectedDrawerDate(date);
+    setIsDrawerOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+    setSelectedPeriod(null);
+  };
 
   // Array otimizado para cobrir a faixa de anos do seletor (6 anos = 72 meses)
   const baseDate = useMemo(() => {
@@ -178,6 +258,12 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     setHighlightedDay(day);
   };
 
+  useEffect(() => {
+    const handleOpenDrawer = () => handleOpenCreateDrawer();
+    window.addEventListener('open-agendamento-drawer', handleOpenDrawer);
+    return () => window.removeEventListener('open-agendamento-drawer', handleOpenDrawer);
+  }, []);
+
   return (
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">
       <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative">
@@ -224,7 +310,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                   <CarouselItem
                     key={`${y}-${m}`}
                     className={cn(
-                      "w-full basis-full shrink-0 grow-0 lg:basis-1/3 lg:pl-8",
+                      "w-full basis-full shrink-0 grow-0 lg:basis-1/3 lg:pl-8 relative",
                       // Transições de opacidade mantidas, mas sem transforms que causem blur
                       "transition-opacity duration-450 ease-out",
                       position === 'center' ? "opacity-100 z-20" : "opacity-100 z-[5]"
@@ -245,11 +331,41 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                       isCenter={position === 'center'}
                       position={position}
                       mode={mode}
+                      agendamentos={agendamentos}
+                      onViewAgendamento={handleOpenViewDrawer}
+                      selectedPeriod={selectedPeriod}
                     />
                   </CarouselItem>
                 );
               })}
             </CarouselContent>
+
+            {/* Drawer Independente - Fixo sobre a posição do primeiro card (Desktop) */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[60] py-0 lg:py-0 px-0">
+              <div className="relative w-full h-full max-w-[1600px] mx-auto">
+                <div className={cn(
+                  "absolute pointer-events-auto transition-all duration-500 ease-in-out",
+                  "w-full h-full md:h-full lg:h-full",
+                  "lg:w-[calc(100%/3-32px)] lg:left-[32px] lg:top-0", // Max height and top alignment
+                  isDrawerOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                )}>
+                  <DrawerAgendamento
+                    isOpen={isDrawerOpen}
+                    onClose={handleCloseDrawer}
+                    mode={drawerMode}
+                    initialDate={selectedDrawerDate}
+                    agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+                    onSave={salvarAgendamento}
+                    onDelete={excluirAgendamento}
+                    onUpdate={editarAgendamento}
+                    anchorRef={null as any}
+                    selectedPeriod={selectedPeriod}
+                    onSelectPeriod={toggleHighlightPeriod}
+                  />
+                </div>
+              </div>
+            </div>
+
             <CarouselPrevious
               onClick={() => api?.scrollPrev()}
               className="hidden lg:flex -left-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
@@ -283,10 +399,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
           </div>
         </div>
 
-
-
-        <div className="max-w-[1600px] mx-auto w-full mt-4 lg:mt-[-20px] flex flex-col gap-4 lg:pb-16">
-          <div className="flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-6 items-stretch justify-center">
+        <div className="max-w-[1600px] mx-auto w-full mt-4 lg:mt-[-20px] flex flex-col gap-4 lg:pb-16 lg:pl-8">
+          <div className="flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-8 items-stretch">
             <div className={`w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-2 ${holidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
               <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} />
             </div>

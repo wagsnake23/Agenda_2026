@@ -25,6 +25,11 @@ interface CalendarGridProps {
   todayColors: { bg: string; text: string };
   isCurrentMonthAndYear: boolean;
   onDayClick: (day: number) => void;
+  agendamentos?: any[];
+  onViewAgendamento?: (date: string) => void;
+  month: number;
+  year: number;
+  selectedPeriod?: { start: string, end: string } | null;
 }
 
 const CalendarGrid: React.FC<CalendarGridProps> = ({
@@ -34,6 +39,11 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
   todayColors,
   isCurrentMonthAndYear,
   onDayClick,
+  agendamentos = [],
+  onViewAgendamento,
+  month,
+  year,
+  selectedPeriod,
 }) => {
   const { mode } = useCalendarMode();
 
@@ -137,7 +147,15 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
               key={index}
               className="aspect-square md:aspect-auto flex items-center justify-center w-full md:h-[38px] lg:h-[48px]"
             >
-              <CalendarDay dayData={dayData} onDayClick={onDayClick} />
+              <CalendarDay
+                dayData={dayData}
+                onDayClick={onDayClick}
+                agendamentos={agendamentos}
+                onViewAgendamento={onViewAgendamento}
+                month={month}
+                year={year}
+                selectedPeriod={selectedPeriod}
+              />
             </div>
           ))}
       </div>

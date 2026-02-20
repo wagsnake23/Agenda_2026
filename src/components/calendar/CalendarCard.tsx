@@ -17,6 +17,9 @@ interface CalendarCardProps {
     isCenter?: boolean;
     position?: 'left' | 'right' | 'center' | 'far';
     mode?: CalendarMode;
+    agendamentos?: any[];
+    onViewAgendamento?: (date: string) => void;
+    selectedPeriod?: { start: string, end: string } | null;
 }
 
 const CalendarCard: React.FC<CalendarCardProps> = ({
@@ -29,6 +32,9 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     isCenter = false,
     position = 'center',
     mode = '24x48',
+    agendamentos = [],
+    onViewAgendamento,
+    selectedPeriod,
 }) => {
     const { calendarData, todayDayOfWeek, todayColors, isCurrentMonthAndYear } = useCalendarData({
         month,
@@ -162,6 +168,11 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     todayColors={todayColors}
                     isCurrentMonthAndYear={isCurrentMonthAndYear}
                     onDayClick={onDayClick}
+                    agendamentos={agendamentos}
+                    onViewAgendamento={onViewAgendamento}
+                    month={month}
+                    year={year}
+                    selectedPeriod={selectedPeriod}
                 />
 
                 {/* Botão Hoje Compacto - Mobile apenas */}
