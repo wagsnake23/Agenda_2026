@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 0 0% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 16%;
+
+    --primary: 220 60% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 92%;
+    --secondary-foreground: 0 0% 16%;
+
+    --muted: 210 20% 92%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 220 60% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 220 60% 50%;
+
+    --radius: 0.75rem;
+
+    /* Calendar colors - Ciclo de 3 cores */
+    --calendar-blue: 225 73% 57%;
+    --calendar-blue-text: 0 0% 100%;
+    --calendar-blue-glow: 225 73% 57% / 0.3;
+
+    --calendar-green: 120 61% 50%;
+    --calendar-green-text: 0 0% 100%;
+    --calendar-green-glow: 120 61% 50% / 0.3;
+
+    --calendar-yellow: 51 100% 50%;
+    --calendar-yellow-text: 0 0% 16%;
+    --calendar-yellow-glow: 51 100% 50% / 0.3;
+
+    --calendar-today: 240 100% 47%;
+    --calendar-today-text: 0 0% 100%;
+    --calendar-today-glow: 240 100% 47% / 0.4;
+
+    --calendar-holiday: 0 84% 40%;
+  }
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Adicione a regra @font-face aqui */
+  @font-face {
+    font-family: 'Capture It';
+    src: url('/fonts/Capture_it.ttf') format('truetype');
+    /* Ajuste o caminho e o formato conforme o arquivo que você baixar */
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 14.75px;
+    /* Redução total de aproximadamente 8% */
+  }
+}
