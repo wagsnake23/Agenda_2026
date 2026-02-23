@@ -19,6 +19,7 @@ interface CalendarCardProps {
     mode?: CalendarMode;
     agendamentos?: any[];
     onViewAgendamento?: (date: string, id?: string) => void;
+    onOpenCreateDrawer?: () => void;
     selectedPeriod?: { start: string, end: string } | null;
 }
 
@@ -34,6 +35,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     mode = '24x48',
     agendamentos = [],
     onViewAgendamento,
+    onOpenCreateDrawer,
     selectedPeriod,
 }) => {
     const { calendarData, todayDayOfWeek, todayColors, isCurrentMonthAndYear } = useCalendarData({
@@ -175,8 +177,29 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     selectedPeriod={selectedPeriod}
                 />
 
-                {/* Botão Hoje Compacto - Mobile apenas */}
-                <div className="md:hidden absolute bottom-0.5 right-0 z-20">
+                {/* Botões de Ação Compactos - Mobile apenas */}
+                <div className="md:hidden absolute bottom-0.5 right-0 z-20 flex items-center gap-1.5">
+                    {/* Botão Agendar (Laranja Premium) */}
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onOpenCreateDrawer?.();
+                        }}
+                        className={cn(
+                            "text-[11px] font-bold uppercase tracking-tight",
+                            "transition-all duration-300 cursor-pointer",
+                            "h-[32px] px-2 rounded-[9px] flex items-center gap-1",
+                            "bg-gradient-to-br from-[#f97316] to-[#ea580c] text-white", // Laranja vibrante com texto branco
+                            "bg-clip-padding saturate-[1.1] border border-black/[0.1]",
+                            "shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_4px_0_rgba(154,52,18,0.2),0_10px_20px_-5px_rgba(0,0,0,0.15)]",
+                            "active:translate-y-[2px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_2px_0_rgba(154,52,18,0.2)] active:scale-[0.98]",
+                        )}
+                    >
+                        <span className="text-sm">📅</span>
+                        <span>Agendar</span>
+                    </button>
+
+                    {/* Botão Hoje */}
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
@@ -195,12 +218,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                             mode === 'adm' && "bg-[#FEE2E2] text-red-800 active:bg-red-200 border-red-300/45",
                         )}
                     >
-                        <span className="flex items-center gap-1">
-                            <span className="text-sm md:text-base drop-shadow-sm">
-                                {getSeasonDataForDate(today.getMonth(), today.getDate()).emoji}
-                            </span>
-                            <span>Hoje: {formatToday()}</span>
-                        </span>
+                        <span>Hoje: {formatToday()}</span>
                     </button>
                 </div>
             </div>

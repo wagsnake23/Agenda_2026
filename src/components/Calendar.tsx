@@ -347,6 +347,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                       mode={mode}
                       agendamentos={agendamentos}
                       onViewAgendamento={handleOpenViewDrawer}
+                      onOpenCreateDrawer={handleOpenCreateDrawer}
                       selectedPeriod={selectedPeriod}
                     />
                   </CarouselItem>
