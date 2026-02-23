@@ -60,7 +60,10 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
     };
 
     return (
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-[22px] border border-yellow-500/20 md:border-gray-200/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300">
+        <div className={cn(
+            "bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-[22px] border border-yellow-500/20 md:border-gray-200/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300",
+            isEmpty ? "hidden md:flex" : "flex"
+        )}>
             <div className="relative w-full h-9 md:h-[52px] flex items-center">
                 {/* Faixa de fundo com gradiente horizontal */}
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/[0.25] to-transparent pointer-events-none" />
