@@ -270,6 +270,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   const handleDayClick = (day: number) => {
     setHighlightedDay(day);
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    handleOpenViewDrawer(dateStr);
   };
 
   useEffect(() => {

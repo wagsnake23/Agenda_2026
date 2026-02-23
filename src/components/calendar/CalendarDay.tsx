@@ -50,19 +50,20 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   // Formatar data do dia atual para comparação
   const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayData.day).padStart(2, '0')}`;
 
-  // Verificar se há agendamentos começando hoje
+  // Verificar se há agendamentos cobrindo este dia
+  const temAgendamentoNesteDia = agendamentos.some(a => a.dataInicio <= dateStr && a.dataFim >= dateStr);
+  // Verificar se começa hoje (para o ícone)
   const temAgendamentoHoje = agendamentos.some(a => a.dataInicio === dateStr);
 
   // Verificar se o dia está no período selecionado para destaque
   const isSelected = !!(selectedPeriod && dateStr >= selectedPeriod.start && dateStr <= selectedPeriod.end);
 
   const isSpecialDay =
-    dayData.isHoliday || dayData.isBirthday || dayData.specialEmojiIcon || temAgendamentoHoje || isSelected;
+    dayData.isHoliday || dayData.isBirthday || dayData.specialEmojiIcon || temAgendamentoNesteDia || isSelected;
 
   const handleClick = (e: React.MouseEvent) => {
-    // Se estiver selecionado, permite clicar para ver detalhes se houver agendamento, 
-    // ou apenas segue o fluxo normal
-    if (temAgendamentoHoje && onViewAgendamento) {
+    // Se houver agendamento neste dia, abre o drawer de visualização
+    if (temAgendamentoNesteDia && onViewAgendamento) {
       e.stopPropagation();
       onViewAgendamento(dateStr);
       return;

@@ -232,11 +232,22 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                         )}
                     </h2>
                     <button
-                        onClick={onClose}
+                        onClick={() => {
+                            if (modoEdicao) {
+                                setModoEdicao(false);
+                                setAgendamentoEditando(null);
+                            } else {
+                                onClose();
+                            }
+                        }}
                         className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-lg active:scale-90"
-                        title="Fechar"
+                        title={modoEdicao ? "Voltar" : "Fechar"}
                     >
-                        <X className="w-4 h-4 md:w-5 md:h-5" strokeWidth={4} />
+                        {modoEdicao ? (
+                            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" strokeWidth={4} />
+                        ) : (
+                            <X className="w-4 h-4 md:w-5 md:h-5" strokeWidth={4} />
+                        )}
                     </button>
                 </div>
 
@@ -476,9 +487,9 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
                                             )}
                                         >
-                                            <div className="grid grid-cols-[65px_1fr_auto_40px] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2.5 md:gap-x-3.5 gap-y-1 items-center relative">
+                                            <div className="grid grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative">
                                                 {/* COLUNA 1: USUÁRIO */}
-                                                <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 pr-2 border-r border-black/[0.06] self-stretch my-0.5">
+                                                <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-2 md:-ml-1.5">
                                                     <div className="w-11 h-11 md:w-14 md:h-14 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
                                                         {agenda.userPhoto ? (
                                                             <img src={agenda.userPhoto} alt={agenda.userName} className="w-full h-full object-cover" />
@@ -494,32 +505,32 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </div>
 
                                                 {/* COLUNA 2: CONTEÚDO */}
-                                                <div className="col-start-2 row-start-1 flex items-center gap-1.5 md:gap-2 overflow-hidden py-0.5">
+                                                <div className="col-start-2 row-start-1 flex items-center gap-1.5 md:gap-2 overflow-hidden py-0.5 -ml-2 md:ml-0">
                                                     <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0">{emoji}</span>
                                                     <span className="text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight truncate">
                                                         {tipoNome}
                                                     </span>
                                                 </div>
-                                                <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden">
+                                                <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-2 md:ml-0">
                                                     <span className="text-[11px] md:text-[12px] leading-none opacity-70">📅</span>
                                                     <span className="text-[10.5px] md:text-[clamp(11px,0.85vw,12px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis block">
                                                         {renderPeriod()}
                                                     </span>
                                                 </div>
                                                 {agenda.observacao && (
-                                                    <div className="col-start-2 col-span-2 row-start-3 italic text-[9.5px] md:text-[10.5px] text-slate-500 leading-tight py-0.5 pr-1 md:pr-2 break-words">
+                                                    <div className="col-start-2 col-span-2 row-start-3 italic text-[9.5px] md:text-[10.5px] text-slate-500 leading-tight py-0.5 pr-1 md:pr-2 break-words -ml-2 md:ml-0">
                                                         "{agenda.observacao}"
                                                     </div>
                                                 )}
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO */}
                                                 <div className="col-start-3 row-start-1 justify-self-end py-0.5">
-                                                    <span className="px-1.5 md:px-2 py-0.5 rounded-full bg-red-50 text-red-700/90 text-[8.5px] md:text-[9.5px] font-bold uppercase tracking-tight shadow-sm border border-red-100/60 leading-none block">
+                                                    <span className="px-1 md:px-2 py-0.5 rounded-full bg-red-50 text-red-700/90 text-[8.5px] md:text-[9.5px] font-bold uppercase tracking-tight shadow-sm border border-red-100/60 leading-none block text-center">
                                                         {agenda.status}
                                                     </span>
                                                 </div>
-                                                <div className="col-start-3 row-start-2 justify-self-end mt-0.5">
-                                                    <span className="text-[11px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+                                                <div className="col-start-3 row-start-2 justify-self-end flex items-center">
+                                                    <span className="text-[10px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
                                                         {agenda.totalDias} dias
                                                     </span>
                                                 </div>
