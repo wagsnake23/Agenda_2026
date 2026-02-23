@@ -215,11 +215,18 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 <div className="flex items-center justify-between p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
                     <h2 className="text-[0.78rem] xs:text-[0.85rem] md:text-[1.1rem] font-bold text-white uppercase tracking-[0.5px] md:tracking-[1px] flex items-center gap-1.5 md:gap-2 whitespace-nowrap">
                         {modoEdicao ? (
-                            <span>EDITAR AGENDAMENTO</span>
+                            <>
+                                <span className="text-[1.1em] md:text-[1.25em]">📝</span>
+                                <span>EDITAR AGENDAMENTO</span>
+                            </>
                         ) : mode === 'create' ? (
-                            <span>NOVO AGENDAMENTO</span>
+                            <>
+                                <span className="text-[1.1em] md:text-[1.25em]">✨</span>
+                                <span>NOVO AGENDAMENTO</span>
+                            </>
                         ) : (
                             <>
+                                <span className="text-[1.1em] md:text-[1.25em]">📅</span>
                                 <span className="opacity-90">AGENDAMENTOS DO DIA</span>
                                 <span className="font-black">
                                     {initialDate && (() => {
