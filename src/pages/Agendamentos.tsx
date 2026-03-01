@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { ArrowLeft, Loader2, Filter, Trash2, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, User } from 'lucide-react';
@@ -67,9 +67,31 @@ const AgendamentosPage: React.FC = () => {
     const { isAdmin } = useAuth();
     const { agendamentos, loading, excluir, alterarStatus, refetch } = useAgendamentos();
 
+    const [searchParams] = useSearchParams();
     const [filterStatus, setFilterStatus] = useState('');
-    const [filterUsuario, setFilterUsuario] = useState('');
+    const [filterUsuario, setFilterUsuario] = useState(searchParams.get('usuario') || '');
     const [filterPeriodo, setFilterPeriodo] = useState('');
+    const [filterTipo, setFilterTipo] = useState('');
+
+    // Atualizar filtro quando o parâmetro da URL mudar
+    React.useEffect(() => {
+        const userId = searchParams.get('usuario');
+
+        if (userId) {
+            setFilterUsuario(userId);
+            setFilterStatus('');
+            setFilterPeriodo('');
+            setFilterTipo('');
+        } else {
+            setFilterUsuario('');
+            // Se a URL estiver limpa (sem parâmetros), removemos os outros filtros também
+            if (searchParams.toString() === '') {
+                setFilterStatus('');
+                setFilterPeriodo('');
+                setFilterTipo('');
+            }
+        }
+    }, [searchParams]);
     const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [alterandoStatusId, setAlterandoStatusId] = useState<string | null>(null);
@@ -95,9 +117,10 @@ const AgendamentosPage: React.FC = () => {
                 filterEnd.setMonth(filterEnd.getMonth() + 1);
                 if (inicio < filter || inicio >= filterEnd) return false;
             }
+            if (filterTipo && a.tipo_agendamento !== filterTipo) return false;
             return true;
         });
-    }, [agendamentos, filterStatus, filterUsuario, filterPeriodo]);
+    }, [agendamentos, filterStatus, filterUsuario, filterPeriodo, filterTipo]);
 
     const handleExcluir = async (id: string) => {
         setDeletingId(id);
@@ -200,6 +223,24 @@ const AgendamentosPage: React.FC = () => {
                                 ))}
                             </select>
 
+                            <select
+                                value={filterTipo}
+                                onChange={e => setFilterTipo(e.target.value)}
+                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none min-w-[180px]"
+                            >
+                                <option value="">Todos os Tipos</option>
+                                <option value="🛌 Abonada">🛌 Abonada</option>
+                                <option value="🏥 Atestado Médico">🏥 Atestado Médico</option>
+                                <option value="⏳ Desconto de Hora">⏳ Desconto de Hora</option>
+                                <option value="🩸 Doação de Sangue">🩸 Doação de Sangue</option>
+                                <option value="🌤️ Folga Mensal">🌤️ Folga Mensal</option>
+                                <option value="🗳️ Folga Eleitoral">🗳️ Folga Eleitoral</option>
+                                <option value="🎂 Folga Aniversário">🎂 Folga Aniversário</option>
+                                <option value="🏖️ Férias">🏖️ Férias</option>
+                                <option value="🏝️ Licença Prêmio">🏝️ Licença Prêmio</option>
+                                <option value="😷 Outros">😷 Outros</option>
+                            </select>
+
                             <div className="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                                 <button
                                     onClick={handlePreviousMonth}
@@ -223,9 +264,9 @@ const AgendamentosPage: React.FC = () => {
                                 </button>
                             </div>
 
-                            {(filterStatus || filterUsuario || filterPeriodo) && (
+                            {(filterStatus || filterUsuario || filterPeriodo || filterTipo) && (
                                 <button
-                                    onClick={() => { setFilterStatus(''); setFilterUsuario(''); setFilterPeriodo(''); }}
+                                    onClick={() => { setFilterStatus(''); setFilterUsuario(''); setFilterPeriodo(''); setFilterTipo(''); }}
                                     className="h-9 px-3 rounded-xl border border-red-200 bg-red-50 text-red-600 text-xs font-bold hover:bg-red-100 transition-all"
                                 >
                                     Limpar
@@ -416,7 +457,7 @@ const AgendamentosPage: React.FC = () => {
             </div>
             {/* Footer exibido apenas em desktop */}
             <Footer className="hidden md:block" />
-        </div>
+        </div >
     );
 };
 

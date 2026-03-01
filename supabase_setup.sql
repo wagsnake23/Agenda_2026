@@ -103,6 +103,11 @@ CREATE POLICY "agendamentos_all_admin"
   USING (public.get_my_perfil() = 'administrador');
 
 -- ────────────────────────────────────────────────────────────
+-- PASSO 5: Adicionar coluna 'escala' (Caso não exista)
+-- ────────────────────────────────────────────────────────────
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS escala TEXT;
+
+-- ────────────────────────────────────────────────────────────
 -- VERIFICAÇÃO FINAL
 -- ────────────────────────────────────────────────────────────
 SELECT tablename, policyname, cmd

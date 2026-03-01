@@ -9,6 +9,7 @@ export interface ProfileData {
     cargo?: string | null;
     matricula?: string | null;
     data_nascimento?: string | null;
+    escala?: string | null;
 }
 
 interface UseProfileReturn {
@@ -34,6 +35,7 @@ export function useProfile(): UseProfileReturn {
                     data_nascimento: data.data_nascimento || null,
                     cargo: (data.cargo || '').trim() || null,
                     matricula: (data.matricula || '').trim() || null,
+                    escala: data.escala || null,
                 })
                 .eq('id', user.id);
 

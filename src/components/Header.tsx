@@ -60,7 +60,7 @@ export const UserMenu = () => {
                     </button>
 
                     <button
-                        onClick={() => { navigate('/agendamentos'); setOpen(false); }}
+                        onClick={() => { navigate(`/agendamentos?usuario=${profile?.id}`); setOpen(false); }}
                         className="w-full flex items-center gap-2.5 px-3 py-2.5 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm font-medium"
                     >
                         <span className="text-[17px] drop-shadow-sm leading-none flex items-center">🗓️</span> Minha Agenda

@@ -31,6 +31,7 @@ const profileSchema = z.object({
     cargo: z.string().min(1, 'Cargo é obrigatório'),
     matricula: z.string().min(1, 'Matrícula é obrigatória'),
     data_nascimento: z.string().optional().nullable(),
+    escala: z.string().optional().nullable(),
 });
 
 type ProfileForm = z.infer<typeof profileSchema>;
@@ -104,6 +105,7 @@ const MeuPerfil: React.FC = () => {
             cargo: profile?.cargo || '',
             matricula: profile?.matricula || '',
             data_nascimento: profile?.data_nascimento || '',
+            escala: profile?.escala || '',
         },
     });
 
@@ -202,6 +204,7 @@ const MeuPerfil: React.FC = () => {
                 cargo: data.cargo.trim() || null,
                 matricula: data.matricula.trim() || null,
                 data_nascimento: data.data_nascimento || null,
+                escala: data.escala || null,
             });
             toast.success('Perfil atualizado com sucesso!');
         }
@@ -476,8 +479,8 @@ const MeuPerfil: React.FC = () => {
                                         />
                                     </div>
 
-                                    {/* LINHA 4: Data Nascimento (12) */}
-                                    <div className="col-span-12">
+                                    {/* LINHA 4: Data Nascimento (6) e Escala (6) */}
+                                    <div className="col-span-12 md:col-span-6">
                                         <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
                                             <span className="text-sm">🎂</span>
                                             Data de Nascimento
@@ -487,6 +490,22 @@ const MeuPerfil: React.FC = () => {
                                             type="date"
                                             className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
                                         />
+                                    </div>
+
+                                    <div className="col-span-12 md:col-span-6">
+                                        <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                            <span className="text-sm">📅</span>
+                                            Escala Preferida
+                                        </label>
+                                        <select
+                                            {...form.register('escala')}
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm appearance-none cursor-pointer"
+                                        >
+                                            <option value="">Não Definida</option>
+                                            <option value="Adm">Escala Adm</option>
+                                            <option value="12x36">Escala 12x36</option>
+                                            <option value="24x48">Escala 24x48</option>
+                                        </select>
                                     </div>
                                 </div>
 

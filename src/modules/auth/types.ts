@@ -8,6 +8,7 @@ export interface Profile {
     foto_url: string | null;
     apelido: string | null;
     perfil: 'conferente' | 'administrador';
+    escala: string | null;
     ativo: boolean;
     created_at: string;
 }
