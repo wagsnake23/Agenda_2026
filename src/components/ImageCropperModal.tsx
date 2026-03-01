@@ -9,10 +9,6 @@ type AspectOption = {
 
 const ASPECT_OPTIONS: AspectOption[] = [
     { label: '1:1', value: 1 },
-    { label: '4:3', value: 4 / 3 },
-    { label: '3:4', value: 3 / 4 },
-    { label: '16:9', value: 16 / 9 },
-    { label: 'Livre', value: null },
 ];
 
 interface ImageCropperModalProps {
@@ -99,30 +95,6 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
 
                 {/* Controles */}
                 <div className="px-5 py-4 space-y-4 bg-[#0f1b2d]">
-                    {/* Proporção */}
-                    <div>
-                        <p className="text-white/50 text-[10px] font-bold uppercase tracking-widest mb-2">
-                            Proporção
-                        </p>
-                        <div className="flex gap-2 flex-wrap">
-                            {ASPECT_OPTIONS.map((opt) => {
-                                const val = opt.value ?? 1;
-                                const isSelected = selectedAspect === val;
-                                return (
-                                    <button
-                                        key={opt.label}
-                                        onClick={() => setSelectedAspect(val)}
-                                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${isSelected
-                                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
-                                                : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white'
-                                            }`}
-                                    >
-                                        {opt.label}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
 
                     {/* Zoom */}
                     <div>
