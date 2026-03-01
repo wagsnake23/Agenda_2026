@@ -85,19 +85,28 @@ const AuthPage: React.FC = () => {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-800/5 rounded-full blur-3xl" />
             </div>
 
+            {/* Logo lateral esquerda superior como botão link */}
+            <div className="absolute top-6 left-6 z-[60]">
+                <button
+                    onClick={() => navigate('/')}
+                    className="flex items-center gap-2 group transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                >
+                    <img src="/logo-bombeiros.png" alt="Brasão" className="w-10 h-10 object-contain drop-shadow-md" />
+                    <div className="flex flex-col items-start">
+                        <span className="text-white font-black text-sm uppercase tracking-[2px] leading-tight">Bombeiros</span>
+                        <span className="text-white font-black text-sm uppercase tracking-[2px] leading-tight">Agudos</span>
+                    </div>
+                </button>
+            </div>
+
             <div className="w-full max-w-[420px] relative z-10">
                 {/* Logo Header */}
-                <div className="text-center mb-8">
-                    <div className="flex items-center justify-center gap-4 mb-3">
-                        <img src="/logo-bombeiros.png" alt="Brasão" className="w-14 h-14 drop-shadow-xl object-contain" />
-                        <img src="/logo.png" alt="Logo" className="w-14 h-14 drop-shadow-xl object-contain" />
-                    </div>
+                <div className="text-center mb-8 flex flex-col items-center">
+                    <img src="/logo.png" alt="Calendario" className="w-20 h-20 drop-shadow-[0_10px_30px_rgba(37,99,235,0.4)] object-contain filter brightness-[1.1] mb-4 transform hover:scale-110 transition-transform duration-500" />
+
                     <h1 className="text-white font-black text-2xl uppercase tracking-[3px] drop-shadow-md">
-                        BOMBEIROS AGUDOS
-                    </h1>
-                    <p className="text-blue-300/80 text-sm font-medium mt-1 tracking-wide">
                         Calendário de Prontidão
-                    </p>
+                    </h1>
                 </div>
 
                 {/* Card Principal */}
@@ -107,8 +116,8 @@ const AuthPage: React.FC = () => {
                         <button
                             onClick={() => setTab('login')}
                             className={`flex-1 py-4 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider transition-all duration-200 ${tab === 'login'
-                                    ? 'text-white bg-white/10 border-b-2 border-blue-400'
-                                    : 'text-white/40 hover:text-white/70'
+                                ? 'text-white bg-white/10 border-b-2 border-blue-400'
+                                : 'text-white/40 hover:text-white/70'
                                 }`}
                         >
                             <LogIn size={16} />
@@ -117,8 +126,8 @@ const AuthPage: React.FC = () => {
                         <button
                             onClick={() => setTab('signup')}
                             className={`flex-1 py-4 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider transition-all duration-200 ${tab === 'signup'
-                                    ? 'text-white bg-white/10 border-b-2 border-blue-400'
-                                    : 'text-white/40 hover:text-white/70'
+                                ? 'text-white bg-white/10 border-b-2 border-blue-400'
+                                : 'text-white/40 hover:text-white/70'
                                 }`}
                         >
                             <UserPlus size={16} />
