@@ -179,26 +179,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
 
                 {/* Botões de Ação Compactos - Mobile apenas */}
                 <div className="md:hidden absolute bottom-0.5 right-0 z-20 flex items-center gap-1.5">
-                    {/* Botão Agendar (Laranja Premium) */}
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onOpenCreateDrawer?.();
-                        }}
-                        className={cn(
-                            "text-[11px] font-bold uppercase tracking-tight",
-                            "transition-all duration-300 cursor-pointer",
-                            "h-[32px] px-2 rounded-[9px] flex items-center gap-1",
-                            "bg-gradient-to-br from-[#f97316] to-[#ea580c] text-white", // Laranja vibrante com texto branco
-                            "bg-clip-padding saturate-[1.1] border border-black/[0.1]",
-                            "shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_4px_0_rgba(154,52,18,0.2),0_10px_20px_-5px_rgba(0,0,0,0.15)]",
-                            "active:translate-y-[2px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_2px_0_rgba(154,52,18,0.2)] active:scale-[0.98]",
-                        )}
-                    >
-                        <span className="text-sm">📅</span>
-                        <span>Agendar</span>
-                    </button>
-
                     {/* Botão Hoje */}
                     <button
                         onClick={(e) => {
@@ -218,7 +198,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                             mode === 'adm' && "bg-[#FEE2E2] text-red-800 active:bg-red-200 border-red-300/45",
                         )}
                     >
-                        <span>Hoje: {formatToday()}</span>
+                        <span>{season.emoji} Hoje: {formatToday()}</span>
                     </button>
                 </div>
             </div>

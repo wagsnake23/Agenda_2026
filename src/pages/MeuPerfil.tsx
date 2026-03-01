@@ -267,7 +267,7 @@ const MeuPerfil: React.FC = () => {
             <Header />
 
             <div className="w-full h-full lg:pt-[74px]">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-4 pb-8 md:py-8">
                     {/* Cabeçalho do Módulo Interno */}
                     <div className="flex items-center gap-3 mb-8">
                         <button
