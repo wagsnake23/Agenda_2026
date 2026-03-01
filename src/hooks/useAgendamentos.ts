@@ -11,12 +11,6 @@ export const useAgendamentos = () => {
     const [error, setError] = useState<string | null>(null);
 
     const fetch = useCallback(async () => {
-        if (!user) {
-            setAgendamentos([]);
-            setLoading(false);
-            return;
-        }
-
         setLoading(true);
         setError(null);
 
@@ -30,11 +24,6 @@ export const useAgendamentos = () => {
           )
         `)
                 .order('data_inicial', { ascending: true });
-
-            // Usuário comum: ver apenas os seus agendamentos
-            if (!isAdmin) {
-                query = query.eq('user_id', user.id);
-            }
 
             const { data, error: fetchError } = await query;
 
@@ -107,9 +96,31 @@ export const useAgendamentos = () => {
 
     const atualizar = async (id: string, updates: Partial<Agendamento>) => {
         try {
+            // Nova regra de negócio: Se o criador mudar as datas, status volta para pendente
+            const { data: currentAg } = await supabase
+                .from('agendamentos')
+                .select('user_id, status, data_inicial, data_final')
+                .eq('id', id)
+                .single();
+
+            let finalUpdates = { ...updates };
+
+            if (currentAg && user) {
+                const isOwner = currentAg.user_id === user.id;
+                const isAdminUser = isAdmin; // isAdmin do hook auth
+
+                // Se as datas mudaram
+                const dateChanged = (updates.data_inicial && updates.data_inicial !== currentAg.data_inicial) ||
+                    (updates.data_final && updates.data_final !== currentAg.data_final);
+
+                if (dateChanged && isOwner && !isAdminUser) {
+                    finalUpdates.status = 'pendente';
+                }
+            }
+
             const { data, error: updateError } = await supabase
                 .from('agendamentos')
-                .update(updates)
+                .update(finalUpdates)
                 .eq('id', id)
                 .select(`
           *,

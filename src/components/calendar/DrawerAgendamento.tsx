@@ -22,6 +22,7 @@ import { useAuth } from '@/context/AuthContext';
 
 export interface Agendamento {
     id: string;
+    userId?: string;
     dataInicio: string;
     dataFim: string;
     tipo: string;
@@ -592,34 +593,36 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </div>
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
-                                                <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-2.5 md:-my-3 -mr-2.5 md:-mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            setModoEdicao(true);
-                                                            setAgendamentoEditando(agenda);
-                                                        }}
-                                                        className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all group/btn"
-                                                        title="Editar"
-                                                    >
-                                                        <Edit2 className="w-3.5 h-3.5 md:w-[15px] md:h-[15px] group-hover/btn:scale-110 transition-transform" />
-                                                    </button>
+                                                {profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && (
+                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-2.5 md:-my-3 -mr-2.5 md:-mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setModoEdicao(true);
+                                                                setAgendamentoEditando(agenda);
+                                                            }}
+                                                            className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all group/btn"
+                                                            title="Editar"
+                                                        >
+                                                            <Edit2 className="w-3.5 h-3.5 md:w-[15px] md:h-[15px] group-hover/btn:scale-110 transition-transform" />
+                                                        </button>
 
-                                                    <div className="w-[50%] h-[1px] bg-black/[0.06] my-0.5" />
+                                                        <div className="w-[50%] h-[1px] bg-black/[0.06] my-0.5" />
 
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            if (window.confirm('Deseja realmente excluir este agendamento?')) {
-                                                                onDelete?.(agenda.id);
-                                                            }
-                                                        }}
-                                                        className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition-all group/btn"
-                                                        title="Excluir"
-                                                    >
-                                                        <Trash2 className="w-3.5 h-3.5 md:w-[15px] md:h-[15px] group-hover/btn:scale-110 transition-transform" />
-                                                    </button>
-                                                </div>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                if (window.confirm('Deseja realmente excluir este agendamento?')) {
+                                                                    onDelete?.(agenda.id);
+                                                                }
+                                                            }}
+                                                            className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition-all group/btn"
+                                                            title="Excluir"
+                                                        >
+                                                            <Trash2 className="w-3.5 h-3.5 md:w-[15px] md:h-[15px] group-hover/btn:scale-110 transition-transform" />
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     );

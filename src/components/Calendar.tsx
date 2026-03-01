@@ -41,6 +41,7 @@ interface CalendarProps {
 // Converter do formato Supabase para o formato do DrawerAgendamento
 const toDrawerFormat = (ag: ReturnType<typeof useAgendamentos>['agendamentos'][number]): DrawerAgendamentoType => ({
   id: ag.id,
+  userId: ag.user_id,
   dataInicio: ag.data_inicial,
   dataFim: ag.data_final,
   tipo: ag.tipo_agendamento,
