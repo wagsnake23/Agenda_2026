@@ -99,86 +99,85 @@ const Header = () => {
     return (
         <>
             {/* Barra de Título Institucional - Desktop Apenas */}
-            <header className="hidden lg:flex fixed top-0 w-full h-[74px] bg-[#0B1221] items-center px-8 shadow-[0_6px_20px_rgba(0,0,0,0.2)] z-[100] select-none">
-                <div onClick={() => navigate('/')} className="absolute left-1/2 -translate-x-1/2 text-center w-full flex items-center justify-center gap-4 cursor-pointer">
-                    <img
-                        src="/logo-bombeiros.png"
-                        alt="Brasão Bombeiros"
-                        className="w-12 h-12 drop-shadow-lg object-contain pointer-events-auto"
-                    />
-                    <h1
-                        className="font-black tracking-[2px] text-white uppercase leading-none inline-flex items-center gap-3 pointer-events-auto"
-                        style={{
-                            fontFamily: 'Inter, sans-serif',
-                            filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.3)) drop-shadow(0px 4px 12px rgba(0,0,0,0.5))',
-                        }}
-                    >
-                        <span className="text-[1.6rem]">BOMBEIROS AGUDOS</span>
-                        <span className="text-[#E53935] text-2xl drop-shadow-md">•</span>
-                        <span className="text-[1.6rem] opacity-90">CALENDÁRIO</span>
-                        <span className="text-2xl drop-shadow-md">📅</span>
-                    </h1>
-                </div>
+            <header className="hidden lg:flex fixed top-0 w-full h-[74px] bg-[#131C31] items-center z-[100] select-none shadow-[0_6px_20px_rgba(0,0,0,0.2)]">
+                <div className="w-full max-w-[1600px] mx-auto px-8 flex items-center justify-between">
+                    <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer">
+                        <img
+                            src="/logo.png"
+                            alt="Logo Calendário"
+                            className="w-11 h-11 drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
+                        />
+                        <h1
+                            className="font-black tracking-normal text-white uppercase leading-none inline-flex items-center pointer-events-auto"
+                            style={{
+                                fontFamily: 'Inter, sans-serif',
+                                filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.3)) drop-shadow(0px 4px 12px rgba(0,0,0,0.5))',
+                            }}
+                        >
+                            <span className="text-[1.3rem]">CALENDÁRIO PRONTIDÃO</span>
+                        </h1>
+                    </div>
 
-                {/* Área de Auth - Alinhada à Direita */}
-                <div className="ml-auto relative z-[101] flex items-center gap-3">
-                    {isAuthenticated ? (
-                        <>
-                            {/* Botão Agendar */}
-                            <button
-                                onClick={handleAgendar}
-                                className="px-5 py-2 bg-[#FDE047] text-[#0B1221] font-black uppercase text-sm rounded-xl
-                                 shadow-[0_4px_0_#A16207,0_8px_15px_rgba(0,0,0,0.3)]
-                                 hover:bg-[#FACC15] hover:shadow-[0_2px_0_#A16207,0_4px_10px_rgba(0,0,0,0.3)]
-                                 hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none
-                                 transition-all duration-150 cursor-pointer"
-                            >
-                                Agendar
-                            </button>
-
-                            {/* Agendamentos */}
-                            <button
-                                onClick={() => navigate('/agendamentos')}
-                                className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
-                            >
-                                <CalendarIcon size={15} /> Agendamentos
-                            </button>
-
-                            {/* Admin Menu */}
-                            {isAdmin && (
+                    {/* Área de Auth - Alinhada à Direita */}
+                    <div className="flex items-center gap-3">
+                        {isAuthenticated ? (
+                            <>
+                                {/* Botão Agendar */}
                                 <button
-                                    onClick={() => navigate('/usuarios')}
+                                    onClick={handleAgendar}
+                                    className="px-5 py-2 bg-[#FDE047] text-[#0B1221] font-black uppercase text-sm rounded-xl
+                                     shadow-[0_4px_0_#A16207,0_8px_15px_rgba(0,0,0,0.3)]
+                                     hover:bg-[#FACC15] hover:shadow-[0_2px_0_#A16207,0_4px_10px_rgba(0,0,0,0.3)]
+                                     hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none
+                                     transition-all duration-150 cursor-pointer"
+                                >
+                                    Agendar
+                                </button>
+
+                                {/* Agendamentos */}
+                                <button
+                                    onClick={() => navigate('/agendamentos')}
                                     className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
                                 >
-                                    <Users size={15} /> Usuários
+                                    <CalendarIcon size={15} /> Agendamentos
                                 </button>
-                            )}
 
-                            {/* Avatar Dropdown */}
-                            <UserMenu />
-                        </>
-                    ) : (
-                        <button
-                            onClick={() => navigate('/auth')}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase text-sm rounded-xl shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] transition-all duration-150"
-                        >
-                            <LogIn size={16} /> Entrar
-                        </button>
-                    )}
+                                {/* Admin Menu */}
+                                {isAdmin && (
+                                    <button
+                                        onClick={() => navigate('/usuarios')}
+                                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
+                                    >
+                                        <Users size={15} /> Usuários
+                                    </button>
+                                )}
+
+                                {/* Avatar Dropdown */}
+                                <UserMenu />
+                            </>
+                        ) : (
+                            <button
+                                onClick={() => navigate('/auth')}
+                                className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase text-sm rounded-xl shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] transition-all duration-150"
+                            >
+                                <LogIn size={16} /> Entrar
+                            </button>
+                        )}
+                    </div>
                 </div>
             </header>
 
             {/* Header Mobile/Tablet */}
             <header className="sticky top-0 z-50 w-full h-[60px] bg-[#EFF3F6] flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-2 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
                 <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-                    <div className="flex items-center gap-1 w-full max-w-[280px]">
+                    <div className="flex items-center gap-1.5 w-full max-w-[280px]">
                         <img
-                            src="/logo-bombeiros.png"
-                            alt="Brasão Bombeiros"
-                            className="w-12 h-12 md:w-14 md:h-14 drop-shadow-xl object-contain relative -left-1 transition-transform duration-300 hover:scale-105 shrink-0"
+                            src="/logo.png"
+                            alt="Logo Calendário"
+                            className="w-10 h-10 md:w-12 md:h-12 drop-shadow-xl object-contain relative -left-1 transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
-                            className="text-[1.35rem] md:text-[2rem] font-black tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
+                            className="text-[1.1rem] md:text-[1.6rem] font-black tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
                             style={{
                                 background: 'linear-gradient(to bottom, #FF4D4D 0%, #D32F2F 50%, #8B0000 100%)',
                                 WebkitBackgroundClip: 'text',
@@ -187,8 +186,8 @@ const Header = () => {
                                 filter: 'drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.1))',
                             }}
                         >
-                            <span>BOMBEIROS</span>
-                            <span>AGUDOS</span>
+                            <span>CALENDÁRIO</span>
+                            <span>PRONTIDÃO</span>
                         </h1>
                     </div>
                 </div>

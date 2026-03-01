@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Calendar from '@/components/Calendar';
 import { format } from 'date-fns';
-import { Toaster } from 'sonner';
 import InstallPWAButton from '@/components/InstallPWAButton';
 import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useAuth } from '@/context/AuthContext';
@@ -59,7 +58,7 @@ const Index = () => {
             />
           </main>
 
-          <Toaster richColors position="bottom-center" />
+
           <InstallPWAButton />
         </div>
 

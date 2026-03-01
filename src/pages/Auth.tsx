@@ -60,9 +60,8 @@ const AuthPage: React.FC = () => {
                     className="flex items-center gap-2 group transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
                 >
                     <img src="/logo-bombeiros.png" alt="Brasão" className="w-10 h-10 object-contain drop-shadow-md" />
-                    <div className="flex flex-col items-start text-blue-900 md:text-white">
-                        <span className="font-black text-xs md:text-sm uppercase tracking-[2px] leading-tight text-left">Bombeiros</span>
-                        <span className="font-black text-xs md:text-sm uppercase tracking-[2px] leading-tight text-left">Agudos</span>
+                    <div className="flex items-center gap-2 text-blue-900 md:text-white">
+                        <span className="font-black text-sm md:text-base uppercase tracking-[3px] leading-none whitespace-nowrap">Bombeiros Agudos</span>
                     </div>
                 </button>
             </div>
@@ -90,16 +89,6 @@ const AuthPage: React.FC = () => {
                         >
                             Calendário de Prontidão
                         </h1>
-                        <p
-                            className="font-bold text-xs mt-2 uppercase tracking-widest leading-none"
-                            style={{
-                                background: 'linear-gradient(to bottom, #FF4D4D 0%, #D32F2F 50%, #8B0000 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                            }}
-                        >
-                            Bombeiros Agudos
-                        </p>
                     </div>
 
                     {/* Formulário */}
@@ -113,7 +102,7 @@ const AuthPage: React.FC = () => {
                                     {...loginForm.register('email')}
                                     type="email"
                                     placeholder="seu@email.com"
-                                    className="w-full h-12 md:h-12 pl-12 pr-4 rounded-2xl bg-[#E8F0FE] border border-blue-100 md:border-transparent text-slate-800 placeholder-slate-400 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:bg-white transition-all shadow-sm"
+                                    className="w-full h-12 md:h-12 pl-12 pr-4 rounded-2xl bg-[#E8F0FE] border border-slate-300 md:border-slate-300/50 text-slate-800 placeholder-slate-400 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:bg-white transition-all shadow-sm"
                                 />
                             </div>
                             {loginForm.formState.errors.email && (
@@ -132,7 +121,7 @@ const AuthPage: React.FC = () => {
                                     {...loginForm.register('password')}
                                     type={showPassword ? 'text' : 'password'}
                                     placeholder="••••••••"
-                                    className="w-full h-12 md:h-12 pl-12 pr-12 rounded-2xl bg-[#E8F0FE] border border-blue-100 md:border-transparent text-slate-800 placeholder-slate-400 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all shadow-sm"
+                                    className="w-full h-12 md:h-12 pl-12 pr-12 rounded-2xl bg-[#E8F0FE] border border-slate-300 md:border-slate-300/50 text-slate-800 placeholder-slate-400 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all shadow-sm"
                                 />
                                 <button
                                     type="button"
@@ -176,7 +165,7 @@ const AuthPage: React.FC = () => {
 
                     {/* Rodapé Atualizado */}
                     <div className="mt-8 md:mt-5 text-slate-600 md:text-slate-500 text-[10px] font-black uppercase tracking-wider">
-                        © 2026 — Calendário Prontidão - Design by Vagner
+                        © 2026 - Calendário Prontidão -  by Vagner
                     </div>
                 </div>
             </div>
