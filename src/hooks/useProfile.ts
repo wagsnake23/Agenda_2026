@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 // Tipo genérico dos dados do perfil para o hook
 export interface ProfileData {
     nome: string;
+    apelido?: string | null;
     cargo?: string | null;
     matricula?: string | null;
     data_nascimento?: string | null;
@@ -29,6 +30,7 @@ export function useProfile(): UseProfileReturn {
                 .from('profiles')
                 .update({
                     nome: data.nome.trim(),
+                    apelido: (data.apelido || '').trim() || null,
                     data_nascimento: data.data_nascimento || null,
                     cargo: (data.cargo || '').trim() || null,
                     matricula: (data.matricula || '').trim() || null,

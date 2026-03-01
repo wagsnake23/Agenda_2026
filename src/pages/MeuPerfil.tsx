@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { Toaster } from 'sonner';
 import {
     ArrowLeft, Camera, Loader2, Save, User, Briefcase, Hash,
-    Calendar as CalendarIcon, Mail, Shield, CheckCircle
+    Calendar as CalendarIcon, Mail, Shield, CheckCircle, Lock, X, Eye, EyeOff
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { getCroppedImg } from '@/utils/cropImage';
@@ -27,6 +27,7 @@ import type { Area } from 'react-easy-crop';
 // ────────────────────────────────────────────────────────────
 const profileSchema = z.object({
     nome: z.string().min(1, 'Nome é obrigatório').min(3, 'Mínimo 3 caracteres'),
+    apelido: z.string().optional().nullable(),
     cargo: z.string().min(1, 'Cargo é obrigatório'),
     matricula: z.string().min(1, 'Matrícula é obrigatória'),
     data_nascimento: z.string().optional().nullable(),
@@ -48,7 +49,7 @@ const PERFIL_LABELS: Record<string, string> = {
 const ProfileSkeleton: React.FC = () => (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6 animate-pulse w-full max-w-5xl mx-auto">
         <div className="md:col-span-5 bg-white rounded-3xl shadow-sm border border-slate-100 p-8 flex flex-col items-center">
-            <div className="w-[140px] h-[140px] rounded-2xl bg-slate-200 mb-6" />
+            <div className="w-[150px] h-[150px] sm:w-[160px] sm:h-[160px] rounded-2xl bg-slate-200 mb-6" />
             <div className="h-6 w-40 bg-slate-200 rounded-lg mb-3" />
             <div className="h-4 w-32 bg-slate-100 rounded-full mb-6" />
             <div className="flex gap-2 mb-8">
@@ -88,10 +89,18 @@ const MeuPerfil: React.FC = () => {
     // Preview local (exibido imediatamente após crop)
     const [localAvatarUrl, setLocalAvatarUrl] = useState<string | null>(null);
 
+    // Estado para alteração de senha
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [changingPassword, setChangingPassword] = useState(false);
+    const [showPass, setShowPass] = useState(false);
+
     const form = useForm<ProfileForm>({
         resolver: zodResolver(profileSchema),
         values: {
             nome: profile?.nome || '',
+            apelido: profile?.apelido || '',
             cargo: profile?.cargo || '',
             matricula: profile?.matricula || '',
             data_nascimento: profile?.data_nascimento || '',
@@ -188,11 +197,47 @@ const MeuPerfil: React.FC = () => {
             // Atualizar estado global otimisticamente
             updateProfile({
                 nome: data.nome.trim(),
+                apelido: data.apelido?.trim() || null,
                 cargo: data.cargo.trim() || null,
                 matricula: data.matricula.trim() || null,
                 data_nascimento: data.data_nascimento || null,
             });
             toast.success('Perfil atualizado com sucesso!');
+        }
+    };
+
+    const handleUpdatePassword = async () => {
+        if (!newPassword || !confirmPassword) {
+            toast.error('Preencha todos os campos de senha');
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            toast.error('As senhas não coincidem');
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            toast.error('A senha deve ter pelo menos 6 caracteres');
+            return;
+        }
+
+        setChangingPassword(true);
+        try {
+            const { error } = await supabase.auth.updateUser({
+                password: newPassword
+            });
+
+            if (error) throw error;
+
+            toast.success('Senha alterada com sucesso!');
+            setShowPasswordModal(false);
+            setNewPassword('');
+            setConfirmPassword('');
+        } catch (err: any) {
+            toast.error(err.message || 'Erro ao alterar senha');
+        } finally {
+            setChangingPassword(false);
         }
     };
 
@@ -242,7 +287,7 @@ const MeuPerfil: React.FC = () => {
                                 {/* Avatar */}
                                 <div className="relative group cursor-pointer mb-5" onClick={() => fileInputRef.current?.click()}>
                                     <div
-                                        className="w-[130px] h-[130px] sm:w-[140px] sm:h-[140px] rounded-2xl overflow-hidden border-4 border-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] bg-blue-50 transition-transform duration-300 group-hover:scale-[1.03] mx-auto flex items-center justify-center shrink-0"
+                                        className="w-[140px] h-[140px] sm:w-[160px] sm:h-[160px] rounded-2xl overflow-hidden border-4 border-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] bg-blue-50 transition-transform duration-300 group-hover:scale-[1.03] mx-auto flex items-center justify-center shrink-0"
                                         title="Clique para alterar foto"
                                     >
                                         {avatarUrl ? (
@@ -321,6 +366,20 @@ const MeuPerfil: React.FC = () => {
                                     <Camera size={16} className="text-white/90" />
                                     {uploadingPhoto ? 'Enviando...' : 'Alterar Foto de Perfil'}
                                 </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setNewPassword('');
+                                        setConfirmPassword('');
+                                        setShowPasswordModal(true);
+                                    }}
+                                    className="w-full h-11 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-sm font-semibold flex items-center justify-center gap-2 transition-all mt-3 hover:bg-slate-100 hover:border-slate-300"
+                                >
+                                    <Lock size={16} className="text-slate-400" />
+                                    Alterar Senha de Acesso
+                                </button>
+
                                 <p className="text-slate-400 text-[11px] mt-3">JPG, PNG ou WebP · máx. 5MB</p>
                             </div>
 
@@ -337,24 +396,41 @@ const MeuPerfil: React.FC = () => {
 
                                 <div className="space-y-5 flex-1">
                                     {/* Nome */}
-                                    <div>
-                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
-                                            <div className="w-5 h-5 rounded-md bg-blue-100 flex items-center justify-center text-blue-600">
-                                                <User size={12} />
-                                            </div>
-                                            Nome Completo <span className="text-red-400">*</span>
-                                        </label>
-                                        <input
-                                            {...form.register('nome')}
-                                            type="text"
-                                            placeholder="Seu nome completo"
-                                            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
-                                        />
-                                        {form.formState.errors.nome && (
-                                            <p className="text-red-500 text-xs mt-1.5 ml-1">
-                                                {form.formState.errors.nome.message}
-                                            </p>
-                                        )}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="sm:col-span-1">
+                                            <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
+                                                <div className="w-5 h-5 rounded-md bg-blue-100 flex items-center justify-center text-blue-600">
+                                                    <User size={12} />
+                                                </div>
+                                                Nome Completo <span className="text-red-400">*</span>
+                                            </label>
+                                            <input
+                                                {...form.register('nome')}
+                                                type="text"
+                                                placeholder="Seu nome"
+                                                className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                            />
+                                            {form.formState.errors.nome && (
+                                                <p className="text-red-500 text-xs mt-1.5 ml-1">
+                                                    {form.formState.errors.nome.message}
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        <div className="sm:col-span-1">
+                                            <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
+                                                <div className="w-5 h-5 rounded-md bg-blue-100 flex items-center justify-center text-blue-600">
+                                                    <Hash size={12} />
+                                                </div>
+                                                Apelido
+                                            </label>
+                                            <input
+                                                {...form.register('apelido')}
+                                                type="text"
+                                                placeholder="Como prefere ser chamado"
+                                                className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                            />
+                                        </div>
                                     </div>
 
                                     {/* Email (não editável) */}
@@ -460,6 +536,81 @@ const MeuPerfil: React.FC = () => {
             </div>
             {/* Footer exibido apenas em desktop */}
             <Footer className="hidden md:block" />
+
+            {/* Modal de Alterar Senha */}
+            {showPasswordModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
+                    <div className="bg-white w-[98%] sm:w-full max-w-sm rounded-[32px] overflow-hidden shadow-2xl border-4 border-white animate-in zoom-in-95 duration-200">
+                        <div className="relative p-6 sm:p-8">
+                            <button
+                                onClick={() => setShowPasswordModal(false)}
+                                className="absolute right-4 top-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+
+                            <div className="flex flex-col items-center text-center mb-6">
+                                <span className="text-4xl mb-3 select-none filter drop-shadow-sm transform hover:scale-110 transition-transform duration-300">
+                                    🔐
+                                </span>
+                                <h3 className="text-xl font-black text-slate-800 tracking-tight">Alterar Senha</h3>
+                                <p className="text-slate-500 text-[13px] mt-1 font-medium">Defina sua nova senha de acesso</p>
+                            </div>
+
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Nova Senha</label>
+                                    <div className="relative">
+                                        <input
+                                            type={showPass ? 'text' : 'password'}
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            placeholder=""
+                                            autoComplete="new-password"
+                                            className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-sans"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPass(!showPass)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                        >
+                                            {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Confirmar Senha</label>
+                                    <input
+                                        type={showPass ? 'text' : 'password'}
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        placeholder=""
+                                        autoComplete="new-password"
+                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-sans"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-3 mt-9">
+                                <button
+                                    onClick={() => setShowPasswordModal(false)}
+                                    className="flex-1 h-12 rounded-2xl bg-[#F1F5F9] hover:bg-[#E2E8F0] text-[#475569] font-black text-[15px] uppercase tracking-wider transition-all duration-300 shadow-[0_4px_0_rgb(203,213,225)] active:shadow-none active:translate-y-[4px] border border-slate-200"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={handleUpdatePassword}
+                                    disabled={changingPassword}
+                                    className="flex-1 h-12 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-black text-[15px] uppercase tracking-wider transition-all duration-300 shadow-[0_4px_0_rgb(29,78,216)] active:shadow-none active:translate-y-[4px] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-blue-500/50"
+                                >
+                                    {changingPassword ? <Loader2 size={20} className="animate-spin" /> : 'Alterar'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

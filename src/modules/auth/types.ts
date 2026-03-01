@@ -6,6 +6,7 @@ export interface Profile {
     cargo: string | null;
     matricula: string | null;
     foto_url: string | null;
+    apelido: string | null;
     perfil: 'conferente' | 'administrador';
     ativo: boolean;
     created_at: string;
