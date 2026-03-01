@@ -137,7 +137,7 @@ const MeuPerfil: React.FC = () => {
             const { data: profileData } = await supabase
                 .from('profiles')
                 .select('foto_url')
-                .eq('id', user.id)
+                .eq('id', user?.id)
                 .single();
             const oldFotoUrl = profileData?.foto_url;
 
@@ -145,6 +145,7 @@ const MeuPerfil: React.FC = () => {
             const blob = await getCroppedImg(rawImageSrc, croppedArea);
 
             // 3. Faz Upload com nome novo p/ o supabase storage
+            if (!user?.id) throw new Error("Usuário não autenticado");
             const { publicUrl, filePath } = await uploadAvatar(user.id, blob);
 
             try {
