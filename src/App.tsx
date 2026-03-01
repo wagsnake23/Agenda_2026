@@ -9,6 +9,7 @@ import AuthPage from "./pages/Auth";
 import MeuPerfil from "./pages/MeuPerfil";
 import AgendamentosPage from "./pages/Agendamentos";
 import UsuariosPage from "./pages/Usuarios";
+import { Toaster } from 'sonner';
 
 import { CalendarModeProvider } from "@/hooks/use-calendar-mode";
 
@@ -16,6 +17,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <Toaster richColors position="top-center" />
     <TooltipProvider>
       <BrowserRouter>
         <AuthProvider>

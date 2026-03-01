@@ -18,7 +18,9 @@ import Footer from '@/components/Footer';
 const userFormSchema = z.object({
     nome: z.string().min(3, 'Nome mínimo 3 caracteres'),
     email: z.string().email('Email inválido'),
-    password: z.string().min(6, 'Senha mínimo 6 caracteres').optional().or(z.literal('')),
+    password: z.string().optional().refine(val => !val || val.length >= 6, {
+        message: 'Senha deve ter no mínimo 6 caracteres',
+    }),
     cargo: z.string().optional().nullable(),
     matricula: z.string().optional().nullable(),
     perfil: z.enum(['conferente', 'administrador']),
@@ -92,6 +94,7 @@ const UserModal: React.FC<{
 
     const handleSubmit = async (data: UserFormInput) => {
         try {
+            console.log("Iniciando salvamento:", data);
             if (isEditing && editingUser) {
                 const { error } = await supabase
                     .from('profiles')
@@ -107,44 +110,35 @@ const UserModal: React.FC<{
                 if (error) throw error;
                 toast.success('Usuário atualizado!');
             } else {
-                // Criar via edge function ou service role
-                const { data: authData, error: authError } = await supabase.auth.admin?.createUser
-                    ? await (supabase.auth.admin as any).createUser({
+                if (!data.password) {
+                    toast.error('Senha é obrigatória para novos usuários');
+                    return;
+                }
+
+                // Chamar a Edge Function para criar o usuário com privilégios de admin
+                const { data: functionData, error: functionError } = await supabase.functions.invoke('admin-create-user', {
+                    body: {
                         email: data.email,
                         password: data.password,
-                        email_confirm: true,
-                    })
-                    : { data: null, error: new Error('Admin API not available') };
+                        nome: data.nome,
+                        cargo: data.cargo,
+                        matricula: data.matricula,
+                        perfil: data.perfil,
+                        ativo: data.ativo
+                    }
+                });
 
-                if (authError) throw authError;
+                if (functionError) throw functionError;
+                if (functionData?.error) throw new Error(functionData.error);
 
-                if (authData?.user) {
-                    const { error: profileError } = await supabase
-                        .from('profiles')
-                        .insert({
-                            id: authData.user.id,
-                            nome: data.nome,
-                            email: data.email,
-                            cargo: data.cargo || null,
-                            matricula: data.matricula || null,
-                            perfil: data.perfil,
-                            ativo: data.ativo,
-                        });
-
-                    if (profileError) throw profileError;
-                }
-                toast.success('Usuário criado!');
+                toast.success('Usuário criado com sucesso!');
             }
 
             onSaved();
             onClose();
         } catch (err: any) {
-            console.error(err);
-            if (err.message?.includes('admin')) {
-                toast.error('Criação de usuários requer Edge Function configurada. Por enquanto, os usuários podem se cadastrar pela tela de login.');
-            } else {
-                toast.error(err.message || 'Erro ao salvar usuário');
-            }
+            console.error("Erro ao salvar:", err);
+            toast.error(err.message || 'Erro ao salvar usuário');
         }
     };
 
@@ -162,7 +156,13 @@ const UserModal: React.FC<{
                     </button>
                 </div>
 
-                <form onSubmit={form.handleSubmit(handleSubmit)} className="p-5 space-y-4">
+                <form
+                    onSubmit={form.handleSubmit(handleSubmit, (errors) => {
+                        console.log("Erros de validação:", errors);
+                        toast.error('Verifique os campos obrigatórios');
+                    })}
+                    className="p-5 space-y-4"
+                >
                     <div>
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Nome</label>
                         <input {...form.register('nome')} type="text" className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all" />

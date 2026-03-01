@@ -249,7 +249,6 @@ const MeuPerfil: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-[#EFF3F6] flex flex-col">
-            <Toaster richColors position="top-center" />
 
             {/* Cropper Modal */}
             {showCropper && rawImageSrc && (

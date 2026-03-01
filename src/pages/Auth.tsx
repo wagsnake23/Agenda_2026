@@ -76,7 +76,6 @@ const AuthPage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-[linear-gradient(135deg,#0B1221_0%,#1a2a4a_50%,#0B1221_100%)] flex items-center justify-center p-4 relative overflow-hidden">
-            <Toaster richColors position="top-center" />
 
             {/* Background decorations */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
