@@ -148,7 +148,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       return;
     }
     setDrawerMode('create');
-    setSelectedDrawerDate(new Date().toISOString().split('T')[0]);
+    setSelectedDrawerDate(undefined);
     setIsDrawerOpen(true);
   };
 
