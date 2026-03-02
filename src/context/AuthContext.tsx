@@ -25,15 +25,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
     const initialized = useRef(false);
+    // Controla se a inicialização já terminou — impede race condition com o listener
+    const initDone = useRef(false);
 
     /**
-     * Limpeza total de estado e persistência local
+     * Limpeza total de estado local
      */
     const clearAuthState = useCallback(() => {
         setSession(null);
         setUser(null);
         setProfile(null);
-        // Opcional: Limpar caches específicos se houver
     }, []);
 
     /**
@@ -48,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 .single();
 
             if (error) {
-                console.warn('[Auth] Erro ao buscar perfil (usuário pode não ter perfil ainda):', error.message);
+                console.warn('[Auth] Erro ao buscar perfil:', error.message);
                 return null;
             }
             return data as Profile;
@@ -59,18 +60,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     /**
-     * Sincroniza o estado do React com os dados do Supabase
+     * Sincroniza o estado do React com os dados do Supabase.
+     * Garante que user NUNCA seja undefined — sempre null ou User.
      */
     const syncAuthState = useCallback(async (currentSession: Session | null) => {
+        // === LOGS DE DIAGNÓSTICO ===
+        console.log('[Auth] SESSION:', currentSession);
+        console.log('[Auth] USER:', currentSession?.user ?? null);
+
         setSession(currentSession);
-        const currentUser = currentSession?.user ?? null;
+        const currentUser = currentSession?.user ?? null; // nunca undefined
         setUser(currentUser);
 
         if (currentUser) {
             const p = await fetchProfile(currentUser.id);
             setProfile(p);
 
-            // Verificação de segurança: se o usuário logado estiver inativo, forçar logout
+            // Se usuário estiver inativo, forçar logout
             if (p && !p.ativo) {
                 console.warn('[Auth] Usuário inativo detectado. Forçando logout.');
                 await supabase.auth.signOut();
@@ -82,51 +88,80 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, [fetchProfile, clearAuthState]);
 
     /**
-     * Efeito de inicialização e monitoramento global de sessão
+     * Efeito de inicialização e monitoramento global de sessão.
+     * Garante que:
+     * 1. getSession() → fonte primária (cache local, sem rede)
+     * 2. getUser() → valida token no servidor
+     * 3. loading só vira false UMA vez, no finally da initAuth
+     * 4. onAuthStateChange NÃO interfere durante a inicialização
      */
     useEffect(() => {
         if (initialized.current) return;
         initialized.current = true;
 
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, newSession) => {
+            console.log(`[Auth] Evento detectado: ${event}`);
+
+            // Ignorar eventos durante a inicialização para evitar race conditions
+            if (!initDone.current) {
+                console.log('[Auth] Evento ignorado durante inicialização inicial.');
+                return;
+            }
+
+            if (event === 'SIGNED_OUT') {
+                clearAuthState();
+            } else if (
+                event === 'SIGNED_IN' ||
+                event === 'TOKEN_REFRESHED' ||
+                event === 'USER_UPDATED'
+            ) {
+                await syncAuthState(newSession);
+            }
+        });
+
         const initAuth = async () => {
             try {
                 setLoading(true);
 
-                // getUser() é mais seguro que getSession() pois valida o token no servidor
-                const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+                // Passo 1: Recuperar sessão do cache local (rápido, sem rede)
+                const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
 
-                if (userError || !currentUser) {
-                    console.log('[Auth] Nenhuma sessão ativa ou sessão inválida detectada.');
-                    const { data: { session: currentSession } } = await supabase.auth.getSession();
-                    if (currentSession) {
-                        // Se existe sessão mas getUser falhou, a sessão é provavelmente inválida (troca de projeto)
-                        console.warn('[Auth] Sessão inconsistente detectada. Limpando...');
-                        await supabase.auth.signOut();
-                    }
+                if (sessionError) {
+                    console.error('[Auth] Erro ao recuperar sessão local:', sessionError.message);
                     clearAuthState();
-                } else {
-                    const { data: { session: currentSession } } = await supabase.auth.getSession();
-                    await syncAuthState(currentSession);
+                    return;
                 }
+
+                if (!currentSession) {
+                    // Sem sessão — garantir user = null
+                    console.log('[Auth] Nenhuma sessão ativa. user = null.');
+                    clearAuthState();
+                    return;
+                }
+
+                // Passo 2: Validar token no servidor (pode fazer refresh automático)
+                const { data: { user: serverUser }, error: userError } = await supabase.auth.getUser();
+
+                if (userError || !serverUser) {
+                    // Token inválido ou expirado e não recuperável
+                    console.warn('[Auth] Token inválido no servidor. Limpando sessão...');
+                    await supabase.auth.signOut();
+                    clearAuthState();
+                    return;
+                }
+
+                // Passo 3: Sessão válida — buscar dados atualizados e sincronizar
+                const { data: { session: freshSession } } = await supabase.auth.getSession();
+                await syncAuthState(freshSession);
+
             } catch (err) {
-                console.error('[Auth] Erro crítico na inicialização do Auth:', err);
+                console.error('[Auth] Erro crítico na inicialização:', err);
                 clearAuthState();
             } finally {
+                initDone.current = true;
                 setLoading(false);
             }
         };
-
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, newSession) => {
-            console.log(`[Auth] Evento detectado: ${event}`);
-
-            if (event === 'SIGNED_OUT') {
-                clearAuthState();
-            } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
-                await syncAuthState(newSession);
-            }
-
-            setLoading(false);
-        });
 
         initAuth();
 
@@ -145,7 +180,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
 
             if (data.user) {
-                console.log('[Auth] Login bem-sucedido, sincronizando usuário:', data.user.id);
+                console.log('[Auth] Login bem-sucedido:', data.user.id);
                 await syncAuthState(data.session);
 
                 const p = await fetchProfile(data.user.id);
@@ -157,10 +192,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 }
             }
 
-            console.log('[Auth] Processo de login concluído com sucesso');
             return { error: null };
         } catch (err: any) {
-            console.error('[Auth] Erro crítico no processo de login:', err);
+            console.error('[Auth] Erro crítico no login:', err);
             return { error: err.message || 'Erro inesperado ao entrar' };
         }
     };
@@ -192,14 +226,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     };
 
+    /**
+     * Logout: limpa estado LOCAL imediatamente (sem depender de user.id)
+     * e depois chama o Supabase em background.
+     */
     const signOut = async () => {
+        // Limpar estado imediatamente — não aguardar resposta da rede
+        clearAuthState();
         try {
             await supabase.auth.signOut();
         } catch (err) {
-            console.error('[Auth] Erro ao deslogar do Supabase:', err);
-        } finally {
-            clearAuthState();
-            // Redirecionamento é tratado nos componentes protegidos ou via ProtectedRoute
+            // Estado já foi limpo acima — logout local já aconteceu
+            console.error('[Auth] Erro ao notificar Supabase do logout (estado local já limpo):', err);
         }
     };
 
@@ -214,7 +252,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     const isAdmin = profile?.perfil === 'administrador';
-    const isAuthenticated = !!user; // focado no usuário validado
+    // Usar user?.id garante que nunca é truthy com undefined
+    const isAuthenticated = !!user?.id;
 
     return (
         <AuthContext.Provider value={{

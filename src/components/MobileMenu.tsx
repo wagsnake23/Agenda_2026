@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 
 const MobileMenu = () => {
     const { isOpen, setIsOpen } = useMobileMenu();
-    const { isAuthenticated, isAdmin, profile, signOut } = useAuth();
+    const { isAuthenticated, isAdmin, profile, signOut, loading } = useAuth();
     const navigate = useNavigate();
     const { mode, setMode } = useCalendarMode();
 
@@ -82,7 +82,12 @@ const MobileMenu = () => {
                         </button>
                     </div>
 
-                    {isAuthenticated ? (
+                    {loading ? (
+                        <div className="flex flex-col">
+                            <span className="text-white font-bold text-base">Carregando...</span>
+                            <span className="text-white/60 text-xs font-medium mt-0.5">Verificando sessão...</span>
+                        </div>
+                    ) : isAuthenticated ? (
                         <div className="flex flex-col">
                             <span className="text-white font-bold text-base truncate">{profile?.nome || 'Usuário'}</span>
                             <span className="text-white/60 text-xs font-medium truncate mt-0.5">{profile?.email}</span>

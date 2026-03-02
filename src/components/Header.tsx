@@ -81,7 +81,7 @@ export const UserMenu = () => {
 };
 
 const Header = () => {
-    const { isAuthenticated, isAdmin } = useAuth();
+    const { isAuthenticated, isAdmin, loading } = useAuth();
     const navigate = useNavigate();
 
     const handleAgendar = () => {
@@ -120,48 +120,47 @@ const Header = () => {
 
                     {/* Área de Auth - Alinhada à Direita */}
                     <div className="flex items-center gap-3">
-                        {isAuthenticated ? (
-                            <>
-                                {/* Botão Agendar */}
-                                <button
-                                    onClick={handleAgendar}
-                                    className="px-5 py-2 bg-[#FDE047] text-[#0B1221] font-black uppercase text-sm rounded-xl
-                                     shadow-[0_4px_0_#A16207,0_8px_15px_rgba(0,0,0,0.3)]
-                                     hover:bg-[#FACC15] hover:shadow-[0_2px_0_#A16207,0_4px_10px_rgba(0,0,0,0.3)]
-                                     hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none
-                                     transition-all duration-150 cursor-pointer"
-                                >
-                                    Agendar
-                                </button>
-
-                                {/* Agendamentos */}
-                                <button
-                                    onClick={() => navigate('/agendamentos')}
-                                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
-                                >
-                                    <CalendarIcon size={15} /> Agendamentos
-                                </button>
-
-                                {/* Admin Menu */}
-                                {isAdmin && (
+                        {/* Enquanto auth carrega, não exibir nenhum botão (evita flash de estado incorreto) */}
+                        {!loading && (
+                            isAuthenticated ? (
+                                <>
+                                    {/* Botão Agendar */}
                                     <button
-                                        onClick={() => navigate('/usuarios')}
+                                        onClick={handleAgendar}
+                                        className="px-5 py-2 bg-[#FDE047] text-[#0B1221] font-black uppercase text-sm rounded-xl shadow-[0_4px_0_#A16207,0_8px_15px_rgba(0,0,0,0.3)] hover:bg-[#FACC15] hover:shadow-[0_2px_0_#A16207,0_4px_10px_rgba(0,0,0,0.3)] hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-150 cursor-pointer"
+                                    >
+                                        Agendar
+                                    </button>
+
+                                    {/* Agendamentos */}
+                                    <button
+                                        onClick={() => navigate('/agendamentos')}
                                         className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
                                     >
-                                        <Users size={15} /> Usuários
+                                        <CalendarIcon size={15} /> Agendamentos
                                     </button>
-                                )}
 
-                                {/* Avatar Dropdown */}
-                                <UserMenu />
-                            </>
-                        ) : (
-                            <button
-                                onClick={() => navigate('/auth')}
-                                className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase text-sm rounded-xl shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] transition-all duration-150"
-                            >
-                                <LogIn size={16} /> Entrar
-                            </button>
+                                    {/* Admin Menu */}
+                                    {isAdmin && (
+                                        <button
+                                            onClick={() => navigate('/usuarios')}
+                                            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
+                                        >
+                                            <Users size={15} /> Usuários
+                                        </button>
+                                    )}
+
+                                    {/* Avatar Dropdown */}
+                                    <UserMenu />
+                                </>
+                            ) : (
+                                <button
+                                    onClick={() => navigate('/auth')}
+                                    className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase text-sm rounded-xl shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] transition-all duration-150"
+                                >
+                                    <LogIn size={16} /> Entrar
+                                </button>
+                            )
                         )}
                     </div>
                 </div>

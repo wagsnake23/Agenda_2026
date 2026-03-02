@@ -10,12 +10,15 @@ export const useAgendamentos = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // Agendamentos públicos: carregados independentemente de login.
+    // Não inclui 'user' ou 'isAdmin' como dependências para evitar re-fetch
+    // ao restaurar sessão, e garantir exibição mesmo sem autenticação.
     const fetch = useCallback(async () => {
         setLoading(true);
         setError(null);
 
         try {
-            let query = supabase
+            const { data, error: fetchError } = await supabase
                 .from('agendamentos')
                 .select(`
           *,
@@ -24,8 +27,6 @@ export const useAgendamentos = () => {
           )
         `)
                 .order('data_inicial', { ascending: true });
-
-            const { data, error: fetchError } = await query;
 
             if (fetchError) throw fetchError;
 
@@ -36,7 +37,8 @@ export const useAgendamentos = () => {
         } finally {
             setLoading(false);
         }
-    }, [user, isAdmin]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Sem dependências de auth — a query é pública
 
     useEffect(() => {
         fetch();
