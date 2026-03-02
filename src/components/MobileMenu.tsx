@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useMobileMenu } from '@/hooks/useMobileMenu';
 import {
-    Menu, X
+    Menu, X, LogOut
 } from 'lucide-react';
 import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue
@@ -152,7 +152,14 @@ const MobileMenu = () => {
                                 </button>
                             )}
 
-                            <div className="mt-4 mb-1 px-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">Área do Usuário</div>
+                            {/* Minha Agenda */}
+                            <button
+                                onClick={() => handleNav(`/agendamentos?usuario=${profile?.id}`)}
+                                className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
+                            >
+                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
+                                <span className="font-bold text-sm">Minha Agenda</span>
+                            </button>
 
                             {/* Item 4: Meu Perfil */}
                             <button
@@ -163,15 +170,6 @@ const MobileMenu = () => {
                                 <span className="font-bold text-sm">Meu Perfil</span>
                             </button>
 
-                            {/* Minha Agenda */}
-                            <button
-                                onClick={() => handleNav(`/agendamentos?usuario=${profile?.id}`)}
-                                className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
-                            >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
-                                <span className="font-bold text-sm">Minha Agenda</span>
-                            </button>
-
                             <div className="h-px w-full bg-slate-200 my-2" />
 
                             {/* Botão Sair */}
@@ -179,7 +177,7 @@ const MobileMenu = () => {
                                 onClick={() => { signOut(); setIsOpen(false); }}
                                 className="flex items-center gap-3 px-3 py-3 w-full text-left text-red-600 hover:bg-red-50 rounded-xl transition-colors group"
                             >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">🚪</span>
+                                <LogOut size={20} className="group-hover:scale-110 transition-transform" />
                                 <span className="font-bold text-sm">Sair</span>
                             </button>
                         </>
