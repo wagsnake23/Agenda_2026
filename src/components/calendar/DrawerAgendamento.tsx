@@ -53,6 +53,46 @@ const STATUS_STYLES: Record<string, { label: string; className: string }> = {
     }
 };
 
+const ConfirmDialog: React.FC<{
+    open: boolean;
+    onConfirm: () => void;
+    onCancel: () => void;
+    message: string;
+}> = ({ open, onConfirm, onCancel, message }) => {
+    if (!open) return null;
+    return createPortal(
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-3 animate-in fade-in duration-200">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={(e) => { e.stopPropagation(); onCancel(); }} />
+            <div className="relative bg-white rounded-[24px] shadow-2xl border border-gray-100 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                <div className="flex flex-col items-center gap-2 mb-4">
+                    <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center text-red-600 mb-1">
+                        <Trash2 size={28} />
+                    </div>
+                    <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Confirmar exclusão</h3>
+                </div>
+
+                <p className="text-slate-600 font-bold text-sm text-center mb-8 px-2 leading-relaxed">{message}</p>
+
+                <div className="flex gap-3">
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onCancel(); }}
+                        className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onConfirm(); }}
+                        className="flex-1 h-12 rounded-xl bg-red-600 text-white font-bold text-sm shadow-[0_4px_0_#991B1B] hover:bg-red-700 active:translate-y-[2px] active:shadow-none transition-all"
+                    >
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>,
+        document.body
+    );
+};
+
 interface DrawerAgendamentoProps {
     isOpen: boolean;
     onClose: () => void;
@@ -103,6 +143,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
     // Estados de Edição
     const [modoEdicao, setModoEdicao] = useState(false);
     const [agendamentoEditando, setAgendamentoEditando] = useState<Agendamento | null>(null);
+    const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
     useEffect(() => {
         if (mode === 'create') {
@@ -612,9 +653,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
-                                                                if (window.confirm('Deseja realmente excluir este agendamento?')) {
-                                                                    onDelete?.(agenda.id);
-                                                                }
+                                                                setConfirmDeleteId(agenda.id);
                                                             }}
                                                             className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition-all group/btn"
                                                             title="Excluir"
@@ -732,6 +771,18 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     document.body
                 )
             }
+            {/* Modal de Confirmação de Exclusão */}
+            {confirmDeleteId && (
+                <ConfirmDialog
+                    open={true}
+                    onConfirm={() => {
+                        if (confirmDeleteId) onDelete?.(confirmDeleteId);
+                        setConfirmDeleteId(null);
+                    }}
+                    onCancel={() => setConfirmDeleteId(null)}
+                    message="Deseja realmente excluir este agendamento?"
+                />
+            )}
         </div >
     );
 };
