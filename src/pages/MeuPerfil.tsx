@@ -40,7 +40,7 @@ type ProfileForm = z.infer<typeof profileSchema>;
 // Labels
 // ────────────────────────────────────────────────────────────
 const PERFIL_LABELS: Record<string, string> = {
-    conferente: 'Conferente',
+    conferente: 'Membro',
     administrador: 'Administrador',
 };
 

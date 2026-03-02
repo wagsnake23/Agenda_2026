@@ -29,7 +29,7 @@ const userFormSchema = z.object({
 type UserFormInput = z.infer<typeof userFormSchema>;
 
 const PERFIL_LABELS: Record<string, string> = {
-    conferente: 'Conferente',
+    conferente: 'Membro',
     administrador: 'Administrador',
 };
 
@@ -171,15 +171,15 @@ const UserModal: React.FC<{
 
     if (!open) return null;
     return (
-        <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[150] flex items-center justify-center p-2 md:p-4">
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md z-10 overflow-hidden animate-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between p-5 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]">
-                    <h3 className="font-bold text-white uppercase tracking-wider text-sm">
+            <div className="relative bg-white rounded-2xl shadow-2xl w-[99%] max-w-[99%] md:max-w-md z-10 overflow-hidden animate-in zoom-in-95 duration-200">
+                <div className="flex items-center justify-between p-4 md:p-5 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]">
+                    <h3 className="font-bold text-white uppercase tracking-wider text-sm md:text-base">
                         {isEditing ? '✏️ Editar Usuário' : '👤 Novo Usuário'}
                     </h3>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 text-white hover:bg-white/30 transition-all">
-                        <X size={16} />
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-md active:scale-90" title="Fechar">
+                        <X size={18} strokeWidth={3} />
                     </button>
                 </div>
 
@@ -225,7 +225,7 @@ const UserModal: React.FC<{
                         <div>
                             <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Perfil</label>
                             <select {...form.register('perfil')} className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all">
-                                <option value="conferente">Conferente</option>
+                                <option value="conferente">Membro</option>
                                 <option value="administrador">Administrador</option>
                             </select>
                         </div>
@@ -238,10 +238,10 @@ const UserModal: React.FC<{
                         </div>
                     </div>
 
-                    <div className="flex gap-3 pt-2">
-                        <button type="button" onClick={onClose} className="flex-1 h-10 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-all">Cancelar</button>
-                        <button type="submit" disabled={form.formState.isSubmitting} className="flex-1 h-10 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-sm hover:from-blue-500 hover:to-blue-600 transition-all disabled:opacity-60 flex items-center justify-center gap-2">
-                            {form.formState.isSubmitting ? <><Loader2 size={14} className="animate-spin" /> Salvando...</> : 'Salvar'}
+                    <div className="flex gap-3 pt-4">
+                        <button type="button" onClick={onClose} className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-[15px] shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all">Cancelar</button>
+                        <button type="submit" disabled={form.formState.isSubmitting} className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-[15px] shadow-[0_4px_0_#1E3A8A] hover:from-blue-500 hover:to-blue-600 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-60 flex items-center justify-center gap-2">
+                            {form.formState.isSubmitting ? <><Loader2 size={16} className="animate-spin" /> Salvando...</> : 'Salvar'}
                         </button>
                     </div>
                 </form>
