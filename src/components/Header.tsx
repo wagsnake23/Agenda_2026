@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { LogIn, LogOut, Users, Calendar as CalendarIcon, ChevronDown } from 'lucide-react';
 import MobileMenu from './MobileMenu';
@@ -28,9 +28,9 @@ export const UserMenu = () => {
         <div ref={ref} className="relative z-[102]">
             <button
                 onClick={() => setOpen(!open)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all text-white border border-white/10"
+                className="flex items-center gap-3 px-[14px] py-[6px] rounded-full bg-white/[0.06] hover:bg-white/[0.12] transition-all duration-200 ease-in-out text-white border border-white/[0.08]"
             >
-                <div className="w-7 h-7 rounded-lg overflow-hidden border border-white/20">
+                <div className="w-[34px] h-[34px] rounded-full overflow-hidden border border-white/20">
                     {profile?.foto_url ? (
                         <img src={profile.foto_url} alt={profile.nome} className="w-full h-full object-cover" />
                     ) : (
@@ -39,7 +39,7 @@ export const UserMenu = () => {
                         </div>
                     )}
                 </div>
-                <span className="text-sm font-bold hidden md:block max-w-[120px] truncate">
+                <span className="text-[14px] font-medium hidden md:block max-w-[120px] truncate">
                     {profile?.nome?.split(' ')[0] || 'Usuário'}
                 </span>
                 <ChevronDown size={14} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
@@ -83,6 +83,7 @@ export const UserMenu = () => {
 const Header = () => {
     const { isAuthenticated, isAdmin, loading } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleAgendar = () => {
         // Direcionar para home e disparar drawer caso esteja fora da home
@@ -99,7 +100,7 @@ const Header = () => {
     return (
         <>
             {/* Barra de Título Institucional - Desktop Apenas */}
-            <header className="hidden lg:flex fixed top-0 w-full h-[74px] bg-[#131C31] items-center z-[100] select-none shadow-[0_6px_20px_rgba(0,0,0,0.2)]">
+            <header className="hidden lg:flex fixed top-0 w-full h-[64px] bg-gradient-to-r from-[#0f172a] to-[#1e293b] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
                 <div className="w-full max-w-[1600px] mx-auto px-8 flex items-center justify-between">
                     <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer">
                         <img
@@ -119,44 +120,56 @@ const Header = () => {
                     </div>
 
                     {/* Área de Auth - Alinhada à Direita */}
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-6">
                         {/* Enquanto auth carrega, não exibir nenhum botão (evita flash de estado incorreto) */}
                         {!loading && (
                             isAuthenticated ? (
                                 <>
+                                    {/* Links do Menu */}
+                                    <div className="flex items-center gap-2">
+                                        {/* Admin Menu */}
+                                        {isAdmin && (
+                                            <>
+                                                <button
+                                                    onClick={() => navigate('/usuarios')}
+                                                    className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname.startsWith('/usuarios')
+                                                            ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
+                                                            : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                                        }`}
+                                                >
+                                                    Usuários
+                                                </button>
+                                                <button
+                                                    onClick={() => navigate('/admin/calendario')}
+                                                    className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname.startsWith('/admin/calendario')
+                                                            ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
+                                                            : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                                        }`}
+                                                >
+                                                    Calendário
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/* Agendamentos */}
+                                        <button
+                                            onClick={() => navigate('/agendamentos')}
+                                            className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname === '/agendamentos'
+                                                    ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
+                                                    : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                                }`}
+                                        >
+                                            Agendamentos
+                                        </button>
+                                    </div>
+
                                     {/* Botão Agendar */}
                                     <button
                                         onClick={handleAgendar}
-                                        className="px-5 py-2 bg-[#FDE047] text-[#0B1221] font-black uppercase text-sm rounded-xl shadow-[0_4px_0_#A16207,0_8px_15px_rgba(0,0,0,0.3)] hover:bg-[#FACC15] hover:shadow-[0_2px_0_#A16207,0_4px_10px_rgba(0,0,0,0.3)] hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-150 cursor-pointer"
+                                        className="px-5 py-2 rounded-full font-semibold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_6px_18px_rgba(250,204,21,0.35)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer"
                                     >
                                         Agendar
                                     </button>
-
-                                    {/* Agendamentos */}
-                                    <button
-                                        onClick={() => navigate('/agendamentos')}
-                                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
-                                    >
-                                        <CalendarIcon size={15} /> Agendamentos
-                                    </button>
-
-                                    {/* Admin Menu */}
-                                    {isAdmin && (
-                                        <>
-                                            <button
-                                                onClick={() => navigate('/usuarios')}
-                                                className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
-                                            >
-                                                <Users size={15} /> Usuários
-                                            </button>
-                                            <button
-                                                onClick={() => navigate('/admin/calendario')}
-                                                className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/10 transition-all"
-                                            >
-                                                <CalendarIcon size={15} /> ️ Calendário
-                                            </button>
-                                        </>
-                                    )}
 
                                     {/* Avatar Dropdown */}
                                     <UserMenu />
