@@ -372,10 +372,9 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     </button>
                 </div>
 
-                {/* Conteúdo */}
                 <div className={cn(
                     "flex-1 overflow-y-auto flex flex-col gap-4",
-                    variant === 'modal' ? "p-4 md:p-6" : "p-4 md:p-6 md:pt-3 md:pb-4"
+                    variant === 'modal' ? "p-4 md:p-6" : "p-4 md:px-3 md:pt-3 md:pb-2"
                 )}>
                     {mode === 'create' || modoEdicao ? (
                         <div className="flex flex-col gap-0">
@@ -415,7 +414,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         <div className="flex md:hidden flex-col items-center justify-start shrink-0 justify-self-end transform translate-y-[-10px]">
                                             <div className={cn(
                                                 "rounded-xl overflow-hidden shadow-sm border border-black/[0.08] transition-all bg-white",
-                                                mode === 'create' ? "w-[88px] h-[88px]" : "w-[64px] h-[64px]"
+                                                mode === 'create' ? "w-[88px] h-[88px]" : "w-[84px] h-[84px]"
                                             )}>
                                                 {agendamentoEditando?.userPhoto ? (
                                                     <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
@@ -423,7 +422,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     <img src={profile.foto_url} alt={profile.nome} className="w-full h-full object-cover" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
-                                                        <User className={cn(mode === 'create' ? "size-9" : "size-8")} />
+                                                        <User className={cn(mode === 'create' ? "size-9" : "size-[32px]")} />
                                                     </div>
                                                 )}
                                             </div>
@@ -481,10 +480,13 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 </div>
 
                                 {/* Coluna Direita (Apenas Desktop): Avatar */}
-                                <div className="hidden md:flex flex-col items-center justify-center shrink-0 md:ml-auto md:pl-2 mt-2 md:mt-4">
+                                <div className={cn(
+                                    "hidden md:flex flex-col items-center justify-center shrink-0 mt-2 md:mt-4",
+                                    variant === 'modal' ? "md:ml-auto md:pl-2" : "md:ml-0 md:pl-0"
+                                )}>
                                     <div className={cn(
                                         "rounded-2xl overflow-hidden shadow-md border-2 border-white transition-transform hover:scale-105",
-                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[110px] md:h-[110px] ring-4 ring-[#facc15]/20 bg-white" : "w-16 h-16 md:w-[110px] md:h-[110px] ring-4 ring-blue-50/15 bg-white"
+                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[120px] md:h-[120px] ring-4 ring-[#facc15]/20 bg-white" : "w-16 h-16 md:w-[120px] md:h-[120px] ring-4 ring-blue-50/15 bg-white"
                                     )}>
                                         {agendamentoEditando?.userPhoto ? (
                                             <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
@@ -559,7 +561,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             )}
 
                             <div className={cn(
-                                "mt-auto pt-6 md:pt-9 flex gap-4",
+                                "mt-auto pt-3 flex gap-4",
+                                variant === 'modal' ? "md:pt-9" : "md:pt-3",
                                 modoEdicao ? "flex-row" : "flex-col"
                             )}>
                                 {modoEdicao && (
