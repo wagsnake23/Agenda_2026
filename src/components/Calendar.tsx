@@ -408,11 +408,37 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               />
             </Carousel>
 
-            {/* Modal de Agendamentos (Usado tanto para Criar quanto para Visualizar) */}
+            {/* Drawer de Visualização (Desktop: Sobre o primeiro card | Mobile: Abaixo do Carrossel) */}
+            <div className={cn(
+              "z-[100] transition-all duration-300",
+              "lg:absolute lg:top-2 lg:left-8 lg:w-[calc(33.333%-32px)] lg:h-[calc(100%-92px)]",
+              "w-full h-auto mt-4 px-2",
+              (drawerMode === 'view' && isDrawerOpen) ? "opacity-100 pointer-events-auto block" : "opacity-0 pointer-events-none hidden"
+            )}>
+              <DrawerAgendamento
+                isOpen={isDrawerOpen && drawerMode === 'view'}
+                onClose={handleCloseDrawer}
+                mode="view"
+                variant="drawer"
+                initialDate={selectedDrawerDate}
+                agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+                todosAgendamentos={agendamentos}
+                onSave={salvarAgendamento}
+                onDelete={excluirAgendamento}
+                onUpdate={editarAgendamento}
+                anchorRef={null as any}
+                selectedPeriod={selectedPeriod}
+                onSelectPeriod={toggleHighlightPeriod}
+                selectedAgendamentoId={selectedAgendamentoId}
+                setSelectedAgendamentoId={setSelectedAgendamentoId}
+              />
+            </div>
+
+            {/* Modal de Criação (Centralizado) */}
             <DrawerAgendamento
-              isOpen={isDrawerOpen}
+              isOpen={isDrawerOpen && drawerMode === 'create'}
               onClose={handleCloseDrawer}
-              mode={drawerMode}
+              mode="create"
               variant="modal"
               initialDate={selectedDrawerDate}
               agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
@@ -461,10 +487,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                   highlightedDay={highlightedDay}
                   onViewAgendamento={handleOpenViewDrawer}
                 />
-
-                {/* Lista Mobile Inline */}
-                {/* Drawer Mobile Removido (Agora usa o Modal unificado acima) */}
-                <div className="hidden" />
               </div>
 
               {/* 2º e 3º - Feriados e Fases da Lua */}
