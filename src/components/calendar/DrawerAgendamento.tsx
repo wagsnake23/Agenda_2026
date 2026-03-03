@@ -375,7 +375,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 {/* Conteúdo */}
                 <div className={cn(
                     "flex-1 overflow-y-auto flex flex-col gap-4",
-                    variant === 'modal' ? "p-6" : "p-4 md:p-6 md:pt-3 md:pb-8"
+                    variant === 'modal' ? "p-4 md:p-6" : "p-4 md:p-6 md:pt-3 md:pb-8"
                 )}>
                     {mode === 'create' || modoEdicao ? (
                         <div className="flex flex-col gap-0">
@@ -415,7 +415,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         <div className="flex md:hidden flex-col items-center justify-start shrink-0 justify-self-end transform translate-y-[-10px]">
                                             <div className={cn(
                                                 "rounded-xl overflow-hidden shadow-sm border border-black/[0.08] transition-all bg-white",
-                                                mode === 'create' ? "w-[78px] h-[78px]" : "w-[64px] h-[64px]"
+                                                mode === 'create' ? "w-[88px] h-[88px]" : "w-[64px] h-[64px]"
                                             )}>
                                                 {agendamentoEditando?.userPhoto ? (
                                                     <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
@@ -447,7 +447,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     </div>
 
                                     {/* Linha 2 Grid Mobile / Flex Desktop */}
-                                    <div className="grid grid-cols-[1fr_1fr_88px] md:flex md:flex-row gap-x-2 md:gap-0 w-full md:w-[95%] mt-1.5 md:mt-1.5 items-end">
+                                    <div className="grid grid-cols-[1fr_1fr_88px] md:flex md:flex-row gap-x-2 md:gap-0 w-full md:w-[95%] mt-[-6px] md:mt-1.5 items-end">
                                         {/* Tipo de Agendamento (Ocupa 2 colunas no mobile) */}
                                         <div className="col-span-2 md:flex-1 space-y-1">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block transition-all">Tipo de Agendamento</label>
@@ -471,9 +471,9 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         </div>
 
                                         {/* Campo Dias no Mobile (Ao lado do Tipo) */}
-                                        <div className="flex md:hidden flex-col items-center justify-center space-y-1">
-                                            <label className="text-[10px] font-bold text-slate-500 uppercase block truncate">Dias</label>
-                                            <div className="h-10 w-full max-w-[60px] rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
+                                        <div className="flex md:hidden flex-col items-center justify-center space-y-1 w-[88px] shrink-0">
+                                            <label className="text-[10px] font-bold text-slate-500 uppercase block truncate">Qtde. Dias</label>
+                                            <div className="h-10 w-full rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
                                                 <span className="text-blue-700 font-extrabold text-sm">{totalDias}</span>
                                             </div>
                                         </div>
