@@ -29,6 +29,7 @@ interface EventForm {
     color_mode: ColorMode;
     emoji: string;
     is_active: boolean;
+    is_system?: boolean;
 }
 
 const EMPTY_FORM: EventForm = {
@@ -40,6 +41,7 @@ const EMPTY_FORM: EventForm = {
     color_mode: 'event_only',
     emoji: '',
     is_active: true,
+    is_system: false,
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -97,7 +99,8 @@ const AdminCalendario: React.FC = () => {
         if (error) {
             toast.error('Erro ao carregar eventos');
         } else {
-            setEvents((data || []) as any);
+            const dbEvents = (data || []).map(e => ({ ...e, is_system: false }));
+            setEvents(dbEvents as any);
         }
         setLoading(false);
     }, []);
@@ -132,6 +135,7 @@ const AdminCalendario: React.FC = () => {
             color_mode: ev.color_mode,
             emoji: ev.emoji || '',
             is_active: ev.is_active,
+            is_system: (ev as any).is_system || false,
         });
         setModalOpen(true);
     };
@@ -147,13 +151,35 @@ const AdminCalendario: React.FC = () => {
     };
 
     // Salvar
+    const SYSTEM_HOLIDAYS = [
+        'Carnaval', 'Quarta-feira de Cinzas', 'Sexta-feira Santa',
+        'Páscoa', 'Corpus Christi', 'Dia das Mães', 'Dia dos Pais',
+        'Ano Novo', 'Tiradentes', 'Dia do Trabalho', 'Independência do Brasil',
+        'Nossa Senhora Aparecida', 'Dia do Servidor Público', 'Finados',
+        'Proclamação da República', 'Dia da Consciência Negra', 'Natal',
+        'Revolução Constitucionalista', 'Aniversário de São Paulo', 'Aniversário de Agudos'
+    ];
+
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!form.title.trim()) { toast.error('Nome é obrigatório'); return; }
         if (!form.date) { toast.error('Data é obrigatória'); return; }
 
+        if (!editingId && SYSTEM_HOLIDAYS.includes(form.title.trim())) {
+            toast.error('Este feriado é calculado automaticamente pelo sistema.');
+            return;
+        }
+
         setSaving(true);
         try {
+            if (form.is_system && editingId) {
+                // Atualização em memória apenas (não vai pro DB)
+                setEvents(prev => prev.map(ev => ev.id === editingId ? { ...ev, emoji: form.emoji.trim() || null } : ev) as any);
+                toast.success('Emoji atualizado localmente!');
+                setModalOpen(false);
+                setSaving(false);
+                return;
+            }
             const payload = {
                 title: form.title.trim(),
                 description: form.description.trim() || null,
@@ -186,7 +212,11 @@ const AdminCalendario: React.FC = () => {
     };
 
     // Toggle ativo/inativo
-    const handleToggle = async (ev: CalendarEvent & { is_active: boolean }) => {
+    const handleToggle = async (ev: CalendarEvent & { is_active: boolean, is_system?: boolean }) => {
+        if (ev.is_system) {
+            toast.error('Eventos do sistema já são controlados e não podem ser desativados.');
+            return;
+        }
         setTogglingId(ev.id);
         const { error } = await supabase
             .from('calendar_events')
@@ -205,6 +235,12 @@ const AdminCalendario: React.FC = () => {
     // Excluir
     const handleDelete = async () => {
         if (!confirmDeleteId) return;
+        const evDelete = events.find(e => e.id === confirmDeleteId) as any;
+        if (evDelete?.is_system) {
+            toast.error('O sistema impede a exclusão de datas móveis vitais.');
+            setConfirmDeleteId(null);
+            return;
+        }
         setDeleting(true);
         const { error } = await supabase.from('calendar_events').delete().eq('id', confirmDeleteId);
         if (error) {
@@ -441,8 +477,9 @@ const AdminCalendario: React.FC = () => {
                                 <input
                                     value={form.title}
                                     onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
+                                    disabled={form.is_system}
                                     placeholder="Ex: Natal"
-                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-blue-500 transition-all font-medium"
+                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-blue-500 transition-all font-medium disabled:opacity-50 disabled:bg-slate-50"
                                 />
                             </div>
 
@@ -463,7 +500,8 @@ const AdminCalendario: React.FC = () => {
                                 <select
                                     value={form.type}
                                     onChange={e => handleTypeChange(e.target.value as CalendarEventType)}
-                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all"
+                                    disabled={form.is_system}
+                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all disabled:opacity-50 disabled:bg-slate-50"
                                 >
                                     <option value="holiday">🏁 Feriado</option>
                                     <option value="event">📌 Evento</option>
@@ -487,14 +525,16 @@ const AdminCalendario: React.FC = () => {
                                             placeholder="MM-DD (ex: 12-25)"
                                             pattern="\d{2}-\d{2}"
                                             maxLength={5}
-                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-mono"
+                                            disabled={form.is_system}
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-mono disabled:opacity-50 disabled:bg-slate-50"
                                         />
                                     ) : (
                                         <input
                                             type="date"
                                             value={form.date}
                                             onChange={e => setForm(p => ({ ...p, date: e.target.value }))}
-                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all"
+                                            disabled={form.is_system}
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all disabled:opacity-50 disabled:bg-slate-50"
                                         />
                                     )}
                                 </div>
@@ -520,6 +560,12 @@ const AdminCalendario: React.FC = () => {
                                 </div>
                             </div>
 
+                            {form.is_system && (
+                                <p className="text-xs text-slate-500 mt-1">
+                                    🔒 Feriado móvel calculado automaticamente pelo sistema. A data e tipo não podem ser alterados.
+                                </p>
+                            )}
+
                             {/* Checkboxes */}
                             <div className="flex gap-3">
                                 <label className={`flex-1 flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.is_fixed ? 'border-amber-400 bg-amber-50' : 'border-slate-200 bg-slate-50'}`}>
@@ -527,7 +573,7 @@ const AdminCalendario: React.FC = () => {
                                         type="checkbox"
                                         checked={form.is_fixed}
                                         onChange={e => setForm(p => ({ ...p, is_fixed: e.target.checked, date: '' }))}
-                                        disabled={form.type === 'birthday'}
+                                        disabled={form.type === 'birthday' || form.is_system}
                                         className="w-4 h-4 accent-amber-500"
                                     />
                                     <div>
@@ -576,38 +622,40 @@ const AdminCalendario: React.FC = () => {
             />
 
             {/* ── Modal Confirmar Exclusão ── */}
-            {confirmDeleteId && (
-                <div className="fixed inset-0 z-[300] flex items-center justify-center p-1 sm:p-3">
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !deleting && setConfirmDeleteId(null)} />
-                    <div className="relative bg-white rounded-[24px] shadow-2xl w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200 p-6">
-                        <div className="flex flex-col items-center text-center gap-3 mb-6">
-                            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
-                                <Trash2 size={24} className="text-red-600" />
+            {
+                confirmDeleteId && (
+                    <div className="fixed inset-0 z-[300] flex items-center justify-center p-1 sm:p-3">
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !deleting && setConfirmDeleteId(null)} />
+                        <div className="relative bg-white rounded-[24px] shadow-2xl w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200 p-6">
+                            <div className="flex flex-col items-center text-center gap-3 mb-6">
+                                <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
+                                    <Trash2 size={24} className="text-red-600" />
+                                </div>
+                                <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">Excluir Evento</h3>
+                                <p className="text-slate-500 text-sm">Esta ação não pode ser desfeita. O evento será removido permanentemente do calendário.</p>
                             </div>
-                            <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">Excluir Evento</h3>
-                            <p className="text-slate-500 text-sm">Esta ação não pode ser desfeita. O evento será removido permanentemente do calendário.</p>
-                        </div>
-                        <div className="flex gap-3">
-                            <button
-                                onClick={() => setConfirmDeleteId(null)}
-                                disabled={deleting}
-                                className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
-                            >
-                                Cancelar
-                            </button>
-                            <button
-                                onClick={handleDelete}
-                                disabled={deleting}
-                                className="flex-1 h-12 rounded-xl bg-[#E53935] text-white font-bold text-sm shadow-[0_4px_0_#9B1212] hover:bg-[#C62828] active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center gap-2"
-                            >
-                                {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
-                                {deleting ? 'Excluindo...' : 'Excluir'}
-                            </button>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setConfirmDeleteId(null)}
+                                    disabled={deleting}
+                                    className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={handleDelete}
+                                    disabled={deleting}
+                                    className="flex-1 h-12 rounded-xl bg-[#E53935] text-white font-bold text-sm shadow-[0_4px_0_#9B1212] hover:bg-[#C62828] active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                                >
+                                    {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+                                    {deleting ? 'Excluindo...' : 'Excluir'}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 
