@@ -123,27 +123,26 @@ const Header = () => {
                                     <div className="flex items-center gap-2">
                                         {/* Admin Menu */}
                                         {isAdmin && (
-                                            <>
-                                                <button
-                                                    onClick={() => navigate('/usuarios')}
-                                                    className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname.startsWith('/usuarios')
-                                                        ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
-                                                        : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
-                                                        }`}
-                                                >
-                                                    Usuários
-                                                </button>
-                                                <button
-                                                    onClick={() => navigate('/admin/calendario')}
-                                                    className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname.startsWith('/admin/calendario')
-                                                        ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
-                                                        : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
-                                                        }`}
-                                                >
-                                                    Feriados e Eventos
-                                                </button>
-                                            </>
+                                            <button
+                                                onClick={() => navigate('/usuarios')}
+                                                className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname.startsWith('/usuarios')
+                                                    ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
+                                                    : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
+                                                    }`}
+                                            >
+                                                Usuários
+                                            </button>
                                         )}
+
+                                        <button
+                                            onClick={() => navigate('/admin/calendario')}
+                                            className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname.startsWith('/admin/calendario')
+                                                ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
+                                                : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
+                                                }`}
+                                        >
+                                            Feriados e Eventos
+                                        </button>
 
                                         {/* Agendamentos */}
                                         <button

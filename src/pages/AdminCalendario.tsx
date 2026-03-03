@@ -66,8 +66,10 @@ const formatDisplayDate = (dateStr: string, isFixed: boolean): string => {
 
 const AdminCalendario: React.FC = () => {
     const navigate = useNavigate();
-    const { isAdmin } = useAuth();
+    const { isAdmin, user, isAuthenticated, loading: authLoading } = useAuth();
     const { refetch } = useCalendarEventsContext();
+
+    const canEdit = (ev: CalendarEvent) => isAdmin || ev.created_by === user?.id;
 
     // Estado
     const [events, setEvents] = useState<(CalendarEvent & { is_active: boolean })[]>([]);
@@ -84,10 +86,10 @@ const AdminCalendario: React.FC = () => {
     const [togglingId, setTogglingId] = useState<string | null>(null);
     const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
-    // Redirecionar se não for admin
+    // Redirecionar se não estiver logado
     useEffect(() => {
-        if (!isAdmin) navigate('/', { replace: true });
-    }, [isAdmin, navigate]);
+        if (!authLoading && !isAuthenticated) navigate('/auth', { replace: true });
+    }, [isAuthenticated, authLoading, navigate]);
 
     // Busca todos os eventos (ativos e inativos)
     const fetchAll = useCallback(async () => {
@@ -189,6 +191,7 @@ const AdminCalendario: React.FC = () => {
                 color_mode: form.color_mode,
                 emoji: form.emoji.trim() || null,
                 is_active: form.is_active,
+                created_by: editingId ? undefined : user?.id,
             };
 
             if (editingId) {
@@ -215,6 +218,10 @@ const AdminCalendario: React.FC = () => {
     const handleToggle = async (ev: CalendarEvent & { is_active: boolean, is_system?: boolean }) => {
         if (ev.is_system) {
             toast.error('Eventos do sistema já são controlados e não podem ser desativados.');
+            return;
+        }
+        if (!canEdit(ev)) {
+            toast.error('Você não tem permissão para alterar este evento.');
             return;
         }
         setTogglingId(ev.id);
@@ -388,20 +395,26 @@ const AdminCalendario: React.FC = () => {
                                                     <td className="px-5 py-3.5 text-center">
                                                         <button
                                                             onClick={() => handleToggle(ev)}
-                                                            disabled={togglingId === ev.id}
-                                                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${ev.is_active ? 'bg-green-500' : 'bg-slate-300'}`}
+                                                            disabled={togglingId === ev.id || !canEdit(ev)}
+                                                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${ev.is_active ? 'bg-green-500' : 'bg-slate-300'} ${!canEdit(ev) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                         >
                                                             <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${ev.is_active ? 'translate-x-6' : 'translate-x-1'}`} />
                                                         </button>
                                                     </td>
                                                     <td className="px-5 py-3.5 text-right">
                                                         <div className="flex items-center justify-end gap-2">
-                                                            <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all" title="Editar">
-                                                                <Edit2 size={14} />
-                                                            </button>
-                                                            <button onClick={() => setConfirmDeleteId(ev.id)} className="p-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-all" title="Excluir">
-                                                                <Trash2 size={14} />
-                                                            </button>
+                                                            {canEdit(ev) ? (
+                                                                <>
+                                                                    <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all" title="Editar">
+                                                                        <Edit2 size={14} />
+                                                                    </button>
+                                                                    <button onClick={() => setConfirmDeleteId(ev.id)} className="p-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-all" title="Excluir">
+                                                                        <Trash2 size={14} />
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <span className="text-[10px] bg-slate-100 text-slate-400 px-2 py-1 rounded-md uppercase font-bold">Somente Leitura</span>
+                                                            )}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -432,12 +445,22 @@ const AdminCalendario: React.FC = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col gap-2 items-end">
-                                                    <button onClick={() => handleToggle(ev)} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${ev.is_active ? 'bg-green-500' : 'bg-slate-300'}`}>
+                                                    <button
+                                                        onClick={() => handleToggle(ev)}
+                                                        disabled={!canEdit(ev)}
+                                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${ev.is_active ? 'bg-green-500' : 'bg-slate-300'} ${!canEdit(ev) ? 'opacity-50' : ''}`}
+                                                    >
                                                         <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${ev.is_active ? 'translate-x-6' : 'translate-x-1'}`} />
                                                     </button>
                                                     <div className="flex gap-1.5">
-                                                        <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg bg-blue-50 text-blue-600"><Edit2 size={13} /></button>
-                                                        <button onClick={() => setConfirmDeleteId(ev.id)} className="p-1.5 rounded-lg bg-red-50 text-red-600"><Trash2 size={13} /></button>
+                                                        {canEdit(ev) ? (
+                                                            <>
+                                                                <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg bg-blue-50 text-blue-600"><Edit2 size={13} /></button>
+                                                                <button onClick={() => setConfirmDeleteId(ev.id)} className="p-1.5 rounded-lg bg-red-50 text-red-600"><Trash2 size={13} /></button>
+                                                            </>
+                                                        ) : (
+                                                            <span className="text-[9px] bg-slate-50 text-slate-400 px-1.5 py-0.5 rounded uppercase font-bold">🔒 Lock</span>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

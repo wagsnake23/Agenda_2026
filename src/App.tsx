@@ -61,7 +61,7 @@ const App = () => (
                 <Route
                   path="/admin/calendario"
                   element={
-                    <ProtectedRoute adminOnly>
+                    <ProtectedRoute>
                       <AdminCalendario />
                     </ProtectedRoute>
                   }

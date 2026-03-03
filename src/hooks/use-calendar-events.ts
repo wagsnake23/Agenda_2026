@@ -21,6 +21,7 @@ export interface CalendarEvent {
     color_mode: ColorMode;
     emoji: string | null;
     created_at?: string;
+    created_by?: string;
     is_system?: boolean;
 }
 
