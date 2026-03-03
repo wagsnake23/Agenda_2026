@@ -46,7 +46,7 @@ export const UserMenu = () => {
             </button>
 
             {open && (
-                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute left-0 top-full mt-2 w-52 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
                     <div className="px-3 py-2.5 border-b border-gray-100">
                         <p className="font-bold text-slate-700 text-sm truncate">{profile?.nome}</p>
                         <p className="text-slate-400 text-xs truncate">{profile?.email}</p>
@@ -54,24 +54,26 @@ export const UserMenu = () => {
 
                     <button
                         onClick={() => { navigate('/meu-perfil'); setOpen(false); }}
-                        className="w-full flex items-center gap-2.5 px-3 py-2.5 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm font-medium"
+                        className="w-full flex items-center gap-3 px-3.5 py-2.5 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm font-bold text-left whitespace-nowrap"
                     >
-                        <span className="text-[17px] drop-shadow-sm leading-none flex items-center">👤</span> Meu Perfil
+                        <span className="w-5 flex justify-center shrink-0 text-[17px] drop-shadow-sm leading-none">👤</span> Meu Perfil
                     </button>
 
                     <button
                         onClick={() => { navigate(`/agendamentos?usuario=${profile?.id}`); setOpen(false); }}
-                        className="w-full flex items-center gap-2.5 px-3 py-2.5 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm font-medium"
+                        className="w-full flex items-center gap-3 px-3.5 py-2.5 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm font-bold text-left whitespace-nowrap"
                     >
-                        <span className="text-[17px] drop-shadow-sm leading-none flex items-center">🗓️</span> Meus Agendamentos
+                        <span className="w-5 flex justify-center shrink-0 text-[17px] drop-shadow-sm leading-none">🗓️</span> Meus Agendamentos
                     </button>
 
                     <div className="border-t border-gray-100">
                         <button
                             onClick={() => { signOut(); setOpen(false); }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2.5 text-red-500 hover:bg-red-50 transition-colors text-sm font-medium"
+                            className="w-full flex items-center gap-3 px-3.5 py-2.5 text-red-500 hover:bg-red-50 transition-colors text-sm font-bold text-left whitespace-nowrap"
                         >
-                            <LogOut size={15} /> Sair
+                            <div className="w-5 flex justify-center shrink-0">
+                                <LogOut size={16} />
+                            </div> Sair
                         </button>
                     </div>
                 </div>

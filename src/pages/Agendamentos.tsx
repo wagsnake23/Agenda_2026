@@ -372,10 +372,10 @@ const AgendamentosPage: React.FC = () => {
                                                         <td className="px-4 py-3">
                                                             <div className="flex items-center gap-2">
                                                                 {ag.profiles?.foto_url ? (
-                                                                    <img src={ag.profiles.foto_url} alt={ag.profiles.nome} className="w-7 h-7 rounded-lg object-cover" />
+                                                                    <img src={ag.profiles.foto_url} alt={ag.profiles.nome} className="w-8 h-8 rounded-lg object-cover" />
                                                                 ) : (
-                                                                    <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
-                                                                        <span className="text-blue-600 text-[10px] font-bold">
+                                                                    <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                                                                        <span className="text-blue-600 text-xs font-bold">
                                                                             {ag.profiles?.nome?.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() || 'U'}
                                                                         </span>
                                                                     </div>
@@ -484,15 +484,15 @@ const AgendamentosPage: React.FC = () => {
                                             <div className="flex items-start justify-between mb-3">
                                                 <div className="flex items-center gap-2">
                                                     {ag.profiles?.foto_url ? (
-                                                        <img src={ag.profiles.foto_url} alt={ag.profiles.nome} className="w-8 h-8 rounded-lg object-cover" />
+                                                        <img src={ag.profiles.foto_url} alt={ag.profiles.nome} className="w-10 h-10 rounded-lg object-cover" />
                                                     ) : (
-                                                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                                                            <User size={14} className="text-blue-500" />
+                                                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                                                            <User size={18} className="text-blue-500" />
                                                         </div>
                                                     )}
                                                     <div>
                                                         <p className="text-slate-700 text-sm font-bold">{ag.profiles?.nome || 'Usuário'}</p>
-                                                        <span className="text-slate-500 text-[10px] uppercase font-bold tracking-tight">{ag.tipo_agendamento}</span>
+                                                        <span className="text-slate-600 text-[13px] uppercase font-black tracking-tight">{ag.tipo_agendamento}</span>
                                                     </div>
                                                 </div>
                                                 <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${st.className}`}>
@@ -541,16 +541,16 @@ const AgendamentosPage: React.FC = () => {
                                                                 });
                                                                 setIsEditDrawerOpen(true);
                                                             }}
-                                                            className="text-blue-400 hover:text-blue-600 p-1.5 rounded-lg hover:bg-blue-50 transition-all"
+                                                            className="flex items-center justify-center p-1.5 px-2.5 rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all border border-blue-100"
                                                         >
-                                                            <Edit2 size={14} />
+                                                            <Edit2 size={16} />
                                                         </button>
                                                         {isAdmin && (
                                                             <button
                                                                 onClick={() => setConfirmDelete(ag.id)}
-                                                                className="text-red-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-all"
+                                                                className="flex items-center justify-center p-1.5 px-2.5 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 transition-all border border-red-100"
                                                             >
-                                                                <Trash2 size={14} />
+                                                                <Trash2 size={16} />
                                                             </button>
                                                         )}
                                                     </div>
