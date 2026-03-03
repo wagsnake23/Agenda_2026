@@ -379,79 +379,77 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 )}>
                     {mode === 'create' || modoEdicao ? (
                         <div className="flex flex-col gap-0">
-                            {/* ESTRUTURA REORGANIZADA: DUAS COLUNAS (ESQUERDA: INPUTS | DIREITA: AVATAR) */}
+                            {/* ESTRUTURA REORGANIZADA: GRID 3 COLUNAS MOBILE | FLEX DESKTOP */}
                             <div className="flex flex-col md:flex-row items-start gap-3 md:gap-6 w-full bg-white pb-1 relative">
-                                {/* Coluna Esquerda: Stack de Datas e Tipo */}
-                                <div className="flex-1 flex flex-col gap-3.5 md:gap-3.5 w-full">
-                                    {/* Linha 1: Datas e Avatar (no Mobile) */}
-                                    <div className="flex flex-row items-start gap-2.5 md:gap-3.5 w-full mt-2 md:mt-3">
-                                        {/* Bloco de Datas: Início e Fim */}
-                                        <div className="flex-1 flex items-start gap-2 md:gap-3.5">
-                                            {/* Data Inicial */}
-                                            <div className="space-y-1.5 flex-1 md:w-[36%] min-w-0">
-                                                <div className="flex items-center gap-1.5 ml-1">
-                                                    <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none transition-all">Data Inicial</label>
-                                                </div>
-                                                <div className="flex gap-2 items-center">
-                                                    <Input
-                                                        type="text"
-                                                        value={dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : ''}
-                                                        readOnly
-                                                        onKeyDown={(e) => e.preventDefault()}
-                                                        className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-2.5 md:px-3 cursor-pointer flex-1 appearance-none bg-white shadow-sm"
-                                                        onClick={() => setIsCalendarModalOpen(true)}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            {/* Data Final */}
-                                            <div className="space-y-1.5 flex-1 md:w-[36%] min-w-0">
-                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none transition-all">Data Final</label>
-                                                <div className="flex gap-2 items-center">
-                                                    <Input
-                                                        type="text"
-                                                        value={dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : ''}
-                                                        readOnly
-                                                        onKeyDown={(e) => e.preventDefault()}
-                                                        className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-2.5 md:px-3 cursor-pointer flex-1 appearance-none bg-white shadow-sm"
-                                                        onClick={() => setIsCalendarModalOpen(true)}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            {/* Campo Dias (Aparece ao lado das datas em Desktop) */}
-                                            <div className="hidden md:block space-y-1.5 w-[70px] shrink-0">
-                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Dias</label>
-                                                <div className="h-10 md:h-11 rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
-                                                    <span className="text-blue-700 font-extrabold text-sm">{totalDias}</span>
-                                                </div>
-                                            </div>
+                                {/* Coluna Esquerda / Principal */}
+                                <div className="flex-1 w-full">
+                                    {/* Grid Superior: Datas e Avatar (Mobile) | Datas e Dias (Desktop) */}
+                                    <div className="grid grid-cols-[1fr_1fr_88px] md:flex md:flex-row gap-x-2 gap-y-2.5 md:gap-3.5 w-full mt-2 md:mt-3 items-start">
+                                        {/* Data Inicial */}
+                                        <div className="space-y-1.5 min-w-0">
+                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none transition-all">Data Inicial</label>
+                                            <Input
+                                                type="text"
+                                                value={dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : ''}
+                                                readOnly
+                                                onKeyDown={(e) => e.preventDefault()}
+                                                className="w-full h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-2 md:px-3 cursor-pointer appearance-none bg-white shadow-sm"
+                                                onClick={() => setIsCalendarModalOpen(true)}
+                                            />
                                         </div>
 
-                                        {/* Avatar no Mobile (Dentro da mesma linha das datas) */}
-                                        <div className="flex md:hidden flex-col items-center justify-center shrink-0 w-[68px] -mt-1">
-                                            <div className="w-[64px] h-[64px] rounded-xl overflow-hidden shadow-md border-2 border-white ring-4 ring-blue-50/15 bg-white">
+                                        {/* Data Final */}
+                                        <div className="space-y-1.5 min-w-0">
+                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none transition-all">Data Final</label>
+                                            <Input
+                                                type="text"
+                                                value={dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : ''}
+                                                readOnly
+                                                onKeyDown={(e) => e.preventDefault()}
+                                                className="w-full h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-2 md:px-3 cursor-pointer appearance-none bg-white shadow-sm"
+                                                onClick={() => setIsCalendarModalOpen(true)}
+                                            />
+                                        </div>
+
+                                        {/* Avatar no Mobile (3ª Coluna) */}
+                                        <div className="flex md:hidden flex-col items-center justify-start shrink-0 justify-self-end">
+                                            <div className={cn(
+                                                "rounded-xl overflow-hidden shadow-sm border border-black/[0.08] transition-all bg-white",
+                                                mode === 'create' ? "w-[78px] h-[78px]" : "w-[64px] h-[64px]"
+                                            )}>
                                                 {agendamentoEditando?.userPhoto ? (
                                                     <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
                                                 ) : mode === 'create' && profile?.foto_url ? (
                                                     <img src={profile.foto_url} alt={profile.nome} className="w-full h-full object-cover" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
-                                                        <User className="size-8" />
+                                                        <User className={cn(mode === 'create' ? "size-9" : "size-8")} />
                                                     </div>
                                                 )}
                                             </div>
                                             <div className="text-center mt-1 min-w-0">
-                                                <span className="text-[8.5px] font-bold text-slate-500 uppercase tracking-tight block truncate w-full">
+                                                <span className={cn(
+                                                    "font-bold text-slate-500 uppercase tracking-tight block truncate w-full",
+                                                    mode === 'create' ? "text-[9.5px]" : "text-[8.5px]"
+                                                )}>
                                                     {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                                 </span>
                                             </div>
                                         </div>
+
+                                        {/* Campo Dias (Aparece ao lado das datas em Desktop) */}
+                                        <div className="hidden md:block space-y-1.5 w-[70px] shrink-0">
+                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Dias</label>
+                                            <div className="h-10 md:h-11 rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
+                                                <span className="text-blue-700 font-extrabold text-sm">{totalDias}</span>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    {/* Linha 2 (Mobile): Tipo + Dias | (Desktop): Tipo de Agendamento */}
-                                    <div className="flex flex-row items-end gap-2.5 md:gap-0 w-full md:w-[95%] -mt-2.5 md:mt-1.5">
-                                        <div className="w-[74%] md:flex-1 space-y-1">
+                                    {/* Linha 2 Grid Mobile / Flex Desktop */}
+                                    <div className="grid grid-cols-[1fr_1fr_88px] md:flex md:flex-row gap-x-2 md:gap-0 w-full md:w-[95%] mt-1.5 md:mt-1.5 items-end">
+                                        {/* Tipo de Agendamento (Ocupa 2 colunas no mobile) */}
+                                        <div className="col-span-2 md:flex-1 space-y-1">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block transition-all">Tipo de Agendamento</label>
                                             <Select value={tipo} onValueChange={setTipo}>
                                                 <SelectTrigger className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700">
@@ -473,9 +471,9 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         </div>
 
                                         {/* Campo Dias no Mobile (Ao lado do Tipo) */}
-                                        <div className="flex md:hidden flex-col space-y-1 w-[60px] shrink-0 ml-1">
-                                            <label className="text-[10px] font-bold text-slate-500 uppercase ml-1 block truncate">Dias</label>
-                                            <div className="h-10 rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
+                                        <div className="flex md:hidden flex-col items-center justify-center space-y-1">
+                                            <label className="text-[10px] font-bold text-slate-500 uppercase block truncate">Dias</label>
+                                            <div className="h-10 w-full max-w-[60px] rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
                                                 <span className="text-blue-700 font-extrabold text-sm">{totalDias}</span>
                                             </div>
                                         </div>
@@ -507,7 +505,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             </div>
 
                             {/* Linha 3: Observação */}
-                            <div className="space-y-1 relative mt-3 md:mt-4">
+                            <div className="space-y-1 relative mt-5 md:mt-4">
                                 <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block transition-all">Observação</label>
                                 <textarea
                                     value={observacao}
