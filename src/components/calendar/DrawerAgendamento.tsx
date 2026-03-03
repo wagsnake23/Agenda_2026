@@ -522,7 +522,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             {agendamentoEditando && (
                                 <div className="mt-5 md:mt-2 flex flex-col gap-2.5">
                                     {/* Exibir Status Atual do Agendamento e Data da Ação */}
-                                    <div className="flex flex-col items-start gap-2 ml-1">
+                                    <div className="flex flex-col items-start gap-1 md:gap-2 ml-1">
                                         <div className="flex flex-row items-center gap-2">
                                             <span className="text-[11px] font-bold text-slate-500 uppercase">Status:</span>
                                             {(() => {
@@ -546,8 +546,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             if (!dateVal) return null;
 
                                             return (
-                                                <div className="flex items-center gap-1 text-slate-600 mt-1">
-                                                    <Clock className="size-[14px] md:size-4" />
+                                                <div className="flex items-center gap-1 text-slate-600 mt-0 md:mt-0.5">
+                                                    <span className="text-[14px] md:text-[16px] drop-shadow-sm">🕒</span>
                                                     <span className="text-sm font-medium">
                                                         {label} {format(parseISO(dateVal), "dd MMM yyyy 'às' HH:mm", { locale: ptBR })}
                                                     </span>
@@ -559,7 +559,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             )}
 
                             <div className={cn(
-                                "mt-auto pt-3 md:pt-9 flex gap-4",
+                                "mt-auto pt-6 md:pt-9 flex gap-4",
                                 modoEdicao ? "flex-row" : "flex-col"
                             )}>
                                 {modoEdicao && (
