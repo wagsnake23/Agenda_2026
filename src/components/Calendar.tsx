@@ -333,71 +333,140 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
           setScaleType={setMode}
         />
 
-        <div className="w-full relative overflow-visible pt-0 pb-0 md:pb-6 mt-0 lg:mt-0 lg:py-7">
-          <Carousel
-            setApi={setApi}
-            opts={{
-              align: typeof window !== 'undefined' && window.innerWidth < 1024 ? "center" : "start",
-              containScroll: "trimSnaps",
-              dragFree: false,
-              slidesToScroll: 1,
-              duration: 22
-            }}
-            className="w-full relative px-0"
-          >
-            <CarouselContent className="w-full flex items-stretch cursor-grab active:cursor-grabbing">
-              {monthsToRender.map((date, idx) => {
-                const m = date.getMonth();
-                const y = date.getFullYear();
-                const isCurrent = m === month && y === year;
+        {/* Mobile Flex Container para garantir 12px exatos de gap vertical entre todos os blocos */}
+        <div className="flex flex-col gap-3 lg:block w-full">
+          <div className="w-full relative overflow-visible pt-0 pb-0 md:pb-6 mt-0 lg:mt-0 lg:py-7">
+            <Carousel
+              setApi={setApi}
+              opts={{
+                align: typeof window !== 'undefined' && window.innerWidth < 1024 ? "center" : "start",
+                containScroll: "trimSnaps",
+                dragFree: false,
+                slidesToScroll: 1,
+                duration: 22
+              }}
+              className="w-full relative px-0"
+            >
+              <CarouselContent className="w-full flex items-stretch cursor-grab active:cursor-grabbing">
+                {monthsToRender.map((date, idx) => {
+                  const m = date.getMonth();
+                  const y = date.getFullYear();
+                  const isCurrent = m === month && y === year;
 
-                const centerIndex = isMobile ? 1 : currentSlide + 1;
-                const position = idx === centerIndex ? 'center' : idx === centerIndex - 1 ? 'left' : idx === centerIndex + 1 ? 'right' : 'far';
+                  const centerIndex = isMobile ? 1 : currentSlide + 1;
+                  const position = idx === centerIndex ? 'center' : idx === centerIndex - 1 ? 'left' : idx === centerIndex + 1 ? 'right' : 'far';
 
-                return (
-                  <CarouselItem
-                    key={`${y}-${m}`}
-                    className={cn(
-                      "w-full basis-full shrink-0 grow-0 lg:basis-1/3 lg:pl-8 relative",
-                      "transition-opacity duration-450 ease-out",
-                      position === 'center' ? "opacity-100 z-20" : "opacity-100 z-[5]"
-                    )}
-                    style={{
-                      opacity: 1,
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden',
-                    }}
-                  >
-                    <CalendarCard
-                      month={m}
-                      year={y}
-                      today={today}
-                      onDayClick={isCurrent ? handleDayClick : () => { }}
-                      goToToday={goToToday}
-                      formatToday={formatToday}
-                      isCenter={position === 'center'}
-                      position={position}
-                      mode={mode}
-                      agendamentos={agendamentos}
-                      onViewAgendamento={handleOpenViewDrawer}
-                      onOpenCreateDrawer={handleOpenCreateDrawer}
+                  return (
+                    <CarouselItem
+                      key={`${y}-${m}`}
+                      className={cn(
+                        "w-full basis-full shrink-0 grow-0 lg:basis-1/3 lg:pl-8 relative",
+                        "transition-opacity duration-450 ease-out",
+                        position === 'center' ? "opacity-100 z-20" : "opacity-100 z-[5]"
+                      )}
+                      style={{
+                        opacity: 1,
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                      }}
+                    >
+                      <CalendarCard
+                        month={m}
+                        year={y}
+                        today={today}
+                        onDayClick={isCurrent ? handleDayClick : () => { }}
+                        goToToday={goToToday}
+                        formatToday={formatToday}
+                        isCenter={position === 'center'}
+                        position={position}
+                        mode={mode}
+                        agendamentos={agendamentos}
+                        onViewAgendamento={handleOpenViewDrawer}
+                        onOpenCreateDrawer={handleOpenCreateDrawer}
+                        selectedPeriod={selectedPeriod}
+                        calendarEvents={calendarEvents}
+                      />
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+
+              {/* Drawer Desktop */}
+              <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[60] py-0 lg:py-0 px-0">
+                <div className="relative w-full h-full max-w-[1600px] mx-auto">
+                  <div className={cn(
+                    "hidden md:block absolute pointer-events-auto transition-all duration-500 ease-in-out",
+                    "w-full h-full md:h-full lg:h-full",
+                    "lg:w-[calc(100%/3-32px)] lg:left-[32px] lg:top-0",
+                    isDrawerOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  )}>
+                    <DrawerAgendamento
+                      isOpen={isDrawerOpen}
+                      onClose={handleCloseDrawer}
+                      mode={drawerMode}
+                      initialDate={selectedDrawerDate}
+                      agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+                      todosAgendamentos={agendamentos}
+                      onSave={salvarAgendamento}
+                      onDelete={excluirAgendamento}
+                      onUpdate={editarAgendamento}
+                      anchorRef={null as any}
                       selectedPeriod={selectedPeriod}
-                      calendarEvents={calendarEvents}
+                      onSelectPeriod={toggleHighlightPeriod}
+                      selectedAgendamentoId={selectedAgendamentoId}
+                      setSelectedAgendamentoId={setSelectedAgendamentoId}
                     />
-                  </CarouselItem>
+                  </div>
+                </div>
+              </div>
+
+              <CarouselPrevious
+                onClick={() => api?.scrollPrev()}
+                className="hidden lg:flex -left-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
+              />
+              <CarouselNext
+                onClick={() => api?.scrollNext()}
+                className="hidden lg:flex -right-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
+              />
+            </Carousel>
+
+            {/* Indicadores de bolinhas */}
+            <div className="hidden lg:flex justify-center gap-3 mt-6 lg:mt-6 mb-4">
+              {[-1, 0, 1].map((offset) => {
+                const date = addMonths(new Date(year, month, 1), offset);
+                return (
+                  <button
+                    key={offset}
+                    onClick={() => {
+                      onMonthChange(date.getMonth());
+                      onYearChange(date.getFullYear());
+                    }}
+                    className={cn(
+                      "h-2.5 rounded-full transition-all duration-300",
+                      offset === 0
+                        ? "w-12 bg-[#C62828] shadow-[0_4px_12px_rgba(198,40,40,0.3)]"
+                        : "w-2.5 bg-gray-300 hover:bg-gray-400"
+                    )}
+                  />
                 );
               })}
-            </CarouselContent>
+            </div>
+          </div>
 
-            {/* Drawer Desktop */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[60] py-0 lg:py-0 px-0">
-              <div className="relative w-full h-full max-w-[1600px] mx-auto">
-                <div className={cn(
-                  "hidden md:block absolute pointer-events-auto transition-all duration-500 ease-in-out",
-                  "w-full h-full md:h-full lg:h-full",
-                  "lg:w-[calc(100%/3-32px)] lg:left-[32px] lg:top-0",
-                  isDrawerOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-                )}>
+          <div className="max-w-[1600px] mx-auto w-full mt-0 lg:mt-[-20px] flex flex-col gap-3 lg:gap-0 lg:pb-16 lg:pl-8">
+            <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 items-stretch">
+              {/* 1º - Agendamentos */}
+              <div className="w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-1 flex flex-col gap-3">
+                <AgendamentosDisplay
+                  agendamentos={agendamentos}
+                  month={month}
+                  year={year}
+                  highlightedDay={highlightedDay}
+                  onViewAgendamento={handleOpenViewDrawer}
+                />
+
+                {/* Lista Mobile Inline */}
+                <div className={cn("md:hidden w-full", !isDrawerOpen && "hidden")}>
                   <DrawerAgendamento
                     isOpen={isDrawerOpen}
                     onClose={handleCloseDrawer}
@@ -416,89 +485,24 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                   />
                 </div>
               </div>
-            </div>
 
-            <CarouselPrevious
-              onClick={() => api?.scrollPrev()}
-              className="hidden lg:flex -left-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
-            />
-            <CarouselNext
-              onClick={() => api?.scrollNext()}
-              className="hidden lg:flex -right-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
-            />
-          </Carousel>
-
-          {/* Indicadores de bolinhas */}
-          <div className="hidden lg:flex justify-center gap-3 mt-6 lg:mt-6 mb-4">
-            {[-1, 0, 1].map((offset) => {
-              const date = addMonths(new Date(year, month, 1), offset);
-              return (
-                <button
-                  key={offset}
-                  onClick={() => {
-                    onMonthChange(date.getMonth());
-                    onYearChange(date.getFullYear());
-                  }}
-                  className={cn(
-                    "h-2.5 rounded-full transition-all duration-300",
-                    offset === 0
-                      ? "w-12 bg-[#C62828] shadow-[0_4px_12px_rgba(198,40,40,0.3)]"
-                      : "w-2.5 bg-gray-300 hover:bg-gray-400"
-                  )}
-                />
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="max-w-[1600px] mx-auto w-full mt-4 lg:mt-[-20px] flex flex-col gap-4 lg:pb-16 lg:pl-8">
-          <div className="flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-8 items-stretch">
-            {/* 1º - Agendamentos */}
-            <div className="w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-1 flex flex-col gap-4">
-              <AgendamentosDisplay
-                agendamentos={agendamentos}
-                month={month}
-                year={year}
-                highlightedDay={highlightedDay}
-                onViewAgendamento={handleOpenViewDrawer}
-              />
-
-              {/* Lista Mobile Inline */}
-              <div className="md:hidden w-full">
-                <DrawerAgendamento
-                  isOpen={isDrawerOpen}
-                  onClose={handleCloseDrawer}
-                  mode={drawerMode}
-                  initialDate={selectedDrawerDate}
-                  agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-                  todosAgendamentos={agendamentos}
-                  onSave={salvarAgendamento}
-                  onDelete={excluirAgendamento}
-                  onUpdate={editarAgendamento}
-                  anchorRef={null as any}
-                  selectedPeriod={selectedPeriod}
-                  onSelectPeriod={toggleHighlightPeriod}
-                  selectedAgendamentoId={selectedAgendamentoId}
-                  setSelectedAgendamentoId={setSelectedAgendamentoId}
-                />
+              {/* 2º e 3º - Feriados e Fases da Lua */}
+              <div className="contents lg:flex lg:w-full lg:flex-1 lg:min-w-[370px] lg:flex-col lg:order-2 lg:gap-8 gap-3">
+                <div className={`w-full flex-1 order-2 lg:order-none ${holidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
+                  <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} />
+                </div>
+                <div className="w-full order-4 lg:order-none">
+                  <MoonPhasesDisplay moonPhases={moonPhases} month={month} />
+                </div>
               </div>
-            </div>
 
-            {/* 2º e 3º - Feriados e Fases da Lua */}
-            <div className="contents lg:flex lg:w-full lg:flex-1 lg:min-w-[370px] lg:flex-col lg:order-2 lg:gap-8 md:gap-4 gap-2">
-              <div className={`w-full flex-1 order-2 lg:order-none ${holidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
-                <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} />
+              {/* 4º - Aniversariantes */}
+              <div className="w-full lg:flex-1 lg:min-w-[370px] order-3 lg:order-3">
+                <BirthdayMessages month={month} year={year} highlightedDay={highlightedDay} calendarEvents={calendarEvents} />
               </div>
-              <div className="w-full order-4 lg:order-none">
-                <MoonPhasesDisplay moonPhases={moonPhases} month={month} />
-              </div>
-            </div>
-
-            {/* 4º - Aniversariantes */}
-            <div className="w-full lg:flex-1 lg:min-w-[370px] order-3 lg:order-3">
-              <BirthdayMessages month={month} year={year} highlightedDay={highlightedDay} calendarEvents={calendarEvents} />
             </div>
           </div>
+
         </div>
       </div>
     </div>

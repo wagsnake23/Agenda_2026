@@ -28,7 +28,7 @@ export const UserMenu = () => {
         <div ref={ref} className="relative z-[102]">
             <button
                 onClick={() => setOpen(!open)}
-                className="flex items-center gap-3 px-[14px] py-[6px] rounded-full bg-white/[0.06] hover:bg-white/[0.12] transition-all duration-200 ease-in-out text-white border border-white/[0.08]"
+                className="flex items-center gap-3 px-[14px] py-[6px] rounded-xl bg-[#2d3f63] hover:bg-[#3a5585] transition-all duration-200 ease-in-out text-white border border-white/[0.08]"
             >
                 <div className="w-[34px] h-[34px] rounded-full overflow-hidden border border-white/20">
                     {profile?.foto_url ? (
@@ -100,7 +100,7 @@ const Header = () => {
     return (
         <>
             {/* Barra de Título Institucional - Desktop Apenas */}
-            <header className="hidden lg:flex fixed top-0 w-full h-[64px] bg-gradient-to-r from-[#0f172a] to-[#1e293b] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
+            <header className="hidden lg:flex fixed top-0 w-full h-[64px] bg-gradient-to-r from-[#1e2a44] to-[#243552] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
                 <div className="w-full max-w-[1600px] mx-auto px-8 flex items-center justify-between">
                     <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer">
                         <img
@@ -133,8 +133,8 @@ const Header = () => {
                                                 <button
                                                     onClick={() => navigate('/usuarios')}
                                                     className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname.startsWith('/usuarios')
-                                                            ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
-                                                            : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                                        ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
+                                                        : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
                                                         }`}
                                                 >
                                                     Usuários
@@ -142,8 +142,8 @@ const Header = () => {
                                                 <button
                                                     onClick={() => navigate('/admin/calendario')}
                                                     className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname.startsWith('/admin/calendario')
-                                                            ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
-                                                            : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                                        ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
+                                                        : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
                                                         }`}
                                                 >
                                                     Calendário
@@ -155,8 +155,8 @@ const Header = () => {
                                         <button
                                             onClick={() => navigate('/agendamentos')}
                                             className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname === '/agendamentos'
-                                                    ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
-                                                    : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                                ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
+                                                : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
                                                 }`}
                                         >
                                             Agendamentos
@@ -166,7 +166,7 @@ const Header = () => {
                                     {/* Botão Agendar */}
                                     <button
                                         onClick={handleAgendar}
-                                        className="px-5 py-2 rounded-full font-semibold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_6px_18px_rgba(250,204,21,0.35)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer"
+                                        className="px-5 py-2 rounded-full font-semibold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.25)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer"
                                     >
                                         Agendar
                                     </button>
