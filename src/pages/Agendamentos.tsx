@@ -198,35 +198,19 @@ const AgendamentosPage: React.FC = () => {
                 message="Tem certeza que deseja excluir este agendamento?"
             />
 
-            <div className="md:hidden">
-                <DrawerAgendamento
-                    isOpen={isEditDrawerOpen}
-                    onClose={() => {
-                        setIsEditDrawerOpen(false);
-                        setAgendamentoParaEditar(null);
-                    }}
-                    mode="edit"
-                    agendamentoExternoParaEdicao={agendamentoParaEditar}
-                    onSave={() => { }}
-                    onUpdate={handleUpdateAgendamento}
-                    anchorRef={null as any}
-                />
-            </div>
-            {/* Modal Desktop Mockado para Edição - no desktop o drawer vai se comportar como modal caso precise, mas o DrawerAgendamento já cuida */}
-            <div className="hidden md:block">
-                <DrawerAgendamento
-                    isOpen={isEditDrawerOpen}
-                    onClose={() => {
-                        setIsEditDrawerOpen(false);
-                        setAgendamentoParaEditar(null);
-                    }}
-                    mode="edit"
-                    agendamentoExternoParaEdicao={agendamentoParaEditar}
-                    onSave={() => { }}
-                    onUpdate={handleUpdateAgendamento}
-                    anchorRef={null as any}
-                />
-            </div>
+            <DrawerAgendamento
+                isOpen={isEditDrawerOpen}
+                onClose={() => {
+                    setIsEditDrawerOpen(false);
+                    setAgendamentoParaEditar(null);
+                }}
+                mode="edit"
+                variant="modal"
+                agendamentoExternoParaEdicao={agendamentoParaEditar}
+                onSave={() => { }}
+                onUpdate={handleUpdateAgendamento}
+                anchorRef={null as any}
+            />
 
             <div className="w-full lg:pt-[74px]">
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-3 pb-6 md:py-6">
@@ -451,6 +435,10 @@ const AgendamentosPage: React.FC = () => {
                                                                                 observacao: ag.observacao,
                                                                                 userName: ag.profiles?.nome,
                                                                                 userPhoto: ag.profiles?.foto_url,
+                                                                                createdAt: ag.created_at,
+                                                                                approvedAt: ag.approved_at,
+                                                                                cancelledAt: ag.cancelled_at,
+                                                                                rejectedAt: ag.rejected_at,
                                                                             });
                                                                             setIsEditDrawerOpen(true);
                                                                         }}
@@ -539,6 +527,10 @@ const AgendamentosPage: React.FC = () => {
                                                                     observacao: ag.observacao,
                                                                     userName: ag.profiles?.nome,
                                                                     userPhoto: ag.profiles?.foto_url,
+                                                                    createdAt: ag.created_at,
+                                                                    approvedAt: ag.approved_at,
+                                                                    cancelledAt: ag.cancelled_at,
+                                                                    rejectedAt: ag.rejected_at,
                                                                 });
                                                                 setIsEditDrawerOpen(true);
                                                             }}

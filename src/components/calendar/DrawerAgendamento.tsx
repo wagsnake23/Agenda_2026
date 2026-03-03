@@ -64,7 +64,7 @@ const ConfirmDialog: React.FC<{
 }> = ({ open, onConfirm, onCancel, message }) => {
     if (!open) return null;
     return createPortal(
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-3 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[400] flex items-center justify-center p-3 animate-in fade-in duration-200">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={(e) => { e.stopPropagation(); onCancel(); }} />
             <div className="relative bg-white rounded-[24px] shadow-2xl border border-gray-100 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
                 <div className="flex flex-col items-center gap-2 mb-4">
@@ -112,6 +112,7 @@ interface DrawerAgendamentoProps {
     onSelectPeriod?: (period: { start: string, end: string } | null) => void;
     selectedAgendamentoId?: string | null;
     setSelectedAgendamentoId?: (id: string | null) => void;
+    variant?: 'drawer' | 'modal';
 }
 
 const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
@@ -130,6 +131,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
     onSelectPeriod,
     selectedAgendamentoId,
     setSelectedAgendamentoId,
+    variant = 'drawer',
 }) => {
     const { profile } = useAuth();
     const [dataInicio, setDataInicio] = useState(initialDate || '');
@@ -281,21 +283,27 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
     return (
         <div
             className={cn(
-                "w-full z-[60] flex flex-col items-center justify-start p-0",
-                "md:absolute md:top-0 md:left-0 md:h-full md:pointer-events-none md:animate-in md:fade-in md:zoom-in-95 md:duration-300",
-                // Removemos o 'hidden md:flex' pois o isDrawerOpen já controla a existência no Calendar.tsx
-                // No mobile, ele deve ser visível se isOpen for true
+                variant === 'modal' ? "fixed inset-0 z-[200] flex items-center justify-center p-1 sm:p-4" : "w-full z-[60] flex flex-col items-center justify-start p-0",
+                variant === 'drawer' && "md:absolute md:top-0 md:left-0 md:h-full md:pointer-events-none md:animate-in md:fade-in md:zoom-in-95 md:duration-300",
                 !isOpen && "hidden"
             )}
         >
+            {variant === 'modal' && (
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+            )}
             <div
                 className={cn(
                     "bg-white rounded-2xl md:rounded-[29px] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)] border border-[#0F172A]/[0.05]",
-                    "w-full h-full md:pointer-events-auto flex flex-col overflow-hidden"
+                    variant === 'modal' ? "w-full max-w-lg relative z-10 animate-in zoom-in-95 duration-200" : "w-full h-full md:pointer-events-auto",
+                    "flex flex-col overflow-hidden"
                 )}
+                style={variant === 'modal' ? { maxHeight: '95vh' } : {}}
             >
                 {/* Header do Drawer */}
-                <div className="flex items-center justify-between p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
+                <div className={cn(
+                    "flex items-center justify-between shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]",
+                    variant === 'modal' ? "px-6 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]" : "p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)]"
+                )}>
                     <div className="flex flex-row items-start md:items-center gap-1.5 md:gap-2 pt-0.5 md:pt-0">
                         {modoEdicao ? (
                             <span className="text-[1.1em] md:text-[1.25em] leading-none mt-[2px] md:mt-0">📝</span>
@@ -333,26 +341,29 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     </div>
                     <button
                         onClick={() => {
-                            if (modoEdicao) {
+                            if (variant === 'modal' || !modoEdicao) {
+                                onClose();
+                            } else {
                                 setModoEdicao(false);
                                 setAgendamentoEditando(null);
-                            } else {
-                                onClose();
                             }
                         }}
                         className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-lg active:scale-90"
-                        title={modoEdicao ? "Voltar" : "Fechar"}
+                        title={variant === 'modal' ? "Fechar" : (modoEdicao ? "Voltar" : "Fechar")}
                     >
-                        {modoEdicao ? (
-                            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" strokeWidth={4} />
-                        ) : (
+                        {variant === 'modal' || !modoEdicao ? (
                             <X className="w-4 h-4 md:w-5 md:h-5" strokeWidth={4} />
+                        ) : (
+                            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" strokeWidth={4} />
                         )}
                     </button>
                 </div>
 
                 {/* Conteúdo */}
-                <div className="flex-1 overflow-y-auto p-4 md:p-6 md:pt-3 md:pb-8 flex flex-col gap-4">
+                <div className={cn(
+                    "flex-1 overflow-y-auto flex flex-col gap-4",
+                    variant === 'modal' ? "p-6" : "p-4 md:p-6 md:pt-3 md:pb-8"
+                )}>
                     {mode === 'create' || modoEdicao ? (
                         <div className="flex flex-col gap-0">
                             {/* ESTRUTURA REORGANIZADA: DUAS COLUNAS (ESQUERDA: INPUTS | DIREITA: AVATAR) */}
@@ -433,7 +444,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 <SelectTrigger className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700">
                                                     <SelectValue placeholder="Selecione..." />
                                                 </SelectTrigger>
-                                                <SelectContent>
+                                                <SelectContent className="z-[350]">
                                                     <SelectItem value="🛌 Abonada">🛌 Abonada</SelectItem>
                                                     <SelectItem value="🏥 Atestado Médico">🏥 Atestado Médico</SelectItem>
                                                     <SelectItem value="⏳ Desconto de Hora">⏳ Desconto de Hora</SelectItem>
@@ -719,7 +730,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
             {/* Modal Centralizado do Calendário */}
             {
                 isCalendarModalOpen && createPortal(
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center animate-in fade-in duration-200 pointer-events-auto">
+                    <div className="fixed inset-0 z-[300] flex items-center justify-center animate-in fade-in duration-200 pointer-events-auto">
                         <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsCalendarModalOpen(false)} />
                         <div className="relative bg-white rounded-2xl md:rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-100 z-10 flex flex-col animate-in zoom-in-95 duration-200 w-[98%] max-w-[98%] md:w-full md:max-w-[380px] overflow-hidden max-h-[90vh]">
                             <div className="w-full flex justify-between items-center p-4 md:px-5 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
