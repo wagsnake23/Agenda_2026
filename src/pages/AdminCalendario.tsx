@@ -155,9 +155,9 @@ const AdminCalendario: React.FC = () => {
         'Carnaval', 'Quarta-feira de Cinzas', 'Sexta-feira Santa',
         'Páscoa', 'Corpus Christi', 'Dia das Mães', 'Dia dos Pais',
         'Ano Novo', 'Tiradentes', 'Dia do Trabalho', 'Independência do Brasil',
-        'Nossa Senhora Aparecida', 'Dia do Servidor Público', 'Finados',
+        'Nossa Senhora Aparecida', 'Finados',
         'Proclamação da República', 'Dia da Consciência Negra', 'Natal',
-        'Revolução Constitucionalista', 'Aniversário de São Paulo', 'Aniversário de Agudos'
+        'Revolução Constitucionalista'
     ];
 
     const handleSave = async (e: React.FormEvent) => {
