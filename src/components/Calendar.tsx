@@ -68,7 +68,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const { events: calendarEvents } = useCalendarEventsContext();
 
   // Hook de agendamentos do Supabase
-  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos } = useAgendamentos();
+  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch } = useAgendamentos();
 
   // Converter para o formato que o Drawer e CalendarCard esperam
   const agendamentos = useMemo(() => agendamentosDB.map(toDrawerFormat), [agendamentosDB]);
@@ -309,9 +309,16 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   useEffect(() => {
     const handleOpenDrawer = () => handleOpenCreateDrawer();
+    const handleGlobalCreated = () => refetch();
+
     window.addEventListener('open-agendamento-drawer', handleOpenDrawer);
-    return () => window.removeEventListener('open-agendamento-drawer', handleOpenDrawer);
-  }, [isAuthenticated]);
+    window.addEventListener('agendamento-criado', handleGlobalCreated);
+
+    return () => {
+      window.removeEventListener('open-agendamento-drawer', handleOpenDrawer);
+      window.removeEventListener('agendamento-criado', handleGlobalCreated);
+    };
+  }, [isAuthenticated, refetch]);
 
   return (
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">
@@ -391,35 +398,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 })}
               </CarouselContent>
 
-              {/* Drawer Desktop */}
-              <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[60] py-0 lg:py-0 px-0">
-                <div className="relative w-full h-full max-w-[1600px] mx-auto">
-                  <div className={cn(
-                    "hidden md:block absolute pointer-events-auto transition-all duration-500 ease-in-out",
-                    "w-full h-full md:h-full lg:h-full",
-                    "lg:w-[calc(100%/3-32px)] lg:left-[32px] lg:top-0",
-                    isDrawerOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-                  )}>
-                    <DrawerAgendamento
-                      isOpen={isDrawerOpen}
-                      onClose={handleCloseDrawer}
-                      mode={drawerMode}
-                      initialDate={selectedDrawerDate}
-                      agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-                      todosAgendamentos={agendamentos}
-                      onSave={salvarAgendamento}
-                      onDelete={excluirAgendamento}
-                      onUpdate={editarAgendamento}
-                      anchorRef={null as any}
-                      selectedPeriod={selectedPeriod}
-                      onSelectPeriod={toggleHighlightPeriod}
-                      selectedAgendamentoId={selectedAgendamentoId}
-                      setSelectedAgendamentoId={setSelectedAgendamentoId}
-                    />
-                  </div>
-                </div>
-              </div>
-
               <CarouselPrevious
                 onClick={() => api?.scrollPrev()}
                 className="hidden lg:flex -left-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
@@ -429,6 +407,25 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 className="hidden lg:flex -right-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
               />
             </Carousel>
+
+            {/* Modal de Agendamentos (Usado tanto para Criar quanto para Visualizar) */}
+            <DrawerAgendamento
+              isOpen={isDrawerOpen}
+              onClose={handleCloseDrawer}
+              mode={drawerMode}
+              variant="modal"
+              initialDate={selectedDrawerDate}
+              agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+              todosAgendamentos={agendamentos}
+              onSave={salvarAgendamento}
+              onDelete={excluirAgendamento}
+              onUpdate={editarAgendamento}
+              anchorRef={null as any}
+              selectedPeriod={selectedPeriod}
+              onSelectPeriod={toggleHighlightPeriod}
+              selectedAgendamentoId={selectedAgendamentoId}
+              setSelectedAgendamentoId={setSelectedAgendamentoId}
+            />
 
             {/* Indicadores de bolinhas */}
             <div className="hidden lg:flex justify-center gap-3 mt-6 lg:mt-6 mb-4">
@@ -466,24 +463,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 />
 
                 {/* Lista Mobile Inline */}
-                <div className={cn("md:hidden w-full", !isDrawerOpen && "hidden")}>
-                  <DrawerAgendamento
-                    isOpen={isDrawerOpen}
-                    onClose={handleCloseDrawer}
-                    mode={drawerMode}
-                    initialDate={selectedDrawerDate}
-                    agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-                    todosAgendamentos={agendamentos}
-                    onSave={salvarAgendamento}
-                    onDelete={excluirAgendamento}
-                    onUpdate={editarAgendamento}
-                    anchorRef={null as any}
-                    selectedPeriod={selectedPeriod}
-                    onSelectPeriod={toggleHighlightPeriod}
-                    selectedAgendamentoId={selectedAgendamentoId}
-                    setSelectedAgendamentoId={setSelectedAgendamentoId}
-                  />
-                </div>
+                {/* Drawer Mobile Removido (Agora usa o Modal unificado acima) */}
+                <div className="hidden" />
               </div>
 
               {/* 2º e 3º - Feriados e Fases da Lua */}

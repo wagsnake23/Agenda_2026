@@ -86,15 +86,7 @@ const Header = () => {
     const location = useLocation();
 
     const handleAgendar = () => {
-        // Direcionar para home e disparar drawer caso esteja fora da home
-        if (window.location.pathname !== '/') {
-            navigate('/');
-            setTimeout(() => {
-                window.dispatchEvent(new CustomEvent('open-agendamento-drawer'));
-            }, 300);
-        } else {
-            window.dispatchEvent(new CustomEvent('open-agendamento-drawer'));
-        }
+        window.dispatchEvent(new CustomEvent('open-global-agendamento-modal'));
     };
 
     return (
@@ -166,9 +158,9 @@ const Header = () => {
                                     {/* Botão Agendar */}
                                     <button
                                         onClick={handleAgendar}
-                                        className="px-5 py-2 rounded-full font-semibold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.25)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer"
+                                        className="px-5 py-2 rounded-full font-semibold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.25)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2"
                                     >
-                                        Agendar
+                                        <span>📝</span> Agendar
                                     </button>
 
                                     {/* Avatar Dropdown */}

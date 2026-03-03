@@ -29,7 +29,7 @@ const MobileMenu = () => {
     };
 
     const handleAgendar = () => {
-        const event = new CustomEvent('open-agendamento-drawer');
+        const event = new CustomEvent('open-global-agendamento-modal');
         window.dispatchEvent(event);
         setIsOpen(false);
     };

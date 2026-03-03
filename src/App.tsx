@@ -15,6 +15,8 @@ import { CalendarModeProvider } from "@/hooks/use-calendar-mode";
 import { CalendarEventsProvider } from "@/context/CalendarEventsContext";
 import AdminCalendario from "./pages/AdminCalendario";
 
+import GlobalAgendamentoModal from "@/components/GlobalAgendamentoModal";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -25,6 +27,7 @@ const App = () => (
         <AuthProvider>
           <CalendarModeProvider>
             <CalendarEventsProvider>
+              <GlobalAgendamentoModal />
               <Routes>
                 {/* Rota pública */}
                 <Route path="/" element={<Index />} />

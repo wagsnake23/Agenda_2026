@@ -87,6 +87,13 @@ const AgendamentosPage: React.FC = () => {
     const [filterPeriodo, setFilterPeriodo] = useState('');
     const [filterTipo, setFilterTipo] = useState('');
 
+    // Escutar criação global de agendamentos
+    React.useEffect(() => {
+        const handleCreated = () => refetch();
+        window.addEventListener('agendamento-criado', handleCreated);
+        return () => window.removeEventListener('agendamento-criado', handleCreated);
+    }, [refetch]);
+
     // Atualizar filtro quando o parâmetro da URL mudar
     React.useEffect(() => {
         const userId = searchParams.get('usuario');

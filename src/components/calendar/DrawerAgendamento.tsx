@@ -301,20 +301,27 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
             >
                 {/* Header do Drawer */}
                 <div className={cn(
-                    "flex items-center justify-between shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]",
-                    variant === 'modal' ? "px-6 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]" : "p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)]"
+                    "flex items-center justify-between shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)] transition-colors duration-300",
+                    variant === 'modal'
+                        ? (mode === 'create'
+                            ? "px-6 py-4 bg-gradient-to-b from-[#facc15] to-[#eab308]"
+                            : "px-6 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]")
+                        : "p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)]"
                 )}>
                     <div className="flex flex-row items-start md:items-center gap-1.5 md:gap-2 pt-0.5 md:pt-0">
                         {modoEdicao ? (
                             <span className="text-[1.1em] md:text-[1.25em] leading-none mt-[2px] md:mt-0">📝</span>
                         ) : mode === 'create' ? (
-                            <span className="text-[1.1em] md:text-[1.25em] leading-none">✨</span>
+                            <span className="text-[1.1em] md:text-[1.25em] leading-none">📝</span>
                         ) : (
                             <span className="text-[1.1em] md:text-[1.25em] leading-none">📅</span>
                         )}
 
                         <div className="flex flex-col justify-center">
-                            <h2 className="text-[0.78rem] xs:text-[0.85rem] md:text-[1.1rem] font-bold text-white uppercase tracking-[0.5px] md:tracking-[1px] whitespace-nowrap leading-tight">
+                            <h2 className={cn(
+                                "font-black uppercase tracking-[0.5px] md:tracking-[1px] whitespace-nowrap leading-tight transition-all",
+                                mode === 'create' ? "text-slate-900 text-[1.05rem] md:text-[1.3rem]" : "text-white text-[0.78rem] xs:text-[0.85rem] md:text-[1.1rem]"
+                            )}>
                                 {modoEdicao ? (
                                     <span>EDITAR AGENDAMENTO</span>
                                 ) : mode === 'create' ? (
@@ -333,7 +340,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 )}
                             </h2>
                             {modoEdicao && agendamentoEditando?.createdAt && (
-                                <div className="text-white/80 text-[11px] md:text-sm mt-0.5 font-medium text-left leading-tight">
+                                <div className={cn(
+                                    "font-medium text-left leading-tight mt-0.5",
+                                    mode === 'create' ? "text-[#0B1221]/70 text-[11px] md:text-sm" : "text-white/80 text-[11px] md:text-sm"
+                                )}>
                                     Criado em {format(parseISO(agendamentoEditando.createdAt), "dd MMM yyyy 'às' HH:mm", { locale: ptBR })}
                                 </div>
                             )}
@@ -348,7 +358,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 setAgendamentoEditando(null);
                             }
                         }}
-                        className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-lg active:scale-90"
+                        className={cn(
+                            "flex items-center justify-center rounded-full transition-all text-white shadow-lg active:scale-90",
+                            mode === 'create' ? "w-6 h-6 md:w-8 md:h-8 bg-red-500/90 hover:bg-red-600" : "w-7 h-7 md:w-10 md:h-10 bg-[#E53935] hover:bg-[#C62828]"
+                        )}
                         title={variant === 'modal' ? "Fechar" : (modoEdicao ? "Voltar" : "Fechar")}
                     >
                         {variant === 'modal' || !modoEdicao ? (
@@ -377,7 +390,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             {/* Data Inicial */}
                                             <div className="space-y-1.5 flex-1 md:w-[36%] min-w-0">
                                                 <div className="flex items-center gap-1.5 ml-1">
-                                                    <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none">Data Inicial</label>
+                                                    <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none transition-all">Data Inicial</label>
                                                 </div>
                                                 <div className="flex gap-2 items-center">
                                                     <Input
@@ -393,7 +406,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                             {/* Data Final */}
                                             <div className="space-y-1.5 flex-1 md:w-[36%] min-w-0">
-                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Data Final</label>
+                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none transition-all">Data Final</label>
                                                 <div className="flex gap-2 items-center">
                                                     <Input
                                                         type="text"
@@ -439,7 +452,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     {/* Linha 2 (Mobile): Tipo + Dias | (Desktop): Tipo de Agendamento */}
                                     <div className="flex flex-row items-end gap-2.5 md:gap-0 w-full md:w-[95%] -mt-2.5 md:mt-1.5">
                                         <div className="w-[74%] md:flex-1 space-y-1">
-                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block">Tipo de Agendamento</label>
+                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block transition-all">Tipo de Agendamento</label>
                                             <Select value={tipo} onValueChange={setTipo}>
                                                 <SelectTrigger className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700">
                                                     <SelectValue placeholder="Selecione..." />
@@ -471,7 +484,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                 {/* Coluna Direita (Apenas Desktop): Avatar */}
                                 <div className="hidden md:flex flex-col items-center justify-center shrink-0 md:ml-auto md:pl-2 mt-2 md:mt-4">
-                                    <div className="w-16 h-16 md:w-[88px] md:h-[88px] rounded-2xl overflow-hidden shadow-md border-2 border-white ring-4 ring-blue-50/15 bg-white transition-transform hover:scale-105">
+                                    <div className={cn(
+                                        "rounded-2xl overflow-hidden shadow-md border-2 border-white transition-transform hover:scale-105",
+                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[96px] md:h-[96px] ring-4 ring-[#facc15]/20 bg-white" : "w-16 h-16 md:w-[88px] md:h-[88px] ring-4 ring-blue-50/15 bg-white"
+                                    )}>
                                         {agendamentoEditando?.userPhoto ? (
                                             <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
                                         ) : mode === 'create' && profile?.foto_url ? (
@@ -492,7 +508,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                             {/* Linha 3: Observação */}
                             <div className="space-y-1 relative mt-3 md:mt-4">
-                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block">Observação</label>
+                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block transition-all">Observação</label>
                                 <textarea
                                     value={observacao}
                                     onChange={(e) => setObservacao(e.target.value.slice(0, 100))}
@@ -569,8 +585,13 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         "h-10.5 md:h-12 rounded-2xl text-[0.9rem] md:text-[1rem] font-black uppercase tracking-wider transition-all duration-300",
                                         modoEdicao ? "flex-1" : "w-full",
                                         isFormValid
-                                            ? "bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-[0_8px_20px_rgba(37,99,235,0.3)] hover:scale-[1.02] active:scale-[0.98]"
-                                            : "bg-slate-100 text-slate-400 border border-slate-200 grayscale opacity-60"
+                                            ? (mode === 'create'
+                                                ? "bg-gradient-to-b from-[#facc15] to-[#eab308] text-[#0B1221] shadow-[0_8px_20px_rgba(250,204,21,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+                                                : "bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-[0_8px_20px_rgba(37,99,235,0.3)] hover:scale-[1.02] active:scale-[0.98]")
+                                            : cn(
+                                                "transition-all grayscale-0 opacity-100",
+                                                mode === 'create' ? "bg-slate-200 text-slate-500 border border-slate-300 shadow-none" : "bg-slate-100 text-slate-400 border border-slate-200 grayscale opacity-60"
+                                            )
                                     )}
                                 >
                                     {modoEdicao ? 'Salvar' : 'Agendar'}
@@ -579,7 +600,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            {agendamentosNoDia.length === 0 ? (
+                            {(!agendamentosNoDia || agendamentosNoDia.length === 0) ? (
                                 <div className="py-12 text-center">
                                     <p className="text-slate-400 font-medium italic text-[14px]">Nenhum agendamento para este dia.</p>
                                 </div>
