@@ -57,15 +57,15 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
     dayData.isHoliday || dayData.isBirthday || dayData.specialEmojiIcon || temAgendamentoNesteDia || isSelected;
 
   const handleClick = (e: React.MouseEvent) => {
-    if (temAgendamentoNesteDia && onViewAgendamento) {
-      e.stopPropagation();
-      onViewAgendamento(dateStr);
-      return;
-    }
     if (!isSpecialDay) return;
     setIsClicked(true);
     setTimeout(() => setIsClicked(false), 300);
     onDayClick(dayData.day);
+
+    if (temAgendamentoNesteDia && onViewAgendamento) {
+      e.stopPropagation();
+      onViewAgendamento(dateStr);
+    }
   };
 
   const handleMouseEnter = () => {
