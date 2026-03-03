@@ -505,13 +505,13 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             </div>
 
                             {/* Linha 3: Observação */}
-                            <div className="space-y-1 relative mt-5 md:mt-4">
+                            <div className="space-y-1 relative mt-5 md:mt-3">
                                 <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block transition-all">Observação</label>
                                 <textarea
                                     value={observacao}
                                     onChange={(e) => setObservacao(e.target.value.slice(0, 100))}
                                     placeholder="Alguma observação importante..."
-                                    className="w-full min-h-[80px] md:min-h-[90px] p-2.5 md:p-3 rounded-xl border border-slate-200 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-slate-700 text-sm resize-none outline-none"
+                                    className="w-full min-h-[80px] md:min-h-[85px] p-2.5 md:p-3 rounded-xl border border-slate-200 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-slate-700 text-sm resize-none outline-none"
                                 />
                                 <div className="absolute bottom-2 right-3 text-[10px] font-bold text-slate-400">
                                     {observacao.length}/100
@@ -520,7 +520,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                             {/* Data de Criação Informativa e Status */}
                             {agendamentoEditando && (
-                                <div className="mt-5 flex flex-col gap-2.5">
+                                <div className="mt-5 md:mt-2 flex flex-col gap-2.5">
                                     {/* Exibir Status Atual do Agendamento e Data da Ação */}
                                     <div className="flex flex-col items-start gap-2 ml-1">
                                         <div className="flex flex-row items-center gap-2">
@@ -556,8 +556,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         })()}
                                     </div>
                                 </div>
-                            )}                                    <div className={cn(
-                                "mt-auto pt-3 flex gap-4",
+                            )}
+
+                            <div className={cn(
+                                "mt-auto pt-3 md:pt-6 flex gap-4",
                                 modoEdicao ? "flex-row" : "flex-col"
                             )}>
                                 {modoEdicao && (
