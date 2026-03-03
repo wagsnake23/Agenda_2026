@@ -484,7 +484,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 <div className="hidden md:flex flex-col items-center justify-center shrink-0 md:ml-auto md:pl-2 mt-2 md:mt-4">
                                     <div className={cn(
                                         "rounded-2xl overflow-hidden shadow-md border-2 border-white transition-transform hover:scale-105",
-                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[110px] md:h-[110px] ring-4 ring-[#facc15]/20 bg-white" : "w-16 h-16 md:w-[96px] md:h-[96px] ring-4 ring-blue-50/15 bg-white"
+                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[110px] md:h-[110px] ring-4 ring-[#facc15]/20 bg-white" : "w-16 h-16 md:w-[110px] md:h-[110px] ring-4 ring-blue-50/15 bg-white"
                                     )}>
                                         {agendamentoEditando?.userPhoto ? (
                                             <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
