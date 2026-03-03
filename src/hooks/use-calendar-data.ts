@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo } from 'react';
-import { getDaysBetween, getColorForMode, isHoliday, BIRTHDAYS, SPECIAL_EMOJI_DAYS } from '@/utils/calendar-utils';
+import { getDaysBetween, getColorForMode } from '@/utils/calendar-utils';
+import { getEventsForDate, isHolidayEvent, CalendarEvent } from '@/hooks/use-calendar-events';
 import type { CalendarMode } from '@/hooks/use-calendar-mode';
 
 interface CalendarDayData {
@@ -10,6 +11,7 @@ interface CalendarDayData {
   colors: { bg: string; text: string };
   isHoliday: boolean;
   holidayName?: string;
+  holidayEmoji?: string;
   isBirthday?: boolean;
   birthdayName?: string;
   specialEmojiName?: string;
@@ -22,9 +24,10 @@ interface UseCalendarDataProps {
   year: number;
   today: Date;
   mode?: CalendarMode;
+  calendarEvents?: CalendarEvent[];
 }
 
-export const useCalendarData = ({ month, year, today, mode = '24x48' }: UseCalendarDataProps) => {
+export const useCalendarData = ({ month, year, today, mode = '24x48', calendarEvents = [] }: UseCalendarDataProps) => {
   const calendarData = useMemo(() => {
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
@@ -40,32 +43,41 @@ export const useCalendarData = ({ month, year, today, mode = '24x48' }: UseCalen
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const isTodayCheck = date.toDateString() === today.toDateString();
-      const colors = getColorForMode(date, mode);
-      const holidayInfo = isHoliday(date);
       const isWeekendDay = date.getDay() === 0 || date.getDay() === 6;
 
-      // Verifica se é um dia de aniversário
-      const birthdayInfo = BIRTHDAYS.find(
-        (b) => b.month === month && b.day === day
-      );
-      const isBirthdayCheck = !!birthdayInfo;
-      const birthdayPersonName = birthdayInfo ? birthdayInfo.name : undefined;
+      // Busca eventos do banco
+      const dayEvents = getEventsForDate(calendarEvents, date);
 
-      // Verifica se é um dia com emoji especial
-      const specialEmojiInfo = SPECIAL_EMOJI_DAYS.find(
-        (s) => s.month === month && s.day === day
-      );
-      const specialEmojiName = specialEmojiInfo ? specialEmojiInfo.name : undefined;
-      const specialEmojiIcon = specialEmojiInfo ? specialEmojiInfo.emoji : undefined;
+      // Verifica feriado
+      const holidayEvent = dayEvents.find(e => e.type === 'holiday' && e.color_mode === 'holiday');
+      const isHolidayDay = !!holidayEvent;
+      const holidayName = holidayEvent?.title;
+      const holidayEmoji = holidayEvent?.emoji || undefined;
+
+      const colors = getColorForMode(date, mode, isHolidayDay);
+
+      // Verifica aniversário
+      const birthdayEvent = dayEvents.find(e => e.type === 'birthday');
+      const isBirthdayDay = !!birthdayEvent;
+      const birthdayName = birthdayEvent?.title;
+
+      // Verifica evento especial (event_only - não pinta mas mostra emoji)
+      const specialEvent = dayEvents.find(e => e.color_mode === 'event_only' && e.type !== 'birthday');
+      const specialEmojiName = specialEvent?.title;
+      const specialEmojiIcon = specialEvent?.emoji || undefined;
+
+      // Para o modo adm: feriado que pinta
+      const effectiveIsHoliday = mode === 'adm' ? isHolidayDay : isHolidayDay;
 
       days.push({
         day,
         isToday: isTodayCheck,
         colors,
-        isHoliday: holidayInfo.isHoliday,
-        holidayName: holidayInfo.holidayName,
-        isBirthday: isBirthdayCheck,
-        birthdayName: birthdayPersonName,
+        isHoliday: effectiveIsHoliday,
+        holidayName,
+        holidayEmoji,
+        isBirthday: isBirthdayDay,
+        birthdayName,
         specialEmojiName,
         specialEmojiIcon,
         isWeekend: isWeekendDay,
@@ -77,10 +89,10 @@ export const useCalendarData = ({ month, year, today, mode = '24x48' }: UseCalen
     }
 
     return days;
-  }, [month, year, today]);
+  }, [month, year, today, mode, calendarEvents]);
 
-  const todayDayOfWeek = today.getDay();
   const todayColors = getColorForMode(today, mode);
+  const todayDayOfWeek = today.getDay();
   const isCurrentMonthAndYear = month === today.getMonth() && year === today.getFullYear();
 
   return {

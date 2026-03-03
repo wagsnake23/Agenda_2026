@@ -146,15 +146,24 @@ const MobileMenu = () => {
                                 <span className="font-bold text-sm">Agendamentos</span>
                             </button>
 
-                            {/* Item 5: Usuários (Admin) */}
+                            {/* Item 5: Admin (Admin) */}
                             {isAdmin && (
-                                <button
-                                    onClick={() => handleNav('/usuarios')}
-                                    className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors group"
-                                >
-                                    <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">👥</span>
-                                    <span className="font-bold text-sm">Usuários</span>
-                                </button>
+                                <>
+                                    <button
+                                        onClick={() => handleNav('/usuarios')}
+                                        className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors group"
+                                    >
+                                        <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">👥</span>
+                                        <span className="font-bold text-sm">Usuários</span>
+                                    </button>
+                                    <button
+                                        onClick={() => handleNav('/admin/calendario')}
+                                        className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
+                                    >
+                                        <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
+                                        <span className="font-bold text-sm">Admin Calendário</span>
+                                    </button>
+                                </>
                             )}
 
                             {/* Minha Agenda */}

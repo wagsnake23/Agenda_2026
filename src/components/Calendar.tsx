@@ -28,6 +28,7 @@ import {
 import { useAgendamentos } from '@/hooks/useAgendamentos';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
+import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
 
 interface CalendarProps {
   month: number;
@@ -61,6 +62,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const [currentSlide, setCurrentSlide] = useState(0);
   const { mode, setMode } = useCalendarMode();
   const { isAuthenticated } = useAuth();
+  const { events: calendarEvents } = useCalendarEventsContext();
 
   // Hook de agendamentos do Supabase
   const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos } = useAgendamentos();
@@ -205,7 +207,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     mode
   });
 
-  const holidayMessages = useHolidayMessages(month, year);
+  const holidayMessages = useHolidayMessages(month, year, calendarEvents);
   const moonPhases = useMoonPhases(month, year);
 
   useEffect(() => {
@@ -379,6 +381,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                       onViewAgendamento={handleOpenViewDrawer}
                       onOpenCreateDrawer={handleOpenCreateDrawer}
                       selectedPeriod={selectedPeriod}
+                      calendarEvents={calendarEvents}
                     />
                   </CarouselItem>
                 );
@@ -492,7 +495,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
             {/* 4º - Aniversariantes */}
             <div className="w-full lg:flex-1 lg:min-w-[370px] order-3 lg:order-3">
-              <BirthdayMessages month={month} year={year} highlightedDay={highlightedDay} />
+              <BirthdayMessages month={month} year={year} highlightedDay={highlightedDay} calendarEvents={calendarEvents} />
             </div>
           </div>
         </div>

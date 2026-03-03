@@ -6,6 +6,7 @@ import CalendarGrid from './CalendarGrid';
 import { MONTHS, getSeasonDataForDate } from '@/utils/calendar-utils';
 import { cn } from '@/lib/utils';
 import type { CalendarMode } from '@/hooks/use-calendar-mode';
+import type { CalendarEvent } from '@/hooks/use-calendar-events';
 
 interface CalendarCardProps {
     month: number;
@@ -21,6 +22,7 @@ interface CalendarCardProps {
     onViewAgendamento?: (date: string, id?: string) => void;
     onOpenCreateDrawer?: () => void;
     selectedPeriod?: { start: string, end: string } | null;
+    calendarEvents?: CalendarEvent[];
 }
 
 const CalendarCard: React.FC<CalendarCardProps> = ({
@@ -37,12 +39,14 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     onViewAgendamento,
     onOpenCreateDrawer,
     selectedPeriod,
+    calendarEvents = [],
 }) => {
     const { calendarData, todayDayOfWeek, todayColors, isCurrentMonthAndYear } = useCalendarData({
         month,
         year,
         today,
         mode,
+        calendarEvents,
     });
 
     const [isDesktopState, setIsDesktopState] = React.useState(false);
@@ -58,12 +62,10 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
 
     const getSeasonData = (m: number, y: number) => {
         const commonStyle = {
-            badgeText: 'text-[#334155]', // Grafite levemente mais suave
+            badgeText: 'text-[#334155]',
             useTextGradient: false
         };
 
-        // Determinamos a estação baseada no dia atual se for o mês corrente, 
-        // ou no meio do mês se for um mês diferente (passado ou futuro).
         const now = new Date();
         const isCurrentMonth = now.getMonth() === m && now.getFullYear() === y;
         const targetDay = isCurrentMonth ? now.getDate() : 15;
@@ -94,9 +96,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 "px-3 py-2 md:px-8 md:pt-4 md:pb-8",
                 "bg-white/95 backdrop-blur-sm opacity-100",
                 "antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [contain:paint]",
-                // Sombra em Camadas Ultra Premium
                 "border border-[#0F172A]/[0.05] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)]",
-                // Brilho interno superior polido
                 "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent before:z-20",
                 "shadow-inner shadow-white/40",
                 isCenter ? "md:bg-white" : "md:bg-gray-50/90",
@@ -106,7 +106,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
         >
             {/* Brilho superior sutil */}
             <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none opacity-50" />
-            {/* Cabeçalho unificado: Oculto no mobile conforme solicitado */}
             <div className="hidden md:flex justify-between items-center mb-4 md:mb-6 pl-0 pr-0">
                 <div className="flex items-center gap-2 md:-ml-2">
                     <img
@@ -124,8 +123,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                         }}>
                             {MONTHS[month]}
                         </span>
-
-                        {/* Separador e Ano */}
                         <div className="flex items-center gap-1">
                             <span className="hidden md:inline text-[#C62828] text-sm md:text-base opacity-40 flex-shrink-0">•</span>
                             <span style={{
@@ -141,14 +138,12 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     </h3>
                 </div>
 
-                {/* Badge da Estação (Lado Direito) */}
+                {/* Badge da Estação */}
                 <div className="flex items-center h-full flex-1 justify-end md:-mr-1">
                     <div className="flex items-center gap-0.5 select-none">
                         <span
                             className={cn("hidden md:inline uppercase text-[13px] md:text-[17px] lg:text-[19px] font-extrabold tracking-wide leading-none", season.badgeText)}
-                            style={{
-                                letterSpacing: '0.8px'
-                            }}
+                            style={{ letterSpacing: '0.8px' }}
                         >
                             {season.name}
                         </span>
@@ -159,9 +154,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 </div>
             </div>
 
-            {/* Container Interno - Card 3D Azul Premium apenas em Desktop */}
             <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border md:border-[#bae6fd]/50 opacity-100 shadow-inner shadow-blue-900/[0.03] filter-none backdrop-filter-none">
-                {/* Micro-brilho interno superior */}
                 <div className="hidden md:block absolute top-[1px] left-[20px] right-[20px] h-[1px] bg-white/20 pointer-events-none" />
                 <CalendarGrid
                     calendarData={calendarData}
@@ -179,7 +172,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
 
                 {/* Botões de Ação Compactos - Mobile apenas */}
                 <div className="md:hidden absolute bottom-0.5 right-0 z-20 flex items-center gap-1.5">
-                    {/* Botão Hoje */}
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
@@ -202,7 +194,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     </button>
                 </div>
             </div>
-
         </div>
     );
 };

@@ -12,6 +12,8 @@ import UsuariosPage from "./pages/Usuarios";
 import { Toaster } from 'sonner';
 
 import { CalendarModeProvider } from "@/hooks/use-calendar-mode";
+import { CalendarEventsProvider } from "@/context/CalendarEventsContext";
+import AdminCalendario from "./pages/AdminCalendario";
 
 const queryClient = new QueryClient();
 
@@ -22,40 +24,50 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <CalendarModeProvider>
-            <Routes>
-              {/* Rota pública */}
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<AuthPage />} />
+            <CalendarEventsProvider>
+              <Routes>
+                {/* Rota pública */}
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<AuthPage />} />
 
-              {/* Rotas protegidas */}
-              <Route
-                path="/meu-perfil"
-                element={
-                  <ProtectedRoute>
-                    <MeuPerfil />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/agendamentos"
-                element={
-                  <ProtectedRoute>
-                    <AgendamentosPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/usuarios"
-                element={
-                  <ProtectedRoute adminOnly>
-                    <UsuariosPage />
-                  </ProtectedRoute>
-                }
-              />
+                {/* Rotas protegidas */}
+                <Route
+                  path="/meu-perfil"
+                  element={
+                    <ProtectedRoute>
+                      <MeuPerfil />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/agendamentos"
+                  element={
+                    <ProtectedRoute>
+                      <AgendamentosPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/usuarios"
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <UsuariosPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/calendario"
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminCalendario />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* 404 */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+                {/* 404 */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </CalendarEventsProvider>
           </CalendarModeProvider>
         </AuthProvider>
       </BrowserRouter>

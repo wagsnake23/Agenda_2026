@@ -19,8 +19,10 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { MONTHS, BIRTHDAYS, getHolidays, holidayEmojis } from "@/utils/calendar-utils";
+import { MONTHS } from "@/utils/calendar-utils";
 import { cn } from "@/lib/utils";
+import { useCalendarEventsContext } from "@/context/CalendarEventsContext";
+import { getEventsForDate } from "@/hooks/use-calendar-events";
 
 interface CalendarHeaderProps {
   month: number;
@@ -57,20 +59,37 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 }) => {
   const commandListRef = useRef<HTMLDivElement>(null);
 
-  // Gerar lista de feriados para o select
-  const holidaysList = useMemo(() => {
-    const holidaysMap = getHolidays(year);
-    const list: { date: string; name: string }[] = [];
-    holidaysMap.forEach((name, date) => {
-      list.push({ date, name });
-    });
-    return list.sort((a, b) => a.name.localeCompare(b.name));
-  }, [year]);
+  const { events: calendarEvents } = useCalendarEventsContext();
 
-  // Gerar lista de aniversariantes para o select
+  // Gerar lista de feriados para o select (a partir do banco)
+  const holidaysList = useMemo(() => {
+    const list: { date: string; name: string; emoji: string | null }[] = [];
+    const daysInYear = 366;
+    for (let d = 0; d < daysInYear; d++) {
+      const date = new Date(year, 0, d + 1);
+      if (date.getFullYear() !== year) break;
+      const dayEvents = getEventsForDate(calendarEvents, date);
+      dayEvents
+        .filter(e => e.type === 'holiday')
+        .forEach(e => {
+          const dateStr = `${year}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+          list.push({ date: dateStr, name: e.title, emoji: e.emoji });
+        });
+    }
+    return list.sort((a, b) => a.name.localeCompare(b.name));
+  }, [year, calendarEvents]);
+
+  // Gerar lista de aniversariantes para o select (a partir do banco)
   const birthdayList = useMemo(() => {
-    return [...BIRTHDAYS].sort((a, b) => a.name.localeCompare(b.name));
-  }, []);
+    return calendarEvents
+      .filter(e => e.type === 'birthday')
+      .map(e => ({
+        name: e.title,
+        month: Number(e.date.slice(5, 7)) - 1, // 0-indexed
+        day: Number(e.date.slice(8, 10)),
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [calendarEvents]);
 
   useEffect(() => {
     if (isYearPopoverOpen && commandListRef.current) {
@@ -288,14 +307,14 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               <SelectValue placeholder="FERIADOS" />
             </SelectTrigger>
             <SelectContent className="backdrop-blur-xl bg-popover/95 border border-white/20 z-50 max-h-[300px]">
-              {holidaysList.map((holiday) => (
+              {holidaysList.map((holiday, idx) => (
                 <SelectItem
-                  key={holiday.date}
+                  key={`${holiday.date}-${idx}`}
                   value={holiday.date}
                   className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white"
                 >
                   <div className="flex items-center gap-2">
-                    <span>{holidayEmojis[holiday.name] || '📅'}</span>
+                    <span>{holiday.emoji || '📅'}</span>
                     <span>{holiday.name}</span>
                   </div>
                 </SelectItem>

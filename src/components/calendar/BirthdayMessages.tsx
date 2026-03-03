@@ -1,30 +1,31 @@
 "use client";
 
 import React, { useMemo } from 'react';
-import { BIRTHDAYS, MONTHS } from '@/utils/calendar-utils';
+import { MONTHS } from '@/utils/calendar-utils';
 import { cn } from '@/lib/utils';
 import { Cake } from 'lucide-react';
+import { getBirthdaysForMonth } from '@/hooks/use-calendar-events';
+import type { CalendarEvent } from '@/hooks/use-calendar-events';
 
 interface BirthdayMessagesProps {
   month: number;
   year: number;
-  highlightedDay: number | null; // Nova prop
+  highlightedDay: number | null;
+  calendarEvents?: CalendarEvent[];
 }
 
-const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highlightedDay }) => {
+const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highlightedDay, calendarEvents = [] }) => {
   const currentMonthBirthdays = useMemo(() => {
     const monthName = (MONTHS[month] || '').substring(0, 3);
     const formattedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1).toLowerCase();
 
-    return BIRTHDAYS
-      .filter(b => b.month === month)
-      .sort((a, b) => a.day - b.day)
+    return getBirthdaysForMonth(calendarEvents, month, year)
       .map(b => ({
         day: b.day,
         name: b.name,
         dateFormatted: `${String(b.day).padStart(2, '0')}/${formattedMonth}`
       }));
-  }, [month]);
+  }, [month, year, calendarEvents]);
 
   const isEmpty = currentMonthBirthdays.length === 0;
 
