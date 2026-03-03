@@ -10,7 +10,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import {
     Plus, Search, Edit2, Trash2,
-    Calendar, Loader2, X, Check, RefreshCw
+    Calendar, Loader2, X, Check, RefreshCw, Lock
 } from 'lucide-react';
 import type { CalendarEvent, CalendarEventType, ColorMode } from '@/hooks/use-calendar-events';
 import EmojiPicker from '@/components/EmojiPicker';
@@ -348,7 +348,7 @@ const AdminCalendario: React.FC = () => {
                     </div>
 
                     {/* Tabela / Cards */}
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div className="bg-transparent md:bg-white md:rounded-2xl md:border md:border-slate-200 md:shadow-sm md:overflow-hidden">
                         {loading ? (
                             <div className="flex items-center justify-center py-20">
                                 <Loader2 size={32} className="animate-spin text-blue-600" />
@@ -424,42 +424,63 @@ const AdminCalendario: React.FC = () => {
                                 </div>
 
                                 {/* Mobile cards */}
-                                <div className="md:hidden divide-y divide-slate-100">
+                                <div className="md:hidden space-y-4 pt-2">
                                     {filtered.map(ev => (
-                                        <div key={ev.id} className={`p-4 ${!ev.is_active ? 'opacity-50' : ''}`}>
-                                            <div className="flex items-start gap-3">
-                                                <span className="text-2xl mt-0.5">{ev.emoji || '📅'}</span>
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="flex items-center gap-2 flex-wrap">
-                                                        <p className="font-bold text-slate-800 truncate">{ev.title}</p>
-                                                        {typeBadge(ev.type)}
-                                                    </div>
-                                                    <p className="text-xs text-slate-500 mt-1 font-mono">{formatDisplayDate(ev.date, ev.is_fixed)}</p>
-                                                    <div className="flex items-center gap-2 mt-2">
-                                                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${ev.is_fixed ? 'bg-amber-100 text-amber-700' : 'bg-purple-100 text-purple-700'}`}>
-                                                            {ev.is_fixed ? 'Anual' : 'Específica'}
-                                                        </span>
-                                                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${ev.color_mode === 'holiday' ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-500'}`}>
-                                                            Pintar: {ev.color_mode === 'holiday' ? 'Sim' : 'Não'}
-                                                        </span>
+                                        <div key={ev.id} className={`bg-white rounded-2xl shadow-sm border border-slate-100 p-4 transition-all ${!ev.is_active ? 'opacity-60 grayscale-[0.5]' : ''}`}>
+                                            <div className="flex items-start justify-between gap-3">
+                                                <div className="flex items-start gap-3 flex-1 min-w-0">
+                                                    <span className="text-3xl shrink-0 mt-0.5" role="img" aria-label="emoji">
+                                                        {ev.emoji || '📅'}
+                                                    </span>
+                                                    <div className="flex-1 min-w-0">
+                                                        <div className="flex flex-col gap-0.5">
+                                                            <h3 className="font-bold text-slate-800 text-[15px] leading-tight truncate">
+                                                                {ev.title}
+                                                            </h3>
+                                                            <div className="flex items-center gap-2 mt-0.5">
+                                                                {typeBadge(ev.type)}
+                                                                <span className="text-[10px] text-slate-400 font-mono font-bold uppercase tracking-wider">
+                                                                    {formatDisplayDate(ev.date, ev.is_fixed)}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                                                            <span className={`px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-tighter border ${ev.is_fixed ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-purple-50 text-purple-600 border-purple-100'}`}>
+                                                                {ev.is_fixed ? 'Anual' : 'Específica'}
+                                                            </span>
+                                                            {ev.color_mode === 'holiday' && (
+                                                                <span className="px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-tighter bg-red-50 text-red-600 border border-red-100">
+                                                                    Destaque Cal.
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-col gap-2 items-end">
+
+                                                <div className="flex flex-col items-end gap-3 shrink-0">
                                                     <button
                                                         onClick={() => handleToggle(ev)}
-                                                        disabled={!canEdit(ev)}
-                                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${ev.is_active ? 'bg-green-500' : 'bg-slate-300'} ${!canEdit(ev) ? 'opacity-50' : ''}`}
+                                                        disabled={togglingId === ev.id || !canEdit(ev)}
+                                                        className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none ${ev.is_active ? 'bg-green-500' : 'bg-slate-300'} ${!canEdit(ev) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                     >
-                                                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${ev.is_active ? 'translate-x-6' : 'translate-x-1'}`} />
+                                                        <span className={`inline-block h-3 w-3 transform rounded-full bg-white shadow transition-transform ${ev.is_active ? 'translate-x-5' : 'translate-x-1'}`} />
                                                     </button>
+
                                                     <div className="flex gap-1.5">
                                                         {canEdit(ev) ? (
                                                             <>
-                                                                <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg bg-blue-50 text-blue-600"><Edit2 size={13} /></button>
-                                                                <button onClick={() => setConfirmDeleteId(ev.id)} className="p-1.5 rounded-lg bg-red-50 text-red-600"><Trash2 size={13} /></button>
+                                                                <button onClick={() => openEdit(ev)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 active:scale-90 transition-all shadow-sm border border-blue-100">
+                                                                    <Edit2 size={14} />
+                                                                </button>
+                                                                <button onClick={() => setConfirmDeleteId(ev.id)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-red-50 text-red-600 active:scale-90 transition-all shadow-sm border border-red-100">
+                                                                    <Trash2 size={14} />
+                                                                </button>
                                                             </>
                                                         ) : (
-                                                            <span className="text-[9px] bg-slate-50 text-slate-400 px-1.5 py-0.5 rounded uppercase font-bold">🔒 Lock</span>
+                                                            <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-50 text-slate-300 border border-slate-100" title="Somente leitura">
+                                                                <Lock size={12} />
+                                                            </div>
                                                         )}
                                                     </div>
                                                 </div>
