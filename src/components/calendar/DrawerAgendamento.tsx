@@ -691,6 +691,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             <div className="px-4 md:px-5 pt-3 pb-3 flex items-center justify-center w-full">
                                 <Calendar
                                     mode="range"
+                                    defaultMonth={dateRange?.from || dateRange?.to || new Date()}
                                     selected={dateRange}
                                     onSelect={handleSelectRange}
                                     showOutsideDays={false}
