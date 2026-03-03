@@ -57,7 +57,7 @@ const formatDisplayDate = (dateStr: string, isFixed: boolean): string => {
     // dateStr always in YYYY-MM-DD format from Supabase
     const [y, m, d] = dateStr.split('-');
     if (isFixed) {
-        return `${d}/${m} (anual)`;
+        return `${d}/${m}`;
     }
     return `${d}/${m}/${y}`;
 };
@@ -261,10 +261,6 @@ const AdminCalendario: React.FC = () => {
         setDeleting(false);
     };
 
-    // Calcular data no formato correto
-    // Para is_fixed=true: o usuário digita a parte MM-DD e nós prefixamos com 2000-
-    // Para is_fixed=false: usamos input type=date (retorna YYYY-MM-DD)
-
     return (
         <div className="min-h-screen bg-[#EFF3F6] flex flex-col items-center justify-start p-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
             <Header />
@@ -297,6 +293,7 @@ const AdminCalendario: React.FC = () => {
                             </button>
                         </div>
                     </div>
+
                     {/* Filtros */}
                     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6 space-y-4 lg:space-y-0 lg:flex lg:flex-row lg:items-center lg:gap-4 justify-between">
                         {/* Busca */}
@@ -348,7 +345,7 @@ const AdminCalendario: React.FC = () => {
                     </div>
 
                     {/* Tabela / Cards */}
-                    <div className="bg-transparent md:bg-white md:rounded-2xl md:border md:border-slate-200 md:shadow-sm md:overflow-hidden">
+                    <div className="mt-6 md:bg-white md:rounded-2xl md:border md:border-slate-200 md:shadow-sm md:overflow-hidden">
                         {loading ? (
                             <div className="flex items-center justify-center py-20">
                                 <Loader2 size={32} className="animate-spin text-blue-600" />
@@ -378,7 +375,7 @@ const AdminCalendario: React.FC = () => {
                                         <tbody className="divide-y divide-slate-100">
                                             {filtered.map(ev => (
                                                 <tr key={ev.id} className={`transition-colors ${!ev.is_active ? 'opacity-50 bg-slate-50/50' : 'hover:bg-slate-50/50'}`}>
-                                                    <td className="px-5 py-3.5 text-2xl">{ev.emoji || '–'}</td>
+                                                    <td className="px-5 py-3.5 text-2xl">{ev.emoji || '📅'}</td>
                                                     <td className="px-5 py-3.5 font-semibold text-slate-800">{ev.title}</td>
                                                     <td className="px-5 py-3.5 text-slate-600 font-mono text-xs">{formatDisplayDate(ev.date, ev.is_fixed)}</td>
                                                     <td className="px-5 py-3.5">{typeBadge(ev.type)}</td>
@@ -427,38 +424,22 @@ const AdminCalendario: React.FC = () => {
                                 <div className="md:hidden space-y-4 pt-2">
                                     {filtered.map(ev => (
                                         <div key={ev.id} className={`bg-white rounded-2xl shadow-sm border border-slate-100 p-4 transition-all ${!ev.is_active ? 'opacity-60 grayscale-[0.5]' : ''}`}>
-                                            <div className="flex items-start justify-between gap-3">
-                                                <div className="flex items-start gap-3 flex-1 min-w-0">
-                                                    <span className="text-3xl shrink-0 mt-0.5" role="img" aria-label="emoji">
+                                            <div className="grid grid-cols-[55px_1fr_auto] grid-rows-[auto_auto_auto] gap-x-3 gap-y-2 items-center">
+
+                                                {/* EMOJI: Linha 1 e 2, Coluna 1 */}
+                                                <div className="row-start-1 row-end-3 col-start-1 flex items-center justify-center bg-slate-50/50 rounded-xl h-full py-1">
+                                                    <span className="text-3xl" role="img" aria-label="emoji">
                                                         {ev.emoji || '📅'}
                                                     </span>
-                                                    <div className="flex-1 min-w-0">
-                                                        <div className="flex flex-col gap-0.5">
-                                                            <h3 className="font-bold text-slate-800 text-[15px] leading-tight truncate">
-                                                                {ev.title}
-                                                            </h3>
-                                                            <div className="flex items-center gap-2 mt-0.5">
-                                                                {typeBadge(ev.type)}
-                                                                <span className="text-[10px] text-slate-400 font-mono font-bold uppercase tracking-wider">
-                                                                    {formatDisplayDate(ev.date, ev.is_fixed)}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="flex flex-wrap items-center gap-1.5 mt-3">
-                                                            <span className={`px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-tighter border ${ev.is_fixed ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-purple-50 text-purple-600 border-purple-100'}`}>
-                                                                {ev.is_fixed ? 'Anual' : 'Específica'}
-                                                            </span>
-                                                            {ev.color_mode === 'holiday' && (
-                                                                <span className="px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-tighter bg-red-50 text-red-600 border border-red-100">
-                                                                    Destaque Cal.
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </div>
                                                 </div>
 
-                                                <div className="flex flex-col items-end gap-3 shrink-0">
+                                                {/* TIPO: Linha 1, Coluna 2 */}
+                                                <div className="col-start-2 flex items-center gap-2 flex-wrap self-center">
+                                                    {typeBadge(ev.type)}
+                                                </div>
+
+                                                {/* TOGGLE: Linha 1, Coluna 3 */}
+                                                <div className="col-start-3 justify-self-end">
                                                     <button
                                                         onClick={() => handleToggle(ev)}
                                                         disabled={togglingId === ev.id || !canEdit(ev)}
@@ -466,23 +447,50 @@ const AdminCalendario: React.FC = () => {
                                                     >
                                                         <span className={`inline-block h-3 w-3 transform rounded-full bg-white shadow transition-transform ${ev.is_active ? 'translate-x-5' : 'translate-x-1'}`} />
                                                     </button>
+                                                </div>
 
-                                                    <div className="flex gap-1.5">
-                                                        {canEdit(ev) ? (
-                                                            <>
-                                                                <button onClick={() => openEdit(ev)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 active:scale-90 transition-all shadow-sm border border-blue-100">
-                                                                    <Edit2 size={14} />
-                                                                </button>
-                                                                <button onClick={() => setConfirmDeleteId(ev.id)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-red-50 text-red-600 active:scale-90 transition-all shadow-sm border border-red-100">
-                                                                    <Trash2 size={14} />
-                                                                </button>
-                                                            </>
-                                                        ) : (
-                                                            <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-50 text-slate-300 border border-slate-100" title="Somente leitura">
-                                                                <Lock size={12} />
-                                                            </div>
-                                                        )}
-                                                    </div>
+                                                {/* NOME: Linha 2, Coluna 2 */}
+                                                <div className="col-start-2 col-span-2 min-w-0 self-center">
+                                                    <h3 className="font-bold text-slate-800 text-[15px] leading-tight truncate">
+                                                        {ev.title}
+                                                    </h3>
+                                                </div>
+
+                                                {/* DATA (ABAIXO DO EMOJI): Linha 3, Coluna 1 */}
+                                                <div className="col-start-1 row-start-3 flex justify-center border-t border-slate-50 pt-1">
+                                                    <span className="text-[11px] text-slate-500 font-mono font-bold uppercase tracking-wider leading-none">
+                                                        {formatDisplayDate(ev.date, ev.is_fixed)}
+                                                    </span>
+                                                </div>
+
+                                                {/* ANUAL: Linha 3, Coluna 2 */}
+                                                <div className="col-start-2 row-start-3 flex items-center gap-1.5 min-w-0 border-t border-slate-50 pt-1">
+                                                    <span className={`px-1.5 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-tighter border ${ev.is_fixed ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-purple-50 text-purple-600 border-purple-100'}`}>
+                                                        {ev.is_fixed ? 'Anual' : 'Específica'}
+                                                    </span>
+                                                    {ev.color_mode === 'holiday' && (
+                                                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-tighter bg-red-50 text-red-600 border border-red-100 truncate">
+                                                            Destaque
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                {/* AÇÕES: Linha 3, Coluna 3 */}
+                                                <div className="col-start-3 row-start-3 flex gap-1.5 justify-self-end border-t border-slate-50 pt-1">
+                                                    {canEdit(ev) ? (
+                                                        <>
+                                                            <button onClick={() => openEdit(ev)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 active:scale-90 transition-all shadow-sm border border-blue-100">
+                                                                <Edit2 size={14} />
+                                                            </button>
+                                                            <button onClick={() => setConfirmDeleteId(ev.id)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-red-50 text-red-600 active:scale-90 transition-all shadow-sm border border-red-100">
+                                                                <Trash2 size={14} />
+                                                            </button>
+                                                        </>
+                                                    ) : (
+                                                        <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-50 text-slate-300 border border-slate-100" title="Somente leitura">
+                                                            <Lock size={12} />
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -493,9 +501,10 @@ const AdminCalendario: React.FC = () => {
                     </div>
 
                     {/* Contador */}
-                    <p className="text-xs text-slate-400 text-right font-medium mt-2">{filtered.length} evento{filtered.length !== 1 ? 's' : ''} exibido{filtered.length !== 1 ? 's' : ''}</p>
+                    <p className="text-xs text-slate-400 text-right font-medium mt-4">{filtered.length} evento{filtered.length !== 1 ? 's' : ''} exibido{filtered.length !== 1 ? 's' : ''}</p>
                 </div>
             </div>
+
             {/* Footer exibido apenas em desktop */}
             <Footer className="hidden md:block" />
 
@@ -666,40 +675,38 @@ const AdminCalendario: React.FC = () => {
             />
 
             {/* ── Modal Confirmar Exclusão ── */}
-            {
-                confirmDeleteId && (
-                    <div className="fixed inset-0 z-[300] flex items-center justify-center p-1 sm:p-3">
-                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !deleting && setConfirmDeleteId(null)} />
-                        <div className="relative bg-white rounded-[24px] shadow-2xl w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200 p-6">
-                            <div className="flex flex-col items-center text-center gap-3 mb-6">
-                                <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
-                                    <Trash2 size={24} className="text-red-600" />
-                                </div>
-                                <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">Excluir Evento</h3>
-                                <p className="text-slate-500 text-sm">Esta ação não pode ser desfeita. O evento será removido permanentemente do calendário.</p>
+            {confirmDeleteId && (
+                <div className="fixed inset-0 z-[300] flex items-center justify-center p-1 sm:p-3">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !deleting && setConfirmDeleteId(null)} />
+                    <div className="relative bg-white rounded-[24px] shadow-2xl w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200 p-6">
+                        <div className="flex flex-col items-center text-center gap-3 mb-6">
+                            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
+                                <Trash2 size={24} className="text-red-600" />
                             </div>
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={() => setConfirmDeleteId(null)}
-                                    disabled={deleting}
-                                    className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    onClick={handleDelete}
-                                    disabled={deleting}
-                                    className="flex-1 h-12 rounded-xl bg-[#E53935] text-white font-bold text-sm shadow-[0_4px_0_#9B1212] hover:bg-[#C62828] active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center gap-2"
-                                >
-                                    {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
-                                    {deleting ? 'Excluindo...' : 'Excluir'}
-                                </button>
-                            </div>
+                            <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">Excluir Evento</h3>
+                            <p className="text-slate-500 text-sm">Esta ação não pode ser desfeita. O evento será removido permanentemente do calendário.</p>
+                        </div>
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => setConfirmDeleteId(null)}
+                                disabled={deleting}
+                                className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                disabled={deleting}
+                                className="flex-1 h-12 rounded-xl bg-[#E53935] text-white font-bold text-sm shadow-[0_4px_0_#9B1212] hover:bg-[#C62828] active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                            >
+                                {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+                                {deleting ? 'Excluindo...' : 'Excluir'}
+                            </button>
                         </div>
                     </div>
-                )
-            }
-        </div >
+                </div>
+            )}
+        </div>
     );
 };
 
