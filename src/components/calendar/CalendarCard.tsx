@@ -132,24 +132,12 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                         className="hidden md:block w-7 h-7 md:w-10 md:h-10 object-contain drop-shadow-md"
                     />
                     <h3 className="text-base md:text-xl font-extrabold uppercase tracking-wide flex items-center gap-1">
-                        <span className="hidden md:inline" style={{
-                            background: 'linear-gradient(135deg, #FF416C 0%, #FF4B2B 50%, #C62828 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            backgroundClip: 'text',
-                            letterSpacing: '0.8px'
-                        }}>
+                        <span className="hidden md:inline text-[#C62828]" style={{ letterSpacing: '0.8px' }}>
                             {MONTHS[month]}
                         </span>
                         <div className="flex items-center gap-1">
                             <span className="hidden md:inline text-[#C62828] text-sm md:text-base opacity-40 flex-shrink-0">•</span>
-                            <span style={{
-                                background: 'linear-gradient(135deg, #FF416C 0%, #FF4B2B 50%, #C62828 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text',
-                                letterSpacing: '0.8px'
-                            }}>
+                            <span className="text-[#C62828]" style={{ letterSpacing: '0.8px' }}>
                                 {year}
                             </span>
                         </div>
@@ -181,7 +169,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 </div>
             </div>
 
-            <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border md:border-[#bae6fd]/50 opacity-100 shadow-inner shadow-blue-900/[0.03] filter-none backdrop-filter-none">
+            <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border-[0.5px] md:border-sky-400/20 opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] filter-none backdrop-filter-none">
                 <div className="hidden md:block absolute top-[1px] left-[20px] right-[20px] h-[1px] bg-white/20 pointer-events-none" />
                 <CalendarGrid
                     calendarData={calendarData}
