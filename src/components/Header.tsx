@@ -181,16 +181,16 @@ const Header = () => {
             </header>
 
             {/* Header Mobile/Tablet */}
-            <header className="sticky top-0 z-50 w-full h-[60px] bg-[#EFF3F6] flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-2 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
+            <header className="sticky top-0 z-50 w-full h-[60px] bg-[#EFF3F6] flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
                 <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
                     <div className="flex items-center gap-1.5 w-full max-w-[280px]">
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
-                            className="w-12 h-12 md:w-14 md:h-14 object-contain ml-1 transition-transform duration-300 hover:scale-105 shrink-0"
+                            className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
-                            className="text-[1.1rem] md:text-[1.6rem] font-bold tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
+                            className="text-[1.1rem] md:text-[1.6rem] font-black tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
                             style={{
                                 background: 'linear-gradient(to bottom, #FF4D4D 0%, #D32F2F 50%, #8B0000 100%)',
                                 WebkitBackgroundClip: 'text',

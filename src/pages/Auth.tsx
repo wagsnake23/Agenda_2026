@@ -96,7 +96,7 @@ const AuthPage: React.FC = () => {
 
             <div className="w-full max-w-[390px] relative z-10">
                 {/* Card de Login - No Mobile fundo branco direto, no Desktop com Card */}
-                <div className="bg-white md:bg-[#F8FAFC] md:rounded-[40px] md:shadow-2xl overflow-hidden px-4 md:px-8 pt-3 md:pt-6 pb-6 md:pb-5 flex flex-col items-center md:border md:border-white/10">
+                <div className="bg-white md:bg-[#F8FAFC] md:rounded-[33px] md:shadow-2xl overflow-hidden px-4 md:px-8 pt-3 md:pt-6 pb-6 md:pb-5 flex flex-col items-center md:border md:border-white/10">
 
                     {/* Logo Original */}
                     <img
