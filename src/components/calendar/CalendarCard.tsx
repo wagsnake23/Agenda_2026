@@ -129,15 +129,15 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     <img
                         src="/logo.png"
                         alt="Logo"
-                        className="hidden md:block w-7 h-7 md:w-10 md:h-10 object-contain drop-shadow-md"
+                        className="hidden md:block w-7 h-7 md:w-10 md:h-10 object-contain drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)]"
                     />
                     <h3 className="text-base md:text-xl font-extrabold uppercase tracking-wide flex items-center gap-1">
-                        <span className="hidden md:inline text-[#C62828]" style={{ letterSpacing: '0.8px' }}>
+                        <span className="hidden md:inline text-[#C62828]" style={{ letterSpacing: '0.8px', textShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
                             {MONTHS[month]}
                         </span>
                         <div className="flex items-center gap-1">
                             <span className="hidden md:inline text-[#C62828] text-sm md:text-base opacity-40 flex-shrink-0">•</span>
-                            <span className="text-[#C62828]" style={{ letterSpacing: '0.8px' }}>
+                            <span className="text-[#C62828]" style={{ letterSpacing: '0.8px', textShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
                                 {year}
                             </span>
                         </div>
