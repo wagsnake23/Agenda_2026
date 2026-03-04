@@ -336,28 +336,66 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   useEffect(() => {
     const channel = supabase.channel("calendar-realtime");
 
-    function atualizarEventosDoDia(payload: any) {
-      if (payload.eventType === "INSERT") {
-        setEvents((prev: any) => [...prev, payload.new]);
-      }
+    async function atualizarEventosDoDia(payload: any) {
       if (payload.eventType === "DELETE") {
         setEvents((prev: any) => prev.filter((e: any) => e.id !== payload.old.id));
+        return;
       }
-      if (payload.eventType === "UPDATE") {
-        setEvents((prev: any) => prev.map((e: any) => e.id === payload.new.id ? payload.new : e));
+
+      if (payload.eventType === "INSERT" || payload.eventType === "UPDATE") {
+        const { data, error } = await supabase
+          .from("calendar_events")
+          .select("*")
+          .eq("id", payload.new.id)
+          .single();
+
+        if (error || !data) {
+          console.error("Erro ao buscar evento completo pro realtime:", error);
+          return;
+        }
+
+        const newEvent = { ...data, is_system: false };
+
+        if (payload.eventType === "INSERT") {
+          setEvents((prev: any) => [...prev, newEvent]);
+        }
+        if (payload.eventType === "UPDATE") {
+          setEvents((prev: any) => prev.map((e: any) => (e.id === newEvent.id ? newEvent : e)));
+        }
       }
     }
 
-    function atualizarCardAgendamentos(payload: any) {
-      if (payload.eventType === "INSERT") {
-        // Para agendamentos, incluiremos o novo elemento e ordenaremos.
-        setAgendamentos((prev: any) => [...prev, payload.new].sort((a, b) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime()));
-      }
+    async function atualizarCardAgendamentos(payload: any) {
       if (payload.eventType === "DELETE") {
         setAgendamentos((prev: any) => prev.filter((a: any) => a.id !== payload.old.id));
+        return;
       }
-      if (payload.eventType === "UPDATE") {
-        setAgendamentos((prev: any) => prev.map((a: any) => a.id === payload.new.id ? payload.new : a));
+
+      if (payload.eventType === "INSERT" || payload.eventType === "UPDATE") {
+        const { data, error } = await supabase
+          .from("agendamentos")
+          .select(`
+            *,
+            profiles:user_id (
+              id, nome, apelido, email, foto_url, cargo, matricula, perfil
+            )
+          `)
+          .eq("id", payload.new.id)
+          .single();
+
+        if (error || !data) {
+          console.error("Erro ao buscar agendamento completo pro realtime:", error);
+          return;
+        }
+
+        if (payload.eventType === "INSERT") {
+          setAgendamentos((prev: any) =>
+            [...prev, data].sort((a, b) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime())
+          );
+        }
+        if (payload.eventType === "UPDATE") {
+          setAgendamentos((prev: any) => prev.map((a: any) => (a.id === data.id ? data : a)));
+        }
       }
     }
 
