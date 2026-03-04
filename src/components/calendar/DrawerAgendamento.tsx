@@ -374,7 +374,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                 <div className={cn(
                     "flex-1 overflow-y-auto flex flex-col gap-4",
-                    variant === 'modal' ? "p-4 md:p-6" : "p-4 md:px-3 md:pt-3 md:pb-1"
+                    variant === 'modal' ? "px-2 py-4 md:p-6" : "px-2 py-4 md:px-3 md:pt-3 md:pb-1"
                 )}>
                     {mode === 'create' || modoEdicao ? (
                         <div className="flex flex-col gap-0">
@@ -652,7 +652,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             id={`agendamento-${agenda.id}`}
                                             onClick={handleCardClick}
                                             className={cn(
-                                                "p-2.5 md:p-3 rounded-2xl border bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
+                                                "p-1.5 md:p-3 rounded-2xl border bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
                                                 isSelected
                                                     ? "border-blue-500 ring-2 ring-blue-200 shadow-lg scale-[1.01] md:scale-[1.02]"
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
@@ -660,7 +660,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         >
                                             <div className="grid grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative">
                                                 {/* COLUNA 1: USUÁRIO */}
-                                                <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-2 md:-ml-1.5">
+                                                <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-1 md:-ml-1.5">
                                                     <div className="w-11 h-11 md:w-14 md:h-14 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
                                                         {agenda.userPhoto ? (
                                                             <img src={agenda.userPhoto} alt={agenda.userName} className="w-full h-full object-cover" />
@@ -676,20 +676,20 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </div>
 
                                                 {/* COLUNA 2: CONTEÚDO */}
-                                                <div className="col-start-2 row-start-1 flex items-center gap-1.5 md:gap-2 overflow-hidden py-0.5 -ml-2 md:ml-0">
+                                                <div className="col-start-2 row-start-1 flex items-center gap-1.5 md:gap-2 overflow-hidden py-0.5 -ml-1 md:ml-0">
                                                     <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0">{emoji}</span>
                                                     <span className="text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight truncate">
                                                         {tipoNome}
                                                     </span>
                                                 </div>
-                                                <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-2 md:ml-0">
+                                                <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0">
                                                     <span className="text-[11px] md:text-[12px] leading-none opacity-70">📅</span>
                                                     <span className="text-[10.5px] md:text-[clamp(11px,0.85vw,12px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis block">
                                                         {renderPeriod()}
                                                     </span>
                                                 </div>
                                                 {agenda.observacao && (
-                                                    <div className="col-start-2 col-span-2 row-start-3 italic text-[9.5px] md:text-[10.5px] text-slate-500 leading-tight py-0.5 pr-1 md:pr-2 break-words -ml-2 md:ml-0">
+                                                    <div className="col-start-2 col-span-2 row-start-3 italic text-[9.5px] md:text-[10.5px] text-slate-500 leading-tight py-0.5 pr-1 md:pr-2 break-words -ml-1 md:ml-0">
                                                         "{agenda.observacao}"
                                                     </div>
                                                 )}
@@ -714,7 +714,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
                                                 {profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && (
-                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-2.5 md:-my-3 -mr-2.5 md:-mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
+                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-1.5 md:-my-3 -mr-1.5 md:-mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
