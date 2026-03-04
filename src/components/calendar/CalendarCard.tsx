@@ -154,7 +154,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 {/* Badge da Estação (Desktop) */}
                 <div className="hidden md:flex items-center h-full flex-1 justify-end md:-mr-1">
                     <div
-                        className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season"
+                        className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season md:shadow-[inset_0_2px_4px_rgba(0,0,0,0.15),inset_0_-1px_1px_rgba(0,0,0,0.05)]"
                         style={{
                             padding: '5px 14px',
                             borderRadius: '20px',
@@ -167,7 +167,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                             gap: '8px',
                             textTransform: 'uppercase',
                             letterSpacing: '0.6px',
-                            border: `1px solid ${season.style.border}`,
+                            border: `0.5px solid ${season.style.border}`,
                         }}
                     >
                         <span className="text-base transform transition-transform group-hover/season:rotate-12">{season.emoji}</span>
