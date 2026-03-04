@@ -131,14 +131,21 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       style={{ transform: "translateZ(0)", backfaceVisibility: "hidden" }}
     >
       <div className="flex flex-col items-center justify-center relative">
-        {temAgendamentoHoje && (
-          <span
-            className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] md:text-[12px] leading-none animate-in zoom-in-50 duration-300"
-            title="Agendamento"
-          >
-            🏖️
-          </span>
-        )}
+        {temAgendamentoHoje && (() => {
+          const agendaDoDia = agendamentos.find(a => a.dataInicio === dateStr);
+          const rawTipo = agendaDoDia?.tipo || "🏖️ Férias";
+          const match = rawTipo.match(/^([\p{Emoji}])/u);
+          const dynamicEmoji = match ? match[1] : "🏖️";
+
+          return (
+            <span
+              className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] md:text-[12px] leading-none animate-in zoom-in-50 duration-300"
+              title={rawTipo}
+            >
+              {dynamicEmoji}
+            </span>
+          )
+        })()}
         <span className="tracking-[0.3px]">
           {String(dayData.day).padStart(2, "0")}
         </span>

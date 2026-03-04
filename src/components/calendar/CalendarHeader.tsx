@@ -333,7 +333,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               todayColors.bg === 'bg-calendar-blue' && "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] text-white",
               todayColors.bg === 'bg-calendar-green' && "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] text-white",
               todayColors.bg === 'bg-calendar-yellow' && "bg-gradient-to-br from-[#fde047] to-[#f59e0b] text-[#1A1A1A]",
-              scaleType === 'adm' && "bg-[#FEE2E2] text-red-800 hover:bg-red-200 border-red-300/45"
+              scaleType === 'adm' && "bg-gradient-to-b from-[#fef08a] to-[#facc15] hover:from-[#fef08a] hover:to-[#facc15] text-[#0B1221] hover:!text-[#0B1221] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] !border !border-[#facc15]/30"
             )}
           >
             Hoje: {formatToday()}

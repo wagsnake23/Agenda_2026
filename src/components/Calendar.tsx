@@ -357,7 +357,10 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         const newEvent = { ...data, is_system: false };
 
         if (payload.eventType === "INSERT") {
-          setEvents((prev: any) => [...prev, newEvent]);
+          setEvents((prev: any) => {
+            if (prev.some((e: any) => e.id === newEvent.id)) return prev;
+            return [...prev, newEvent];
+          });
         }
         if (payload.eventType === "UPDATE") {
           setEvents((prev: any) => prev.map((e: any) => (e.id === newEvent.id ? newEvent : e)));
@@ -389,9 +392,10 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         }
 
         if (payload.eventType === "INSERT") {
-          setAgendamentos((prev: any) =>
-            [...prev, data].sort((a, b) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime())
-          );
+          setAgendamentos((prev: any) => {
+            if (prev.some((a: any) => a.id === data.id)) return prev;
+            return [...prev, data].sort((a, b) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime());
+          });
         }
         if (payload.eventType === "UPDATE") {
           setAgendamentos((prev: any) => prev.map((a: any) => (a.id === data.id ? data : a)));

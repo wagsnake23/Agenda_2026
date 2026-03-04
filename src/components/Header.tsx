@@ -162,7 +162,7 @@ const Header = () => {
                                     {/* Botão Agendar */}
                                     <button
                                         onClick={handleAgendar}
-                                        className="px-5 py-2 rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.25)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2"
+                                        className="px-5 py-2 rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2 border border-[#facc15]/30"
                                     >
                                         <span>📝</span> Agendar
                                     </button>
@@ -193,13 +193,9 @@ const Header = () => {
                             className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
-                            className="text-[1.1rem] md:text-[1.6rem] font-black tracking-wider uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
+                            className="text-[1.1rem] md:text-[1.6rem] font-black tracking-wider uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0 text-[#C62828]"
                             style={{
-                                background: 'linear-gradient(to bottom, #FF4D4D 0%, #D32F2F 50%, #8B0000 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text',
-                                filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.15))'
+                                textShadow: '0 1px 0 rgba(0,0,0,0.15)'
                             }}
                         >
                             <span>CALENDÁRIO</span>
