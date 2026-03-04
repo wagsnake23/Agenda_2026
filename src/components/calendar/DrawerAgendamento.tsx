@@ -374,7 +374,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                 <div className={cn(
                     "flex-1 overflow-y-auto flex flex-col gap-4",
-                    variant === 'modal' ? "px-2 py-4 md:p-6" : "px-2 py-4 md:px-3 md:pt-3 md:pb-1"
+                    variant === 'modal' ? "px-3 py-4 md:p-6" : "px-3 py-4 md:px-3 md:pt-3 md:pb-1"
                 )}>
                     {mode === 'create' || modoEdicao ? (
                         <div className="flex flex-col gap-0">
