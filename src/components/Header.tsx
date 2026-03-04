@@ -103,13 +103,16 @@ const Header = () => {
                             className="w-14 h-14 drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
                         />
                         <h1
-                            className="font-bold tracking-normal text-white uppercase leading-none inline-flex items-center pointer-events-auto"
+                            className="font-black md:text-[1.25rem] tracking-wider text-white uppercase leading-none inline-flex items-center pointer-events-auto"
                             style={{
-                                fontFamily: 'Inter, sans-serif',
-                                filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.3)) drop-shadow(0px 4px 12px rgba(0,0,0,0.5))',
+                                background: 'linear-gradient(to bottom, #ffffff 40%, #94a3b8 100%)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                backgroundClip: 'text',
+                                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
                             }}
                         >
-                            <span className="text-[1.3rem]">CALENDÁRIO AGENDA</span>
+                            CALENDÁRIO AGENDA
                         </h1>
                     </div>
 
@@ -182,21 +185,21 @@ const Header = () => {
 
             {/* Header Mobile/Tablet */}
             <header className="sticky top-0 z-50 w-full h-[60px] bg-[#EFF3F6] flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
-                <div className="flex items-center gap-3 cursor-pointer relative -top-[1px]" onClick={() => navigate('/')}>
-                    <div className="flex items-center gap-1.5 w-full max-w-[280px]">
+                <div className="flex items-center cursor-pointer relative -top-[1px]" onClick={() => navigate('/')}>
+                    <div className="flex items-center gap-4 w-full max-w-[320px]">
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
                             className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
-                            className="text-[1.1rem] md:text-[1.6rem] font-black tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
+                            className="text-[1.1rem] md:text-[1.6rem] font-black tracking-wider uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
                             style={{
                                 background: 'linear-gradient(to bottom, #FF4D4D 0%, #D32F2F 50%, #8B0000 100%)',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
-                                fontFamily: 'Inter, sans-serif',
-                                filter: 'drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.1))',
+                                backgroundClip: 'text',
+                                filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.15))'
                             }}
                         >
                             <span>CALENDÁRIO</span>
