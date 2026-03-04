@@ -56,7 +56,7 @@ const Index = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-[#EFF3F6] lg:bg-[linear-gradient(135deg,#F0F4F8_0%,#E2E8F0_100%)] flex flex-col items-center justify-start p-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible">
+      <div className="min-h-screen bg-[#EFF3F6] lg:bg-[linear-gradient(135deg,#F0F4F8_0%,#E2E8F0_100%)] flex flex-col items-center justify-start px-[10px] py-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible">
         <Header />
 
         {/* Wrapper de Escala apenas para Desktop - Aplica o padding-top p/ header fixo lg:pt-[74px] */}
