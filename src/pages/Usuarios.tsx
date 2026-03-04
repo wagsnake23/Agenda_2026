@@ -286,7 +286,7 @@ const UserModal: React.FC<{
                                 type="button"
                                 onClick={() => setIsConfirmResetOpen(true)}
                                 disabled={actionLoading === "reset-password"}
-                                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-100 shadow-sm transition-all disabled:opacity-60"
+                                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 border border-orange-500 shadow-sm transition-all disabled:opacity-60"
                             >
                                 {actionLoading === "reset-password" ? (
                                     <Loader2 size={16} className="animate-spin" />
@@ -307,15 +307,17 @@ const UserModal: React.FC<{
                 </form>
 
                 <AlertDialog open={isConfirmResetOpen} onOpenChange={setIsConfirmResetOpen}>
-                    <AlertDialogContent className="rounded-[24px] border-none shadow-2xl">
+                    <AlertDialogContent className="w-[99%] max-w-sm rounded-[24px] border-none shadow-2xl p-6">
                         <AlertDialogHeader>
-                            <AlertDialogTitle className="text-xl font-black text-slate-800 uppercase tracking-tight">Redefinir Senha</AlertDialogTitle>
-                            <AlertDialogDescription className="text-slate-600 font-bold text-sm leading-relaxed">
+                            <AlertDialogTitle className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center justify-center gap-2">
+                                🔑 Redefinir Senha
+                            </AlertDialogTitle>
+                            <AlertDialogDescription className="text-slate-600 font-bold text-sm leading-relaxed mt-2 text-center">
                                 Deseja redefinir a senha do usuário para <strong className="text-orange-600">Agenda1</strong>?
                             </AlertDialogDescription>
                         </AlertDialogHeader>
-                        <AlertDialogFooter className="gap-3 mt-4">
-                            <AlertDialogCancel className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm border-none shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all">
+                        <AlertDialogFooter className="flex flex-row items-center gap-3 mt-6 sm:space-x-0 sm:justify-center w-full">
+                            <AlertDialogCancel className="m-0 mt-0 flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-[15px] border border-slate-200 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all">
                                 Cancelar
                             </AlertDialogCancel>
                             <AlertDialogAction
@@ -323,7 +325,7 @@ const UserModal: React.FC<{
                                     e.preventDefault();
                                     handleResetPassword();
                                 }}
-                                className="flex-1 h-12 rounded-xl bg-orange-600 text-white font-bold text-sm border-none shadow-[0_4px_0_#C2410C] hover:bg-orange-700 active:translate-y-[2px] active:shadow-none transition-all"
+                                className="m-0 flex-1 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-[15px] border-none shadow-[0_4px_0_#C2410C] hover:from-orange-600 hover:to-orange-700 active:translate-y-[2px] active:shadow-none transition-all"
                             >
                                 Confirmar
                             </AlertDialogAction>
