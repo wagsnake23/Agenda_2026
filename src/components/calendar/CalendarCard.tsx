@@ -61,29 +61,42 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     }, []);
 
     const getSeasonData = (m: number, y: number) => {
-        const commonStyle = {
-            badgeText: 'text-[#334155]',
-            useTextGradient: false
-        };
-
         const now = new Date();
         const isCurrentMonth = now.getMonth() === m && now.getFullYear() === y;
         const targetDay = isCurrentMonth ? now.getDate() : 15;
 
         const seasonInfo = getSeasonDataForDate(m, targetDay);
 
-        const gradients: Record<string, string> = {
-            'Verão': 'linear-gradient(135deg, #ffffff 0%, #fef9f3 100%)',
-            'Outono': 'linear-gradient(135deg, #ffffff 0%, #fef6e7 100%)',
-            'Inverno': 'linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)',
-            'Primavera': 'linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%)'
+        // Definição de Gradientes Premium Suaves por Estação
+        const gradients: Record<string, { bg: string, text: string, border: string }> = {
+            'Primavera': {
+                bg: 'linear-gradient(to bottom, #fffce8, #fff3cd)',
+                text: '#856404',
+                border: '#fde047'
+            },
+            'Verão': {
+                bg: 'linear-gradient(to bottom, #f0fdf4, #dcfce7)',
+                text: '#166534',
+                border: '#bbf7d0'
+            },
+            'Outono': {
+                bg: 'linear-gradient(to bottom, #fff7ed, #ffedd5)',
+                text: '#9a3412',
+                border: '#fed7aa'
+            },
+            'Inverno': {
+                bg: 'linear-gradient(to bottom, #f0f9ff, #e0f2fe)',
+                text: '#075985',
+                border: '#bae6fd'
+            }
         };
+
+        const style = gradients[seasonInfo.name] || gradients['Primavera'];
 
         return {
             name: seasonInfo.name,
             emoji: seasonInfo.emoji,
-            gradient: gradients[seasonInfo.name] || gradients['Verão'],
-            ...commonStyle
+            style
         };
     };
 
@@ -138,18 +151,27 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     </h3>
                 </div>
 
-                {/* Badge da Estação */}
-                <div className="flex items-center h-full flex-1 justify-end md:-mr-1">
-                    <div className="flex items-center gap-0.5 select-none">
-                        <span
-                            className={cn("hidden md:inline uppercase text-[13px] md:text-[17px] lg:text-[19px] font-extrabold tracking-wide leading-none", season.badgeText)}
-                            style={{ letterSpacing: '0.8px' }}
-                        >
-                            {season.name}
-                        </span>
-                        <span className="text-xl md:text-2xl lg:text-3xl leading-none drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)] filter saturate-[1.1] transform active:scale-95 transition-transform">
-                            {season.emoji}
-                        </span>
+                {/* Badge da Estação (Desktop) */}
+                <div className="hidden md:flex items-center h-full flex-1 justify-end md:-mr-1">
+                    <div
+                        className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season"
+                        style={{
+                            padding: '5px 14px',
+                            borderRadius: '20px',
+                            fontSize: '13.5px',
+                            background: season.style.bg,
+                            color: season.style.text,
+                            fontWeight: '800',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.6px',
+                            border: `1px solid ${season.style.border}`,
+                        }}
+                    >
+                        <span className="text-base transform transition-transform group-hover/season:rotate-12">{season.emoji}</span>
+                        <span>{season.name}</span>
                     </div>
                 </div>
             </div>
