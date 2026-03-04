@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useMobileMenu } from '@/hooks/useMobileMenu';
 import {
-    Menu, X, LogOut
+    Menu, X, LogOut, LogIn
 } from 'lucide-react';
 import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue
@@ -204,13 +204,15 @@ const MobileMenu = () => {
                             </button>
                         </>
                     ) : (
-                        <button
-                            onClick={() => handleNav('/auth')}
-                            className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
-                        >
-                            <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">🔑</span>
-                            <span className="font-bold text-sm">Entrar</span>
-                        </button>
+                        <div className="px-1 pt-2">
+                            <button
+                                onClick={() => handleNav('/auth')}
+                                className="flex items-center justify-center gap-3 px-4 py-3 w-full rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.15)] active:scale-95 transition-all"
+                            >
+                                <LogIn size={18} />
+                                <span>Entrar</span>
+                            </button>
+                        </div>
                     )}
 
                 </div>

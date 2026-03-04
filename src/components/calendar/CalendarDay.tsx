@@ -44,7 +44,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   const { mode } = useCalendarMode();
 
   if (!dayData || month === undefined || year === undefined) {
-    return <div className="w-full h-full rounded-[11px]" />;
+    return <div className="w-full h-full rounded-[9px] md:rounded-[11px]" />;
   }
 
   const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayData.day).padStart(2, '0')}`;
@@ -93,7 +93,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       onClick={handleClick}
       className={cn(
         "relative w-full h-full flex items-center justify-center",
-        "rounded-[11px]",
+        "rounded-[9px] md:rounded-[11px]",
         "text-sm md:text-base font-semibold",
         "bg-clip-padding saturate-[1.05]",
         "transition-colors duration-200 ease-out",
