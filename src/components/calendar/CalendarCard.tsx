@@ -110,6 +110,9 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 "bg-white/95 backdrop-blur-sm opacity-100",
                 "antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [contain:paint]",
                 "border border-[#0F172A]/[0.05] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)]",
+                // Efeito 3D Desktop (borda fina e sombra interna)
+                "md:border-[0.5px] md:border-slate-300/80",
+                "md:shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-2px_6px_rgba(0,0,0,0.06),0_12px_24px_-8px_rgba(0,0,0,0.15)]",
                 "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent before:z-20",
                 "shadow-inner shadow-white/40",
                 isCenter ? "md:bg-white" : "md:bg-gray-50/90",
