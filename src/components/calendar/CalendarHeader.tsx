@@ -192,8 +192,8 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             <SelectTrigger
               className="w-[140px] md:w-[220px] lg:w-[200px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
                          bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] rounded-[12px] lg:rounded-[11px]
-                         focus-visible:border-red-600 focus-visible:ring-2 
-                         focus-visible:ring-red-600 focus-visible:ring-offset-2 
+                         focus:ring-0 focus:ring-offset-0 focus:border-gray-200 lg:focus:border-gray-300
+                         focus-visible:border-red-600 focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
                          hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white
                          data-[state=open]:!ring-2 data-[state=open]:!ring-red-600 data-[state=open]:!border-red-600"
             >
