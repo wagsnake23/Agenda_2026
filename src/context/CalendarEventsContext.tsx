@@ -8,6 +8,7 @@ interface CalendarEventsContextType {
     loading: boolean;
     error: string | null;
     refetch: () => void;
+    setEvents: React.Dispatch<React.SetStateAction<CalendarEvent[]>>;
 }
 
 const CalendarEventsContext = createContext<CalendarEventsContextType>({
@@ -15,13 +16,14 @@ const CalendarEventsContext = createContext<CalendarEventsContextType>({
     loading: true,
     error: null,
     refetch: () => { },
+    setEvents: () => { },
 });
 
 export const CalendarEventsProvider = ({ children }: { children: ReactNode }) => {
-    const { events, loading, error, refetch } = useCalendarEvents();
+    const { events, loading, error, refetch, setEvents } = useCalendarEvents();
 
     return (
-        <CalendarEventsContext.Provider value={{ events, loading, error, refetch }}>
+        <CalendarEventsContext.Provider value={{ events, loading, error, refetch, setEvents }}>
             {children}
         </CalendarEventsContext.Provider>
     );

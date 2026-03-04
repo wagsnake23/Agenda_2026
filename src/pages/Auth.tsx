@@ -96,17 +96,17 @@ const AuthPage: React.FC = () => {
 
             <div className="w-full max-w-[390px] relative z-10">
                 {/* Card de Login - No Mobile fundo branco direto, no Desktop com Card */}
-                <div className="bg-white md:bg-[#F8FAFC] md:rounded-[33px] md:shadow-2xl overflow-hidden px-4 md:px-8 pt-3 md:pt-6 pb-6 md:pb-5 flex flex-col items-center md:border md:border-white/10">
+                <div className="bg-white md:bg-[#F8FAFC] md:rounded-[35px] md:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.3)] overflow-hidden px-4 md:px-8 pt-3 md:pt-4 pb-6 md:pb-1 flex flex-col items-center md:border-[12px] md:border-white">
 
                     {/* Logo Original */}
                     <img
                         src="/logo.png"
                         alt="Calendário"
-                        className="w-20 md:w-20 h-20 md:h-20 drop-shadow-[0_10px_30px_rgba(37,99,235,0.3)] object-contain filter brightness-[1.1] mb-2 md:mb-3 transform hover:scale-105 transition-transform duration-500"
+                        className="w-20 md:w-20 h-20 md:h-20 drop-shadow-[0_10px_30px_rgba(37,99,235,0.3)] object-contain filter brightness-[1.1] mb-2 md:mb-1 transform hover:scale-105 transition-transform duration-500"
                     />
 
                     {/* Títulos com Gradiente Premium */}
-                    <div className="text-center mb-8 md:mb-5">
+                    <div className="text-center mb-8 md:mb-4">
                         <h1
                             className="font-black text-xl uppercase leading-tight"
                             style={{
@@ -120,7 +120,7 @@ const AuthPage: React.FC = () => {
                     </div>
 
                     {/* Formulário */}
-                    <form onSubmit={loginForm.handleSubmit(handleLogin)} className="w-full space-y-5 md:space-y-3">
+                    <form onSubmit={loginForm.handleSubmit(handleLogin)} className="w-full space-y-5 md:space-y-2">
                         {/* Email */}
                         <div className="space-y-2">
                             <label className="text-slate-500 md:text-slate-700 text-xs font-black uppercase tracking-wider ml-1 opacity-70">Email</label>
@@ -185,14 +185,14 @@ const AuthPage: React.FC = () => {
                     {/* Esqueci a Senha */}
                     <button
                         type="button"
-                        className="mt-8 mb-4 md:mb-0 text-blue-900 font-bold text-xs uppercase tracking-widest hover:text-blue-700 transition-all"
+                        className="mt-8 md:mt-4 mb-4 md:mb-0 text-blue-900 font-bold text-xs uppercase tracking-widest hover:text-blue-700 transition-all"
                         onClick={() => setShowResetModal(true)}
                     >
                         Esqueceu sua senha?
                     </button>
 
                     {/* Footer Desktop - Dentro do card */}
-                    <div className="hidden md:block mt-5 text-slate-500 text-[10px] font-black uppercase tracking-wider">
+                    <div className="hidden md:block mt-7 text-[#475569] text-[10px] font-semibold uppercase tracking-wider">
                         © {new Date().getFullYear()} - Calendário Agenda - by Vagner
                     </div>
                 </div>

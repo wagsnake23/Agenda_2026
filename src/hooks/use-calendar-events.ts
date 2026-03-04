@@ -72,7 +72,7 @@ export const useCalendarEvents = () => {
         fetchEvents();
     }, [fetchEvents]);
 
-    return { events, loading, error, refetch: fetchEvents };
+    return { events, loading, error, refetch: fetchEvents, setEvents };
 };
 
 // ─────────────────────────────────────────────────────────────────────────────

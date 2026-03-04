@@ -29,6 +29,7 @@ import { useAgendamentos } from '@/hooks/useAgendamentos';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
+import { supabase } from '@/lib/supabase';
 
 interface CalendarProps {
   month: number;
@@ -65,10 +66,10 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const [currentSlide, setCurrentSlide] = useState(0);
   const { mode, setMode } = useCalendarMode();
   const { isAuthenticated } = useAuth();
-  const { events: calendarEvents } = useCalendarEventsContext();
+  const { events: calendarEvents, setEvents } = useCalendarEventsContext();
 
   // Hook de agendamentos do Supabase
-  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch } = useAgendamentos();
+  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch, setAgendamentos } = useAgendamentos();
 
   // Converter para o formato que o Drawer e CalendarCard esperam
   const agendamentos = useMemo(() => agendamentosDB.map(toDrawerFormat), [agendamentosDB]);
@@ -330,6 +331,60 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       window.removeEventListener('agendamento-criado', handleGlobalCreated);
     };
   }, [isAuthenticated, refetch]);
+
+  // ---> INÍCIO: SETUP SUPABASE REALTIME <---
+  useEffect(() => {
+    const channel = supabase.channel("calendar-realtime");
+
+    function atualizarEventosDoDia(payload: any) {
+      if (payload.eventType === "INSERT") {
+        setEvents((prev: any) => [...prev, payload.new]);
+      }
+      if (payload.eventType === "DELETE") {
+        setEvents((prev: any) => prev.filter((e: any) => e.id !== payload.old.id));
+      }
+      if (payload.eventType === "UPDATE") {
+        setEvents((prev: any) => prev.map((e: any) => e.id === payload.new.id ? payload.new : e));
+      }
+    }
+
+    function atualizarCardAgendamentos(payload: any) {
+      if (payload.eventType === "INSERT") {
+        // Para agendamentos, incluiremos o novo elemento e ordenaremos.
+        setAgendamentos((prev: any) => [...prev, payload.new].sort((a, b) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime()));
+      }
+      if (payload.eventType === "DELETE") {
+        setAgendamentos((prev: any) => prev.filter((a: any) => a.id !== payload.old.id));
+      }
+      if (payload.eventType === "UPDATE") {
+        setAgendamentos((prev: any) => prev.map((a: any) => a.id === payload.new.id ? payload.new : a));
+      }
+    }
+
+    channel
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "agendamentos" },
+        (payload) => {
+          console.log("Realtime agendamentos:", payload);
+          atualizarCardAgendamentos(payload);
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "calendar_events" },
+        (payload) => {
+          console.log("Realtime eventos:", payload);
+          atualizarEventosDoDia(payload);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [setEvents, setAgendamentos]);
+  // ---> FIM: SETUP SUPABASE REALTIME <---
 
   return (
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">

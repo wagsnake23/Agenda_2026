@@ -193,5 +193,6 @@ export const useAgendamentos = () => {
         atualizar,
         excluir,
         alterarStatus,
+        setAgendamentos,
     };
 };
