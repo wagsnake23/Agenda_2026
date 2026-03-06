@@ -805,8 +805,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         caption_label: "font-black text-[0.95rem] uppercase tracking-wider text-blue-800",
                                         nav: "static",
                                         nav_button: "h-8 w-8 flex items-center justify-center rounded-lg bg-blue-50/80 border border-blue-100/60 text-blue-600 shadow-[0_1px_2px_rgba(30,64,175,0.1),inset_0_1px_0_rgba(255,255,255,1)] hover:bg-blue-100 hover:text-blue-700 transition-all active:scale-95",
-                                        nav_button_previous: "absolute left-0 -top-1.5 ml-2",
-                                        nav_button_next: "absolute right-0 -top-1.5 mr-2",
+                                        nav_button_previous: "absolute left-1/2 -translate-x-[135px] md:-translate-x-[150px] -top-1.5",
+                                        nav_button_next: "absolute right-1/2 translate-x-[135px] md:translate-x-[150px] -top-1.5",
                                         table: "order-3 w-[min-content] mx-auto border-separate border-spacing-y-1 border-spacing-x-1 max-w-full",
                                         head_row: "flex w-full justify-center gap-1",
                                         head_cell: "text-[12px] md:text-[13px] font-bold tracking-[0.4px] uppercase flex items-center justify-center rounded-[14px] h-10 w-10 md:h-12 md:w-12 bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.08)] text-slate-700 first:text-slate-700 last:text-slate-700 m-0",
@@ -831,20 +831,20 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 <tfoot>
                                                     <tr>
                                                         <td colSpan={7}>
-                                                            <div className="w-full mt-3 mb-0 bg-gradient-to-b from-blue-50/90 to-blue-100/80 border border-blue-200/60 rounded-[12px] py-1.5 px-1.5 flex flex-nowrap items-center justify-center gap-1 sm:gap-4 shadow-[0_2px_4px_rgba(30,64,175,0.08),inset_0_1.5px_1px_rgba(255,255,255,1)] mx-auto sm:max-w-full">
-                                                                <div className="flex items-center gap-1 text-[13px] sm:text-[14px] text-blue-700/80 whitespace-nowrap">
+                                                            <div className="w-full mt-3 mb-0 bg-gradient-to-b from-blue-50/90 to-blue-100/80 border border-blue-200/60 rounded-[12px] py-1.5 px-2 flex flex-nowrap items-center justify-center gap-1.5 sm:gap-2 shadow-[0_2px_4px_rgba(30,64,175,0.08),inset_0_1.5px_1px_rgba(255,255,255,1)] mx-auto">
+                                                                <div className="flex items-center gap-1 text-[11px] sm:text-[12px] text-blue-700/80 whitespace-nowrap">
                                                                     <span className="font-medium">Início:</span>
-                                                                    <strong className="text-blue-800 font-bold">{rInicio}</strong>
+                                                                    <strong className="text-blue-800 font-black">{rInicio}</strong>
                                                                 </div>
-                                                                <span className="text-blue-200/80 font-light">|</span>
-                                                                <div className="flex items-center gap-1 text-[13px] sm:text-[14px] text-blue-700/80 whitespace-nowrap">
+                                                                <span className="text-blue-200/80 font-light text-[11px]">|</span>
+                                                                <div className="flex items-center gap-1 text-[11px] sm:text-[12px] text-blue-700/80 whitespace-nowrap">
                                                                     <span className="font-medium">Fim:</span>
-                                                                    <strong className="text-blue-800 font-bold">{rFim}</strong>
+                                                                    <strong className="text-blue-800 font-black">{rFim}</strong>
                                                                 </div>
-                                                                <span className="text-blue-200/80 font-light">|</span>
-                                                                <div className="flex items-center gap-1 text-[13px] sm:text-[14px] text-blue-700/80 whitespace-nowrap">
+                                                                <span className="text-blue-200/80 font-light text-[11px]">|</span>
+                                                                <div className="flex items-center gap-1 text-[11px] sm:text-[12px] text-blue-700/80 whitespace-nowrap">
                                                                     <span className="font-medium">Total:</span>
-                                                                    <strong className="text-blue-800 font-bold">{totalDias}d</strong>
+                                                                    <strong className="text-blue-800 font-black">{totalDias}d</strong>
                                                                 </div>
                                                             </div>
                                                         </td>

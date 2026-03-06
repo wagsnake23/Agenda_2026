@@ -105,10 +105,6 @@ const Header = () => {
                         <h1
                             className="font-black md:text-[1.25rem] tracking-wider text-white uppercase leading-none inline-flex items-center pointer-events-auto"
                             style={{
-                                background: 'linear-gradient(to bottom, #ffffff 40%, #94a3b8 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text',
                                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
                             }}
                         >
@@ -162,9 +158,9 @@ const Header = () => {
                                     {/* Botão Agendar */}
                                     <button
                                         onClick={handleAgendar}
-                                        className="px-5 py-2 rounded-full lg:rounded-[18px] font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2 border border-[#facc15]/30"
+                                        className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_0_#eab308] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
                                     >
-                                        <span>📝</span> Agendar
+                                        <span className="relative top-[-1px]">📝</span> Agendar
                                     </button>
 
                                     {/* Avatar Dropdown */}
@@ -173,9 +169,9 @@ const Header = () => {
                             ) : (
                                 <button
                                     onClick={() => navigate('/auth')}
-                                    className="px-5 py-2 rounded-full lg:rounded-[18px] font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2 border border-[#facc15]/30"
+                                    className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_0_#eab308] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
                                 >
-                                    <LogIn size={16} /> Entrar
+                                    <LogIn size={16} strokeWidth={3} /> Entrar
                                 </button>
                             )
                         )}

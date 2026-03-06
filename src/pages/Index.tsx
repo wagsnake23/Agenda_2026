@@ -84,11 +84,8 @@ const Index = () => {
               <div className="flex items-center gap-3">
                 <img src="/logo.png" alt="Logo" className="w-10 h-10 opacity-90 drop-shadow-md" />
                 <h3
-                  className="font-black text-base md:text-lg tracking-wider uppercase whitespace-nowrap"
+                  className="font-black text-base md:text-lg tracking-wider text-white uppercase whitespace-nowrap"
                   style={{
-                    background: 'linear-gradient(to bottom, #ffffff 40%, #94a3b8 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
                     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
                   }}
                 >
