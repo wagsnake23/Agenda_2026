@@ -683,8 +683,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     </span>
                                                 </div>
                                                 <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0">
-                                                    <span className="text-[11px] md:text-[12px] leading-none opacity-70">📅</span>
-                                                    <span className="text-[10.5px] md:text-[clamp(11px,0.85vw,12px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis block">
+                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70">📅</span>
+                                                    <span className="text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis block">
                                                         {renderPeriod()}
                                                     </span>
                                                 </div>
