@@ -98,12 +98,12 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
         "bg-clip-padding saturate-[1.05]",
         "transition-colors duration-200 ease-out",
         "will-change-[background-color,box-shadow,transform]",
-        "shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)]",
+        "shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_2px_4px_rgba(0,0,0,0.08)]",
         isSelected && "bg-[#FFFDDF] border border-orange-400/60 shadow-[0_0_12px_rgba(251,146,60,0.4)] z-10",
 
         mode === "adm"
           ? !isSelected && dayData.colors.bg === 'bg-white'
-            ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)] border-none"
+            ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.85),0_2px_4px_rgba(0,0,0,0.08)] border-none"
             : cn(
               "border",
               !isSelected && dayData.colors.border ? dayData.colors.border : "border-transparent"

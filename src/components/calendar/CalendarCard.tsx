@@ -110,10 +110,10 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     };
 
     const seasonGradients: Record<string, string> = {
-        "VERÃO": "linear-gradient(to bottom right, rgba(255,255,255,0.98) 0%, rgba(255,250,230,0.92) 12%, rgba(255,240,190,0.72) 32%, rgba(255,225,150,0.42) 55%, rgba(255,210,90,0.18) 75%, rgba(255,210,90,0) 90%)",
-        "OUTONO": "linear-gradient(to bottom right, rgba(255,255,255,0.98) 0%, rgba(255,248,240,0.92) 12%, rgba(255,235,210,0.72) 32%, rgba(255,210,170,0.42) 55%, rgba(255,170,110,0.18) 75%, rgba(255,170,110,0) 90%)",
-        "INVERNO": "linear-gradient(to bottom right, rgba(255,255,255,0.98) 0%, rgba(245,250,255,0.92) 12%, rgba(225,240,255,0.72) 32%, rgba(200,225,255,0.42) 55%, rgba(170,210,255,0.18) 75%, rgba(170,210,255,0) 90%)",
-        "PRIMAVERA": "linear-gradient(to bottom right, rgba(255,255,255,0.98) 0%, rgba(255,245,250,0.92) 12%, rgba(255,225,240,0.72) 32%, rgba(255,200,230,0.42) 55%, rgba(255,170,220,0.18) 75%, rgba(255,170,220,0) 90%)"
+        "VERÃO": "radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,250,230,0.80) 12%, rgba(255,235,180,0.55) 26%, rgba(255,220,140,0.30) 40%, rgba(255,210,90,0.12) 52%, rgba(255,210,90,0) 65%)",
+        "OUTONO": "radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,248,235,0.80) 12%, rgba(255,225,190,0.55) 26%, rgba(255,200,150,0.30) 40%, rgba(255,170,110,0.12) 52%, rgba(255,170,110,0) 65%)",
+        "INVERNO": "radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(245,250,255,0.80) 12%, rgba(225,240,255,0.55) 26%, rgba(200,225,255,0.30) 40%, rgba(170,210,255,0.12) 52%, rgba(170,210,255,0) 65%)",
+        "PRIMAVERA": "radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,245,250,0.80) 12%, rgba(255,225,240,0.55) 26%, rgba(255,200,230,0.30) 40%, rgba(255,170,220,0.12) 52%, rgba(255,170,220,0) 65%)"
     };
 
     const bgImage = seasonImages[season.name.toUpperCase()] || seasonImages["PRIMAVERA"];
@@ -150,15 +150,13 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             >
                 {/* Background da Estação */}
                 <div
-                    className="absolute inset-0 z-0 border-none outline-none"
+                    className="absolute inset-0 z-0 border-none outline-none contrast-[1.05] saturate-[1.05]"
                     style={{
-                        backgroundImage: `url(${bgImage})`,
+                        backgroundImage: `${bgGradient}, url(${bgImage})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center"
                     }}
                 >
-                    {/* Degradê concentrado apenas na parte superior esquerda */}
-                    <div className="absolute top-0 left-0 w-[52%] h-[58%] pointer-events-none" style={{ background: bgGradient }} />
                     {/* Gradiente superior para melhorar a leitura do título do mês */}
                     <div
                         className="absolute inset-0 pointer-events-none"
@@ -177,7 +175,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     <img
                         src="/logo.png"
                         alt="Logo"
-                        className="hidden md:block w-7 h-7 md:w-10 md:h-10 object-contain drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)]"
+                        className="hidden md:block w-8 h-8 md:w-[54px] md:h-[54px] object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
                     />
                     <h3 className="text-lg md:text-2xl font-extrabold uppercase tracking-wide flex items-center gap-1 m-0">
                         <span className="hidden md:inline text-[#E51A1A] font-black" style={{ letterSpacing: '1.2px', textShadow: '-1.5px -1.5px 0 rgba(255,255,255,0.95), 1.5px -1.5px 0 rgba(255,255,255,0.95), -1.5px 1.5px 0 rgba(255,255,255,0.95), 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 3px 5px rgba(0,0,0,0.4)' }}>
@@ -217,7 +215,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 </div>
             </div>
 
-            <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border-[0.5px] md:border-sky-400/20 opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] filter-none backdrop-filter-none">
+            <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border-[0.5px] md:border-sky-400/20 opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] backdrop-blur-[2px]">
                 <CalendarGrid
                     calendarData={calendarData}
                     isTransitioning={false}

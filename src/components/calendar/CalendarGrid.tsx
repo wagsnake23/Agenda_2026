@@ -83,8 +83,8 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 // =====================
                 mode === 'adm'
                   ? cn(
-                    "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.08)]",
-                    "bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED]",
+                    "shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(0,0,0,0.08)]",
+                    "bg-[#f5f6f7]",
                     isWeekend ? "text-red-800" : "text-slate-700",
                     isToday && "z-20"
                   )
@@ -93,7 +93,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                   // MODO NORMAL
                   // =====================
                   : cn(
-                    "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.08)]",
+                    "shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(0,0,0,0.08)]",
 
                     isToday
                       ? cn(
@@ -111,7 +111,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                       )
                       : cn(
                         isWeekend ? 'text-red-800' : 'text-slate-700',
-                        "bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED]"
+                        "bg-[#f5f6f7]"
                       )
                   )
               )}
