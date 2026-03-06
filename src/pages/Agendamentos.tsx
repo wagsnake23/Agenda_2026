@@ -12,6 +12,13 @@ import { Agendamento } from '@/modules/auth/types';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import DrawerAgendamento, { Agendamento as DrawerAgendamentoType } from '@/components/calendar/DrawerAgendamento';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 const STATUS_STYLES: Record<string, { label: string; className: string }> = {
     pendente: {
@@ -234,46 +241,55 @@ const AgendamentosPage: React.FC = () => {
                             <span className="text-slate-600 text-xs font-bold uppercase tracking-wide">Filtros</span>
                         </div>
                         <div className="flex flex-wrap gap-3">
-                            <select
-                                value={filterStatus}
-                                onChange={e => setFilterStatus(e.target.value)}
-                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none w-full md:w-[180px]"
-                            >
-                                <option value="">Todos os Status</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="aprovado">Aprovado</option>
-                                <option value="recusado">Recusado</option>
-                                <option value="cancelado">Cancelado</option>
-                            </select>
+                            <div className="w-full md:w-[180px]">
+                                <Select value={filterStatus || "all"} onValueChange={(v) => setFilterStatus(v === "all" ? "" : v)}>
+                                    <SelectTrigger className="h-9 w-full rounded-xl border-slate-200 bg-white text-slate-600 text-sm font-medium focus:ring-2 focus:ring-blue-500">
+                                        <SelectValue placeholder="Status" />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl border-slate-200 shadow-xl">
+                                        <SelectItem value="all" className="rounded-lg text-sm">🔎 Todos os Status</SelectItem>
+                                        <SelectItem value="pendente" className="rounded-lg text-sm text-yellow-600 font-medium">⏳ Pendente</SelectItem>
+                                        <SelectItem value="aprovado" className="rounded-lg text-sm text-green-600 font-medium">✅ Aprovado</SelectItem>
+                                        <SelectItem value="recusado" className="rounded-lg text-sm text-red-600 font-medium">🚫 Recusado</SelectItem>
+                                        <SelectItem value="cancelado" className="rounded-lg text-sm text-slate-500 font-medium">✖️ Cancelado</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                            <select
-                                value={filterUsuario}
-                                onChange={e => setFilterUsuario(e.target.value)}
-                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none w-full md:w-[200px]"
-                            >
-                                <option value="">Todos os Usuários</option>
-                                {usuariosUnicos.map(u => (
-                                    <option key={u.id} value={u.id}>{u.apelido || u.nome}</option>
-                                ))}
-                            </select>
+                            <div className="w-full md:w-[200px]">
+                                <Select value={filterUsuario || "all"} onValueChange={(v) => setFilterUsuario(v === "all" ? "" : v)}>
+                                    <SelectTrigger className="h-9 w-full rounded-xl border-slate-200 bg-white text-slate-600 text-sm font-medium focus:ring-2 focus:ring-blue-500">
+                                        <SelectValue placeholder="Usuário" />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl border-slate-200 shadow-xl">
+                                        <SelectItem value="all" className="rounded-lg text-sm">👤 Todos os Usuários</SelectItem>
+                                        {usuariosUnicos.map(u => (
+                                            <SelectItem key={u.id} value={u.id} className="rounded-lg text-sm">{u.apelido || u.nome}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                            <select
-                                value={filterTipo}
-                                onChange={e => setFilterTipo(e.target.value)}
-                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none w-full md:w-[220px]"
-                            >
-                                <option value="">Todos os Tipos</option>
-                                <option value="🛌 Abonada">🛌 Abonada</option>
-                                <option value="🏥 Atestado Médico">🏥 Atestado Médico</option>
-                                <option value="⏳ Desconto de Hora">⏳ Desconto de Hora</option>
-                                <option value="🩸 Doação de Sangue">🩸 Doação de Sangue</option>
-                                <option value="🌤️ Folga Mensal">🌤️ Folga Mensal</option>
-                                <option value="🗳️ Folga Eleitoral">🗳️ Folga Eleitoral</option>
-                                <option value="🎂 Folga Aniversário">🎂 Folga Aniversário</option>
-                                <option value="🏖️ Férias">🏖️ Férias</option>
-                                <option value="🏝️ Licença Prêmio">🏝️ Licença Prêmio</option>
-                                <option value="😷 Outros">😷 Outros</option>
-                            </select>
+                            <div className="w-full md:w-[220px]">
+                                <Select value={filterTipo || "all"} onValueChange={(v) => setFilterTipo(v === "all" ? "" : v)}>
+                                    <SelectTrigger className="h-9 w-full rounded-xl border-slate-200 bg-white text-slate-600 text-sm font-medium focus:ring-2 focus:ring-blue-500">
+                                        <SelectValue placeholder="Tipo" />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl border-slate-200 shadow-xl">
+                                        <SelectItem value="all" className="rounded-lg text-sm">🏷️ Todos os Tipos</SelectItem>
+                                        <SelectItem value="🛌 Abonada" className="rounded-lg text-sm">🛌 Abonada</SelectItem>
+                                        <SelectItem value="🏥 Atestado Médico" className="rounded-lg text-sm">🏥 Atestado Médico</SelectItem>
+                                        <SelectItem value="⏳ Desconto de Hora" className="rounded-lg text-sm">⏳ Desconto de Hora</SelectItem>
+                                        <SelectItem value="🩸 Doação de Sangue" className="rounded-lg text-sm">🩸 Doação de Sangue</SelectItem>
+                                        <SelectItem value="🌤️ Folga Mensal" className="rounded-lg text-sm">🌤️ Folga Mensal</SelectItem>
+                                        <SelectItem value="🗳️ Folga Eleitoral" className="rounded-lg text-sm">🗳️ Folga Eleitoral</SelectItem>
+                                        <SelectItem value="🎂 Folga Aniversário" className="rounded-lg text-sm">🎂 Folga Aniversário</SelectItem>
+                                        <SelectItem value="🏖️ Férias" className="rounded-lg text-sm">🏖️ Férias</SelectItem>
+                                        <SelectItem value="🏝️ Licença Prêmio" className="rounded-lg text-sm">🏝️ Licença Prêmio</SelectItem>
+                                        <SelectItem value="😷 Outros" className="rounded-lg text-sm">😷 Outros</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
                             <div className="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm w-full md:w-auto">
                                 <button

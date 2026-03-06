@@ -14,6 +14,13 @@ import {
 } from 'lucide-react';
 import type { CalendarEvent, CalendarEventType, ColorMode } from '@/hooks/use-calendar-events';
 import EmojiPicker from '@/components/EmojiPicker';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -47,9 +54,9 @@ const EMPTY_FORM: EventForm = {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const typeBadge = (type: CalendarEventType) => {
-    if (type === 'holiday') return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-red-100 text-red-700 uppercase tracking-wide">Feriado</span>;
-    if (type === 'birthday') return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-700 uppercase tracking-wide">Aniversário</span>;
-    return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-700 uppercase tracking-wide">Evento</span>;
+    if (type === 'holiday') return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-red-100 text-red-700 uppercase tracking-wide flex items-center gap-1">🏖️ Feriado</span>;
+    if (type === 'birthday') return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-700 uppercase tracking-wide flex items-center gap-1">🎂 Aniversário</span>;
+    return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-700 uppercase tracking-wide flex items-center gap-1">📝 Evento</span>;
 };
 
 const formatDisplayDate = (dateStr: string, isFixed: boolean): string => {
@@ -316,30 +323,32 @@ const AdminCalendario: React.FC = () => {
                             {/* Tipo */}
                             <div className="w-full md:flex-[0.25]">
                                 <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:hidden">Tipo de evento</label>
-                                <select
-                                    value={filterType}
-                                    onChange={e => setFilterType(e.target.value as FilterType)}
-                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white text-slate-700 font-medium cursor-pointer"
-                                >
-                                    <option value="all">Todos os tipos</option>
-                                    <option value="holiday">Feriado</option>
-                                    <option value="event">Evento</option>
-                                    <option value="birthday">Aniversário</option>
-                                </select>
+                                <Select value={filterType} onValueChange={(v) => setFilterType(v as FilterType)}>
+                                    <SelectTrigger className="w-full h-11 rounded-xl border-slate-200 text-sm focus:ring-2 focus:ring-blue-500 bg-white text-slate-700 font-medium">
+                                        <SelectValue placeholder="Tipo" />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl border-slate-200 shadow-xl">
+                                        <SelectItem value="all" className="rounded-lg">🏷️ Todos os tipos</SelectItem>
+                                        <SelectItem value="holiday" className="rounded-lg">🏖️ Feriado</SelectItem>
+                                        <SelectItem value="event" className="rounded-lg">📝 Evento</SelectItem>
+                                        <SelectItem value="birthday" className="rounded-lg">🎂 Aniversário</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
 
                             {/* Status */}
                             <div className="w-full md:flex-[0.15]">
                                 <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:hidden">Status</label>
-                                <select
-                                    value={filterStatus}
-                                    onChange={e => setFilterStatus(e.target.value as FilterStatus)}
-                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white text-slate-700 font-medium cursor-pointer"
-                                >
-                                    <option value="all">Todos os status</option>
-                                    <option value="active">Ativos</option>
-                                    <option value="inactive">Inativos</option>
-                                </select>
+                                <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as FilterStatus)}>
+                                    <SelectTrigger className="w-full h-11 rounded-xl border-slate-200 text-sm focus:ring-2 focus:ring-blue-500 bg-white text-slate-700 font-medium">
+                                        <SelectValue placeholder="Status" />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl border-slate-200 shadow-xl">
+                                        <SelectItem value="all" className="rounded-lg">🔎 Todos os status</SelectItem>
+                                        <SelectItem value="active" className="rounded-lg">✅ Ativos</SelectItem>
+                                        <SelectItem value="inactive" className="rounded-lg">🚫 Inativos</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </div>
                     </div>
