@@ -652,7 +652,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             id={`agendamento-${agenda.id}`}
                                             onClick={handleCardClick}
                                             className={cn(
-                                                "p-1 md:pt-3 md:pb-1.5 md:px-1.5 rounded-2xl border bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
+                                                "p-1 md:pt-3 md:pb-1.5 md:px-1.5 rounded-2xl border overflow-hidden bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
                                                 isSelected
                                                     ? "border-blue-500 ring-2 ring-blue-200 shadow-lg scale-[1.01] md:scale-[1.02]"
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
@@ -714,30 +714,30 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
                                                 {profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && (
-                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-1 md:-my-3 -mr-1 md:-mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
+                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-blue-200/70 bg-gradient-to-b from-[#d9e7fa] to-[#c1d6f0] shadow-[inset_1px_0_2px_rgba(255,255,255,0.8),inset_-3px_-2px_6px_rgba(0,0,50,0.08)] -mt-1 -mb-1 -mr-1 md:-mt-3 md:-mb-1.5 md:-mr-1.5 flex flex-col items-center justify-center gap-0.5 md:gap-1 acoes rounded-r-2xl">
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 setModoEdicao(true);
                                                                 setAgendamentoEditando(agenda);
                                                             }}
-                                                            className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all group/btn"
+                                                            className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center rounded-full text-blue-600 hover:text-blue-800 hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
                                                             title="Editar"
                                                         >
-                                                            <Edit2 className="w-3.5 h-3.5 md:w-[15px] md:h-[15px] group-hover/btn:scale-110 transition-transform" />
+                                                            <Edit2 className="w-4 h-4 md:w-[17px] md:h-[17px] group-hover/btn:scale-110 transition-transform" />
                                                         </button>
 
-                                                        <div className="w-[50%] h-[1px] bg-black/[0.06] my-0.5" />
+                                                        <div className="w-[60%] h-[1px] bg-blue-300/40 my-0.5 shadow-[0_1px_0_rgba(255,255,255,0.7)]" />
 
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 setConfirmDeleteId(agenda.id);
                                                             }}
-                                                            className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition-all group/btn"
+                                                            className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center rounded-full text-[#E53935] hover:text-[#C62828] hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
                                                             title="Excluir"
                                                         >
-                                                            <Trash2 className="w-3.5 h-3.5 md:w-[15px] md:h-[15px] group-hover/btn:scale-110 transition-transform" />
+                                                            <Trash2 className="w-4 h-4 md:w-[17px] md:h-[17px] group-hover/btn:scale-110 transition-transform" />
                                                         </button>
                                                     </div>
                                                 )}
