@@ -313,8 +313,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     "flex items-center justify-between shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)] transition-colors duration-300",
                     variant === 'modal'
                         ? (mode === 'create'
-                            ? "px-6 py-4 bg-gradient-to-b from-[#facc15] to-[#eab308]"
-                            : "px-6 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]")
+                            ? "px-6 md:px-5 py-4 bg-gradient-to-b from-[#facc15] to-[#eab308]"
+                            : "px-6 md:px-5 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]")
                         : "p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)]"
                 )}>
                     <div className="flex flex-row items-start md:items-center gap-1.5 md:gap-2 pt-0.5 md:pt-0">
@@ -383,7 +383,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                 <div className={cn(
                     "flex-1 overflow-y-auto flex flex-col gap-4",
-                    variant === 'modal' ? "px-3 py-4 md:p-6" : "px-3 py-4 md:px-[16px] md:pt-3 md:pb-1"
+                    variant === 'modal' ? "px-3 py-4 md:px-5 md:py-6" : "px-3 py-4 md:px-[16px] md:pt-3 md:pb-1"
                 )}>
                     {mode === 'create' || modoEdicao ? (
                         <div className="flex flex-col gap-0">
@@ -394,7 +394,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     {/* Grid Superior: Datas e Avatar (Mobile) | Datas e Dias (Desktop) */}
                                     <div className="grid grid-cols-[1fr_1fr_88px] md:flex md:flex-row gap-x-2 gap-y-2.5 md:gap-3.5 w-full mt-2 md:mt-3 items-start">
                                         {/* Data Inicial */}
-                                        <div className="space-y-1.5 min-w-0 md:w-[108px]">
+                                        <div className="space-y-1.5 min-w-0 md:w-[120px]">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none transition-all">Data Inicial</label>
                                             <Input
                                                 type="text"
@@ -410,7 +410,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         </div>
 
                                         {/* Data Final */}
-                                        <div className="space-y-1.5 min-w-0 md:w-[108px]">
+                                        <div className="space-y-1.5 min-w-0 md:w-[120px]">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none transition-all">Data Final</label>
                                             <Input
                                                 type="text"
@@ -500,11 +500,11 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 {/* Coluna Direita (Apenas Desktop): Avatar */}
                                 <div className={cn(
                                     "hidden md:flex flex-col items-center justify-center shrink-0 mt-2 md:mt-4",
-                                    variant === 'modal' ? "md:ml-auto md:pl-2" : "md:ml-0 md:pl-0"
+                                    variant === 'modal' ? "md:ml-auto md:pl-0" : "md:ml-0 md:pl-0"
                                 )}>
                                     <div className={cn(
                                         "rounded-2xl overflow-hidden shadow-md border-2 border-white transition-transform hover:scale-105",
-                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[120px] md:h-[120px] ring-4 ring-[#facc15]/20 bg-white" : "w-16 h-16 md:w-[120px] md:h-[120px] ring-4 ring-blue-50/15 bg-white"
+                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[120px] md:h-[120px] bg-white" : "w-16 h-16 md:w-[120px] md:h-[120px] ring-4 ring-blue-50/15 bg-white"
                                     )}>
                                         {agendamentoEditando?.userPhoto ? (
                                             <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
@@ -819,19 +819,19 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         caption: "order-1 flex justify-center pt-0 relative items-center pb-3 w-full px-1",
                                         caption_label: "font-black text-[0.95rem] uppercase tracking-wider text-blue-800",
                                         nav: "static",
-                                        nav_button: "h-8 w-8 flex items-center justify-center rounded-lg bg-[#93C5FD] border border-blue-300/60 text-[#1E3A8A] shadow-[0_1px_2px_rgba(30,64,175,0.2),inset_0_1px_0_rgba(255,255,255,0.4)] hover:brightness-105 hover:scale-105 transition-all active:scale-95",
+                                        nav_button: "h-8 w-8 flex items-center justify-center rounded-lg bg-[#93C5FD] border border-blue-300/60 text-[#1E3A8A] shadow-[0_3px_0_#60A5FA,inset_0_1px_0_rgba(255,255,255,0.4)] hover:brightness-105 hover:scale-105 transition-all active:translate-y-[2px] active:shadow-none",
                                         nav_button_previous: "absolute left-1/2 -translate-x-[150px] md:-translate-x-[165px] -top-1.5",
                                         nav_button_next: "absolute right-1/2 translate-x-[150px] md:translate-x-[165px] -top-1.5",
                                         table: "order-3 w-[min-content] mx-auto border-separate border-spacing-y-1 border-spacing-x-1 max-w-full",
                                         head_row: "flex w-full justify-center gap-1",
-                                        head_cell: "text-[12px] md:text-[13px] font-bold tracking-[0.4px] uppercase flex items-center justify-center rounded-[14px] h-10 w-10 md:h-12 md:w-12 bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.08)] text-slate-700 first:text-slate-700 last:text-slate-700 m-0",
+                                        head_cell: "text-[12px] md:text-[13px] font-bold tracking-[0.4px] uppercase flex items-center justify-center rounded-[14px] h-10 w-10 md:h-12 md:w-12 bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED] text-slate-700 border border-slate-300 shadow-[0_1.5px_0_#cbd5e1,inset_0_1.5px_1px_rgba(255,255,255,0.4)] m-0",
                                         row: "flex w-full justify-center gap-1 group relative",
-                                        cell: "h-10 w-10 md:h-12 md:w-12 text-center p-0 m-0 relative focus-within:z-20 bg-transparent text-slate-700 first:text-slate-700 last:text-slate-700",
-                                        day: "h-10 w-10 md:h-12 md:w-12 p-0 flex items-center justify-center relative rounded-[14px] text-sm md:text-base font-semibold bg-white bg-clip-padding saturate-[1.05] transition-all duration-200 ease-out border border-slate-300 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.15)] hover:scale-[1.02] hover:brightness-[1.05] cursor-pointer text-inherit outline-none focus-visible:ring-1 focus-visible:ring-blue-400",
-                                        day_range_start: "day-range-start !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_8px_rgba(59,130,246,0.3)] z-20 !scale-[1.02]",
-                                        day_range_end: "day-range-end !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_8px_rgba(59,130,246,0.3)] z-20 !scale-[1.02]",
+                                        cell: "h-11 w-10 md:h-[50px] md:w-12 text-center p-0 m-0 relative focus-within:z-20 bg-transparent text-slate-700 first:text-slate-700 last:text-slate-700",
+                                        day: "h-10 w-10 md:h-12 md:w-12 p-0 flex items-center justify-center relative rounded-[14px] text-sm md:text-base font-semibold bg-white bg-clip-padding saturate-[1.05] transition-all duration-200 ease-out border border-slate-300 shadow-[0_2px_0_#cbd5e1,inset_0_1.5px_1px_rgba(255,255,255,0.4)] hover:scale-[1.02] hover:brightness-[1.05] cursor-pointer text-inherit outline-none focus-visible:ring-1 focus-visible:ring-blue-400 active:translate-y-[1.5px] active:shadow-none",
+                                        day_range_start: "day-range-start !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_0_#60A5FA,inset_0_1.5px_1px_rgba(255,255,255,0.4)] z-20 !scale-[1.02] active:translate-y-[1.5px] active:shadow-none",
+                                        day_range_end: "day-range-end !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_0_#60A5FA,inset_0_1.5px_1px_rgba(255,255,255,0.4)] z-20 !scale-[1.02] active:translate-y-[1.5px] active:shadow-none",
                                         day_range_middle: "aria-selected:!bg-[#DBEAFE] aria-selected:!text-[#1E3A8A] !shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_1px_rgba(0,0,0,0.05)] font-bold",
-                                        day_selected: "font-bold !bg-[#93C5FD] !text-[#1E40AF]",
+                                        day_selected: "font-bold !bg-[#93C5FD] !text-[#1E40AF] !shadow-[0_2px_0_#60A5FA,inset_0_1.5px_1px_rgba(255,255,255,0.4)] active:translate-y-[1.5px] active:shadow-none",
                                         day_today: "ring-2 ring-inset ring-[#C62828] font-black shadow-[0_4px_12px_-4px_rgba(198,40,40,0.25)] z-10",
                                         day_outside: "text-transparent bg-transparent opacity-0 pointer-events-none shadow-none",
                                         day_disabled: "text-slate-300 opacity-50 font-normal grayscale pointer-events-none",
@@ -886,17 +886,19 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 )
             }
             {/* Modal de Confirmação de Exclusão */}
-            {confirmDeleteId && (
-                <ConfirmDialog
-                    open={true}
-                    onConfirm={() => {
-                        if (confirmDeleteId) onDelete?.(confirmDeleteId);
-                        setConfirmDeleteId(null);
-                    }}
-                    onCancel={() => setConfirmDeleteId(null)}
-                    message="Deseja realmente excluir este agendamento?"
-                />
-            )}
+            {
+                confirmDeleteId && (
+                    <ConfirmDialog
+                        open={true}
+                        onConfirm={() => {
+                            if (confirmDeleteId) onDelete?.(confirmDeleteId);
+                            setConfirmDeleteId(null);
+                        }}
+                        onCancel={() => setConfirmDeleteId(null)}
+                        message="Deseja realmente excluir este agendamento?"
+                    />
+                )
+            }
         </div >
     );
 };
