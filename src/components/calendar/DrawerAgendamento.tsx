@@ -302,8 +302,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
             )}
             <div
                 className={cn(
-                    "bg-white rounded-2xl md:rounded-[29px] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)] border border-[#0F172A]/[0.05]",
-                    variant === 'modal' ? "w-full md:max-w-[525px] relative z-10 animate-in zoom-in-95 duration-200" : "w-full h-full md:pointer-events-auto",
+                    "bg-white rounded-2xl md:rounded-[29px] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)]",
+                    variant === 'modal' ? "w-full md:max-w-[515px] relative z-10 animate-in zoom-in-95 duration-200 md:border-[4px] md:border-white" : "w-full h-full md:pointer-events-auto border border-[#0F172A]/[0.05]",
                     "flex flex-col overflow-hidden"
                 )}
                 style={variant === 'modal' ? { maxHeight: '95vh' } : {}}
@@ -401,7 +401,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 value={dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : ''}
                                                 readOnly
                                                 onKeyDown={(e) => e.preventDefault()}
-                                                className="w-full h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-2 md:px-3 cursor-pointer appearance-none bg-white shadow-sm"
+                                                className={cn(
+                                                    "w-full h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 px-2 md:px-3 cursor-pointer appearance-none bg-white shadow-sm",
+                                                    variant === 'modal' ? "text-[13px] md:text-[15px]" : "text-[13px] md:text-sm"
+                                                )}
                                                 onClick={() => setIsCalendarModalOpen(true)}
                                             />
                                         </div>
@@ -414,7 +417,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 value={dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : ''}
                                                 readOnly
                                                 onKeyDown={(e) => e.preventDefault()}
-                                                className="w-full h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-2 md:px-3 cursor-pointer appearance-none bg-white shadow-sm"
+                                                className={cn(
+                                                    "w-full h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 px-2 md:px-3 cursor-pointer appearance-none bg-white shadow-sm",
+                                                    variant === 'modal' ? "text-[13px] md:text-[15px]" : "text-[13px] md:text-sm"
+                                                )}
                                                 onClick={() => setIsCalendarModalOpen(true)}
                                             />
                                         </div>
@@ -460,7 +466,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         <div className="col-span-2 md:flex-1 space-y-1">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block transition-all">Tipo de Agendamento</label>
                                             <Select value={tipo} onValueChange={setTipo}>
-                                                <SelectTrigger className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700">
+                                                <SelectTrigger className={cn(
+                                                    "h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700",
+                                                    variant === 'modal' ? "md:text-[15px]" : "text-sm"
+                                                )}>
                                                     <SelectValue placeholder="Selecione..." />
                                                 </SelectTrigger>
                                                 <SelectContent className="z-[350]">
@@ -508,7 +517,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         )}
                                     </div>
                                     <div className="text-center mt-1.5 min-w-0">
-                                        <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[100px]">
+                                        <span className={cn(
+                                            "font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[100px]",
+                                            variant === 'modal' ? "text-[9px] md:text-[12px]" : "text-[9px] md:text-[10px]"
+                                        )}>
                                             {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                         </span>
                                     </div>
@@ -522,7 +534,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     value={observacao}
                                     onChange={(e) => setObservacao(e.target.value.slice(0, 100))}
                                     placeholder="Alguma observação importante..."
-                                    className="w-full min-h-[80px] md:min-h-[85px] p-2.5 md:p-3 rounded-xl border border-slate-200 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-slate-700 text-sm resize-none outline-none"
+                                    className={cn(
+                                        "w-full min-h-[80px] md:min-h-[85px] p-2.5 md:p-3 rounded-xl border border-slate-200 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-slate-700 resize-none outline-none",
+                                        variant === 'modal' ? "text-[13px] md:text-[15px]" : "text-sm"
+                                    )}
                                 />
                                 <div className="absolute bottom-2 right-3 text-[10px] font-bold text-slate-400">
                                     {observacao.length}/100
