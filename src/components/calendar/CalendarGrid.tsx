@@ -69,7 +69,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 "rounded-[9px] md:rounded-[11px]",
                 "aspect-square md:aspect-auto",
                 "w-full md:h-[38px] lg:h-[48px]",
-                "py-1 relative overflow-hidden border-none",
+                "py-1 relative overflow-hidden border-[0.5px] border-slate-300/40",
                 "bg-clip-padding saturate-[1.05]",
 
                 // Transição segura (somente cores e sombra)
