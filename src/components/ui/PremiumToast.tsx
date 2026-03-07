@@ -64,8 +64,8 @@ const ICON_COLORS: Record<ToastType, string> = {
 };
 
 const AUTO_DISMISS: Record<ToastType, number | null> = {
-    success: 4000,
-    error: 5000,
+    success: 2000,
+    error: 2000,
     loading: null,
 };
 
