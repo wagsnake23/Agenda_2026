@@ -103,7 +103,7 @@ const Header = () => {
                             className="w-14 h-14 drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
                         />
                         <h1
-                            className="font-black md:text-[1.25rem] tracking-wider text-white uppercase leading-none inline-flex items-center pointer-events-auto"
+                            className="font-black md:text-[1.15rem] tracking-wider text-white uppercase leading-none inline-flex items-center pointer-events-auto"
                             style={{
                                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
                             }}
