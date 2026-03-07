@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useMemo } from "react";
-import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -39,6 +39,8 @@ interface CalendarHeaderProps {
   todayColors: { bg: string; text: string };
   scaleType: '24x48' | '12x36' | 'adm';
   setScaleType: (scale: '24x48' | '12x36' | 'adm') => void;
+  todayAppointmentsCount?: number;
+  handleOpenTodayAppointments?: () => void;
 }
 
 const CalendarHeader: React.FC<CalendarHeaderProps> = ({
@@ -56,6 +58,8 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   todayColors,
   scaleType,
   setScaleType,
+  todayAppointmentsCount = 0,
+  handleOpenTodayAppointments,
 }) => {
   const commandListRef = useRef<HTMLDivElement>(null);
 
@@ -131,7 +135,20 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               </span>
             </div>
 
-            <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center">
+            <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center gap-6">
+              {/* Sino de Notificações - Somente Desktop */}
+              <div
+                onClick={handleOpenTodayAppointments}
+                className="relative cursor-pointer hover:scale-110 transition-transform hidden lg:block"
+              >
+                <Bell size={20} color="#1e3a8a" strokeWidth={2.5} />
+                {todayAppointmentsCount > 0 && (
+                  <span className="absolute -top-[10px] -right-[12px] bg-[#ef4444] text-white text-[11px] font-[700] rounded-full px-[6px] py-[2px] shadow-sm animate-in zoom-in duration-300">
+                    {todayAppointmentsCount}
+                  </span>
+                )}
+              </div>
+
               <Button
                 onClick={goToToday}
                 variant="ghost"

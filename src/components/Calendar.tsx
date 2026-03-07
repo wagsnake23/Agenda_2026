@@ -241,6 +241,20 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     setHighlightedDay(null);
   }, [month, year]);
 
+  // Notificações de hoje (Sino)
+  const todayStr = useMemo(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }, []);
+
+  const todayAppointmentsCount = useMemo(() => {
+    return agendamentos.filter(ag => ag.dataInicio === todayStr).length;
+  }, [agendamentos, todayStr]);
+
+  const handleOpenTodayAppointmentsBell = () => {
+    handleOpenViewDrawer(todayStr);
+  };
+
   useEffect(() => {
     if (!api) return;
 
@@ -472,6 +486,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
             todayColors={todayColors}
             scaleType={mode}
             setScaleType={setMode}
+            todayAppointmentsCount={todayAppointmentsCount}
+            handleOpenTodayAppointments={handleOpenTodayAppointmentsBell}
           />
         </div>
       </section>
