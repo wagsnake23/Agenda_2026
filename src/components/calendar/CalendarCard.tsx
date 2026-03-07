@@ -173,19 +173,20 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent border-none outline-none" />
                 </div>
 
-                <div className="inline-flex items-center gap-2 relative z-10 md:-ml-2 -mt-[2px] -translate-y-[2px]">
+                <div className="inline-flex items-center gap-2 relative z-10 md:-ml-2 -mt-[9px]">
                     <img
                         src="/logo.png"
                         alt="Logo"
                         className="hidden md:block w-8 h-8 md:w-[54px] md:h-[54px] object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
                     />
-                    <h3 className="text-lg md:text-2xl font-extrabold uppercase tracking-wide flex items-center gap-1 m-0">
-                        <span className="hidden md:inline text-[#E51A1A] font-black drop-shadow-[0_2.5px_2.5px_rgba(0,0,0,0.3)]" style={{ letterSpacing: '1.2px', textShadow: '-1.5px -1.5px 0 rgba(249,250,251,0.95), 1.5px -1.5px 0 rgba(249,250,251,0.95), -1.5px 1.5px 0 rgba(249,250,251,0.95), 1.5px 1.5px 0 rgba(249,250,251,0.95), 0 4px 10px rgba(0,0,0,0.5)' }}>
-                            {MONTHS[month]}
-                        </span>
-                        <div className="flex items-center gap-1">
-                            <span className="hidden md:inline text-[#E51A1A] text-base md:text-lg opacity-60 flex-shrink-0" style={{ WebkitTextStroke: '0.6px #E51A1A' }}>•</span>
-                            <span className="text-[#222222] font-black opacity-100 drop-shadow-[0_2px_2px_rgba(0,0,0,0.25)]" style={{ letterSpacing: '0.8px', textShadow: '-0.5px -0.5px 0 rgba(249,250,251,0.9), 0.5px -0.5px 0 rgba(249,250,251,0.9), -1.5px 1.5px 0 rgba(249,250,251,0.9), 1.5px 1.5px 0 rgba(249,250,251,0.9), 0 4px 8px rgba(0,0,0,0.4)' }}>
+                    <h3 className="text-lg md:text-2xl font-extrabold uppercase tracking-wide flex flex-col items-start leading-tight m-0">
+                        {/* Badge Única: Mês e Ano */}
+                        <div className="hidden md:flex items-center justify-center px-[14px] py-0 rounded-[14px] shadow-[0_1px_4px_rgba(0,0,0,0.05)] bg-white/95 backdrop-blur-[6px] transition-all duration-300 gap-2">
+                            <span className="text-[#D14343] font-black text-base md:text-[18px] leading-none">
+                                {MONTHS[month]}
+                            </span>
+                            <span className="text-[#D14343] opacity-20 font-bold">•</span>
+                            <span className="text-[#D14343] font-black text-base md:text-[19px] leading-none">
                                 {year}
                             </span>
                         </div>
@@ -193,7 +194,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 </div>
 
                 {/* Badge da Estação (Desktop) */}
-                <div className="hidden md:flex absolute top-[12px] right-[14px] z-10">
+                <div className="hidden md:flex absolute top-[16px] right-[14px] z-10">
                     <div
                         className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season shadow-[0_4px_10px_rgba(0,0,0,0.12)]"
                         style={{

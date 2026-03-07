@@ -220,7 +220,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             size="icon"
             onClick={handlePrevMonth}
             className="h-9 w-10 lg:h-11 lg:w-11 transition-all duration-300 
-                       bg-white border-gray-200 shadow-sm border rounded-[12px] lg:rounded-md
+                       bg-white border-gray-200 shadow-sm border rounded-[12px] lg:rounded-[12px]
                        hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white
                        focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
                        focus-visible:border-red-600 outline-none ring-0 shrink-0"
@@ -234,7 +234,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           >
             <SelectTrigger
               className="flex-1 max-w-[200px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
-                         bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] rounded-[12px] lg:rounded-[10px]
+                         bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] rounded-[12px] lg:rounded-[12px]
                          focus:ring-0 focus:ring-offset-0 focus:border-gray-200 lg:focus:border-[#e5e7eb]
                          focus-visible:border-red-600 focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
                          hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]
@@ -263,7 +263,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                 variant="outline"
                 role="combobox"
                 className="w-[90px] lg:max-w-[110px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
-                           bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] rounded-[12px] lg:rounded-[10px]
+                           bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] rounded-[12px] lg:rounded-[12px]
                            focus-visible:border-red-600 
                            focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
                            hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]
@@ -321,7 +321,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             size="icon"
             onClick={handleNextMonth}
             className="h-9 w-10 lg:h-11 lg:w-11 transition-all duration-300 
-                       bg-white border-gray-200 shadow-sm border rounded-[12px] lg:rounded-md
+                       bg-white border-gray-200 shadow-sm border rounded-[12px] lg:rounded-[12px]
                        hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white
                        focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2
                        focus-visible:border-red-600 outline-none ring-0 shrink-0"
@@ -345,7 +345,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             >
               <SelectTrigger
                 className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.5px] transition-all
-                           bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[10px]
+                           bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[12px]
                            focus-visible:border-red-600 focus-visible:ring-2 
                            focus-visible:ring-red-600 focus-visible:ring-offset-2 
                            hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
@@ -374,7 +374,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             >
               <SelectTrigger
                 className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
-                           bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[10px]
+                           bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[12px]
                            focus-visible:border-red-600 focus-visible:ring-2 
                            focus-visible:ring-red-600 focus-visible:ring-offset-2 
                            hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
