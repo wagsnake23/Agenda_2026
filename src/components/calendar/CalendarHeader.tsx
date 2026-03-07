@@ -127,22 +127,22 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto auto auto 1fr', gridTemplateRows: 'auto auto', gap: '0px 14px' }}>
                 {/* Coluna 1: Dia da Semana e Numero (Sem Badge) */}
                 <div className="flex flex-col items-start justify-center pt-0.5 border-r border-[#1e40af]/30 lg:border-[#1e40af]/50 pr-4 mr-1 h-full" style={{ gridRow: '1 / span 2', gridColumn: '1' }}>
-                  <span className="text-[14px] lg:text-[17px] font-[700] text-[#64748b] tracking-[1.5px] uppercase mb-[2px] select-none leading-none">
+                  <span className="text-[14px] lg:text-[17px] font-[700] text-[#64748b] tracking-[1.5px] uppercase mb-[2px] select-none leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)]">
                     {DAYS_OF_WEEK[today.getDay()]}
                   </span>
-                  <span className="text-[32px] lg:text-[36px] font-[800] text-[#1e40af] leading-none tracking-tighter">
+                  <span className="text-[32px] lg:text-[36px] font-[800] text-[#1e40af] leading-none tracking-tighter drop-shadow-[0_1.5px_1.5px_rgba(0,0,0,0.2)]">
                     {String(today.getDate()).padStart(2, '0')}
                   </span>
                 </div>
 
                 <div className="flex items-end" style={{ gridColumn: '2', gridRow: '1' }}>
-                  <span className="text-[14px] font-[700] tracking-[1.5px] uppercase text-[#1e40af] lg:text-[17px] leading-none mb-[1px]">
+                  <span className="text-[14px] font-[700] tracking-[1.5px] uppercase text-[#1e40af] lg:text-[17px] leading-none mb-[1px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
                     {MONTHS[today.getMonth()].substring(0, 3)}
                   </span>
                 </div>
 
                 <div className="flex items-start" style={{ gridColumn: '2', gridRow: '2' }}>
-                  <span className="text-[14px] lg:text-[17px] font-[700] text-[#475569] leading-none mt-[2px]">
+                  <span className="text-[14px] lg:text-[17px] font-[700] text-[#475569] leading-none mt-[2px] drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)]">
                     {today.getFullYear()}
                   </span>
                 </div>
