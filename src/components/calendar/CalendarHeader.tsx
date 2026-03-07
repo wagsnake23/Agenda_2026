@@ -138,10 +138,19 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             {/* Sino de Notificações - Reposicionado e Maior */}
             <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex items-center justify-center px-2">
               <div
-                onClick={handleOpenTodayAppointments}
-                className="relative cursor-pointer hover:scale-110 transition-transform hidden lg:block"
+                onClick={todayAppointmentsCount > 0 ? handleOpenTodayAppointments : undefined}
+                className={cn(
+                  "relative transition-transform hidden lg:block",
+                  todayAppointmentsCount > 0
+                    ? "cursor-pointer hover:scale-110"
+                    : "cursor-default opacity-50"
+                )}
               >
-                <Bell size={26} color="#1e3a8a" strokeWidth={2.5} />
+                <Bell
+                  size={26}
+                  color={todayAppointmentsCount > 0 ? "#1e3a8a" : "#94a3b8"}
+                  strokeWidth={2.5}
+                />
                 {todayAppointmentsCount > 0 && (
                   <span className="absolute -top-[10px] -right-[12px] bg-[#ef4444] text-white text-[11px] font-[700] rounded-full px-[6px] py-[2px] shadow-sm animate-in zoom-in duration-300">
                     {todayAppointmentsCount}
