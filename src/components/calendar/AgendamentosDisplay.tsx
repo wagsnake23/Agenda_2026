@@ -117,23 +117,25 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                     <div
                                         onClick={() => onViewAgendamento(agendamento.dataInicio, agendamento.id)}
                                         className={cn(
-                                            "relative cursor-pointer transition-all duration-150 ease-in-out flex flex-col py-[4px] md:py-[8px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full active:scale-[0.98] origin-left",
-                                            "before:content-[''] before:absolute before:left-[-12px] before:top-[14px] md:before:top-[16px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#3b82f6]",
+                                            "cursor-pointer transition-all duration-150 ease-in-out flex flex-col py-[4px] md:py-[8px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full active:scale-[0.98] origin-left",
                                             "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
                                             isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md z-20 animate-bounce-twice font-semibold"
                                         )}
                                     >
-                                        <div className="flex items-center gap-[8px] w-full">
+                                        <div className={cn(
+                                            "flex items-start gap-[8px] w-full relative",
+                                            "before:content-[''] before:absolute before:left-[-12px] before:top-[8px] md:before:top-[10px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#3b82f6]"
+                                        )}>
                                             <span className="bg-[#3b82f6]/15 text-[#2563eb] text-[12px] md:text-[14px] font-bold px-[8px] py-[4px] rounded-[8px] shrink-0 uppercase">
                                                 {dateText}
                                             </span>
-                                            <span className="flex items-center gap-1 text-[#334155] truncate">
+                                            <span className="flex items-start gap-1 text-[#334155] whitespace-normal">
                                                 {emoji && (
-                                                    <span className="text-base md:text-lg filter saturate-[1.3] brightness-[1.1]">
+                                                    <span className="text-base md:text-lg filter saturate-[1.3] brightness-[1.1] pt-0.5">
                                                         {emoji}
                                                     </span>
                                                 )}
-                                                <span className="truncate">{tipoNome} - {userName}</span>
+                                                <span className="break-words">{tipoNome} - {userName}</span>
                                             </span>
                                         </div>
                                         {hasContinuation && (

@@ -87,16 +87,18 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
                 <React.Fragment key={i}>
                   <div
                     className={cn(
-                      "relative transition-all duration-150 ease-in-out flex items-center gap-[8px] py-[3px] md:py-[6px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full",
-                      "before:content-[''] before:absolute before:left-[-12px] before:top-[12px] md:before:top-[14px] before:w-[8px] before:h-[8px] before:rounded-full",
-                      isInfoEvent ? "before:bg-[#94a3b8]" : "before:bg-[#ef4444]",
+                      "cursor-transition-all duration-150 ease-in-out flex items-start py-[3px] md:py-[6px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full",
                       "text-[13px] md:text-[15px] lg:text-[16px] font-medium uppercase tracking-tight leading-[1.6]",
                       isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md z-20 animate-bounce-twice font-semibold",
                       isInfoEvent && !isHighlighted && "text-slate-500",
                       !isInfoEvent && !isHighlighted && "text-[#1F2937]"
                     )}
                   >
-                    <div className="flex items-center gap-[8px] flex-1">
+                    <div className={cn(
+                      "flex items-start gap-[8px] flex-1 relative",
+                      "before:content-[''] before:absolute before:left-[-12px] before:top-[7px] md:before:top-[8px] before:w-[8px] before:h-[8px] before:rounded-full",
+                      isInfoEvent ? "before:bg-[#94a3b8]" : "before:bg-[#ef4444]"
+                    )}>
                       <span className={cn(
                         "text-[12px] md:text-[14px] font-bold px-[8px] py-[3px] rounded-[6px] shrink-0",
                         isInfoEvent ? "bg-[#e2e8f0] text-[#1e293b]" : "bg-[#ef4444]/15 text-[#c62828]"
@@ -104,12 +106,12 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
                         {String(day).padStart(2, '0')}/{formattedMonth}
                       </span>
 
-                      <span className={cn("flex items-center gap-1 truncate", isInfoEvent ? "text-[#475569]" : "text-[#334155]")}>
-                        <span className="truncate">
+                      <span className={cn("flex items-start gap-1 whitespace-normal", isInfoEvent ? "text-[#475569]" : "text-[#334155]")}>
+                        <span className="break-words">
                           {name}
                         </span>
                         {emoji && (
-                          <span className="text-base md:text-xl drop-shadow-[0_3px_8px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] transition-transform hover:scale-110 transform -translate-y-[1px] shrink-0">
+                          <span className="text-base md:text-xl drop-shadow-[0_3px_8px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] transition-transform hover:scale-110 transform -translate-y-[1px] shrink-0 pt-0.5">
                             {emoji}
                           </span>
                         )}
