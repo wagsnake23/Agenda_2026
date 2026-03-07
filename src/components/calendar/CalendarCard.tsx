@@ -147,7 +147,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             <div
                 className={cn(
                     "hidden md:flex justify-between items-start",
-                    "md:-mx-8 md:-mt-4 md:px-8 md:pt-4 mb-0 relative overflow-hidden md:rounded-t-[28px] md:h-[95px] border-none outline-none shadow-none bg-white"
+                    "md:-mx-8 md:-mt-4 md:px-8 md:pt-4 mb-0 relative overflow-hidden md:rounded-t-[28px] md:h-[99px] border-none outline-none shadow-none bg-white"
                 )}
             >
                 {/* Background da Estação */}
@@ -217,7 +217,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 </div>
             </div>
 
-            <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border-[0.5px] md:border-sky-400/20 opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] backdrop-blur-[2px]">
+            <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 md:-mt-1 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border-[0.5px] md:border-sky-400/20 opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] backdrop-blur-[2px]">
                 <CalendarGrid
                     calendarData={calendarData}
                     isTransitioning={false}
