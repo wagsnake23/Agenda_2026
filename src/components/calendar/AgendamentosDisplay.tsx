@@ -116,7 +116,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                         )}
                                     >
                                         <div className="flex items-center gap-[8px] w-full">
-                                            <span className="bg-[#3b82f6]/15 text-[#2563eb] text-[12px] font-semibold px-[8px] py-[4px] rounded-[8px] shrink-0 uppercase">
+                                            <span className="bg-[#3b82f6]/15 text-[#2563eb] text-[12px] md:text-[14px] font-bold px-[8px] py-[4px] rounded-[8px] shrink-0 uppercase">
                                                 {dateText}
                                             </span>
                                             <span className="flex items-center gap-1 text-[#334155] truncate">

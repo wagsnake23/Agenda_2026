@@ -89,8 +89,8 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
                     <div className="flex items-center gap-[8px] flex-1">
                       {dayMatch ? (
                         <span className={cn(
-                          "text-[12px] font-semibold px-[8px] py-[3px] rounded-[6px] shrink-0",
-                          isGrayEvent ? "bg-slate-100 text-slate-500" : "bg-[#f1f5f9] text-[#334155]"
+                          "text-[12px] md:text-[14px] font-bold px-[8px] py-[3px] rounded-[6px] shrink-0",
+                          isGrayEvent ? "bg-[#e5e7eb] text-[#374151]" : "bg-[#ef4444]/15 text-[#c62828]"
                         )}>
                           {dayMatch[1]}/{formattedMonth}
                         </span>

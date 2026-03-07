@@ -85,7 +85,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
                     )}
                   >
                     <div className="flex items-center gap-[8px] flex-1">
-                      <span className="bg-[#f1f5f9] text-[#334155] text-[12px] font-semibold px-[8px] py-[3px] rounded-[6px] shrink-0">
+                      <span className="bg-[#f97316]/15 text-[#b45309] text-[12px] md:text-[14px] font-bold px-[8px] py-[3px] rounded-[6px] shrink-0">
                         {data.dateFormatted}
                       </span>
                       <span className="flex items-center gap-1 text-[#334155] truncate">

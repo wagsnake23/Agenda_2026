@@ -60,12 +60,7 @@ const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month
               >
                 <span className="text-2xl md:text-3xl mb-1.5 drop-shadow-[0_3px_10px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.05] transition-all duration-200 hover:scale-110">{phase.phaseIcon}</span>
                 <span className="text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] text-center leading-[1.6] uppercase tracking-tighter opacity-90">
-                  <span className="inline md:hidden">{phase.phaseName}</span>
-                  <span className="hidden md:inline">
-                    {phase.phaseName === 'Cresc.' ? 'Crescente' :
-                      phase.phaseName === 'Ming.' ? 'Minguante' :
-                        phase.phaseName}
-                  </span>
+                  {phase.phaseName}
                 </span>
                 <span className="text-[11px] md:text-[13px] lg:text-[14px] text-[#475569] mt-0.5 font-semibold leading-[1.6]">
                   {String(phase.date).padStart(2, '0')}/{formattedMonth}
