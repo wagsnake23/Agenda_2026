@@ -33,7 +33,7 @@ const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-slate-400/80 rounded-r-md z-10" />
 
         {/* Conteúdo do Header */}
-        <div className="relative flex items-center justify-between px-3 md:px-6 z-20 w-full">
+        <div className="relative flex items-center justify-between pl-3 pr-2 md:pl-6 md:pr-4 z-20 w-full">
           <div className="flex items-center gap-2">
             <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">🌙</span>
             <h4 className="font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
