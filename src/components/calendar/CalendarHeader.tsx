@@ -106,72 +106,62 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   }, [isYearPopoverOpen, year]);
 
   return (
-    <div className="sticky top-[60px] z-40 bg-transparent w-full flex flex-col gap-1 -mt-3 md:mt-8 lg:mt-6 mb-1 md:mb-6 lg:mb-7 md:relative md:top-auto md:z-10">
-      {/* Container Principal que se torna Card no Desktop */}
+    <div className="sticky top-[60px] z-40 w-full flex flex-col gap-1 -mt-3 md:mt-8 lg:mt-6 mb-1 md:mb-6 lg:mb-7 md:relative md:top-auto md:z-10">
       <div className={cn(
-        "flex flex-col lg:flex-row gap-2 lg:gap-6 justify-center lg:justify-between items-center w-full transition-all duration-300",
-        "lg:bg-white lg:rounded-[20px] lg:p-[18px_24px]",
-        "lg:shadow-[0_12px_30px_rgba(15,23,42,0.08),0_4px_10px_rgba(15,23,42,0.04)]",
-        "lg:border lg:border-[#0F172A]/[0.05] lg:max-w-none lg:mx-0"
+        "flex flex-col lg:grid lg:grid-cols-3 gap-2 lg:gap-8 w-full transition-all duration-300 items-stretch"
       )}>
 
-        {/* Bloco 1 - Escala e Aniversários (Esquerda) */}
-        <div className="hidden lg:flex items-center justify-start lg:flex-1 lg:order-1 gap-4 xl:gap-6">
-          <Select
-            value={scaleType}
-            onValueChange={(val) => setScaleType(val as '24x48' | '12x36' | 'adm')}
-          >
-            <SelectTrigger
-              className="lg:w-[195px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
-                         bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] lg:rounded-[11px]
-                         focus-visible:border-red-600 focus-visible:ring-2 
-                         focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                         hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white"
-            >
-              <SelectValue placeholder="ESCALA" />
-            </SelectTrigger>
-            <SelectContent className="backdrop-blur-xl bg-popover/95 border border-white/20 z-50">
-              <SelectItem value="24x48" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala 24x48</SelectItem>
-              <SelectItem value="12x36" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala 12x36</SelectItem>
-              <SelectItem value="adm" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala Adm</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className={cn(
+          "hidden lg:flex flex-col items-center justify-center w-full",
+          "lg:bg-white lg:rounded-[20px] lg:p-[18px_24px]",
+          "lg:shadow-[0_12px_30px_rgba(15,23,42,0.08),0_4px_10px_rgba(15,23,42,0.04)]",
+          "lg:border lg:border-[#0F172A]/[0.05]"
+        )}>
+          <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto 1fr auto', gridTemplateRows: '1fr 1fr', gap: '4px 12px' }}>
+            <div className="border-r border-[#e5e7eb] pr-3 mr-1 flex items-center justify-center h-full" style={{ gridRow: '1 / span 2' }}>
+              <span className="text-[44px] font-[800] leading-[1] text-[#1f2937] px-1">{String(new Date().getDate()).padStart(2, '0')}</span>
+            </div>
 
-          <Select
-            key={`birthday-select-${month}-${year}`}
-            onValueChange={(value) => {
-              const [m, d] = value.split('-').map(Number);
-              onMonthChange(m);
-            }}
-          >
-            <SelectTrigger
-              className="lg:w-[200px] xl:w-[240px] h-11 justify-between font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
-                         bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] lg:rounded-[11px]
-                         focus-visible:border-red-600 focus-visible:ring-2 
-                         focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                         hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white"
-            >
-              <SelectValue placeholder="ANIVERSÁRIOS" />
-            </SelectTrigger>
-            <SelectContent className="backdrop-blur-xl bg-popover/95 border border-white/20 z-50 max-h-[300px]">
-              {birthdayList.map((bday, idx) => (
-                <SelectItem
-                  key={`${bday.name}-${idx}`}
-                  value={`${bday.month}-${bday.day}`}
-                  className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white"
-                >
-                  <div className="flex items-center gap-2">
-                    <span>🎂</span>
-                    <span>{bday.name.replace(/Bombeiro\s+/i, '')}</span>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <div className="self-end" style={{ gridColumn: '2', gridRow: '1' }}>
+              <span className="text-[14px] font-[700] tracking-[1px] uppercase text-[#64748b]">
+                {MONTHS[new Date().getMonth()].substring(0, 3)}
+              </span>
+            </div>
+
+            <div className="self-start" style={{ gridColumn: '2', gridRow: '2' }}>
+              <span className="text-[14px] font-[600] text-[#94a3b8]">
+                {new Date().getFullYear()}
+              </span>
+            </div>
+
+            <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center">
+              <Button
+                onClick={goToToday}
+                variant="ghost"
+                className={cn(
+                  "py-[6px] px-[16px] h-auto text-[13px] font-[700] uppercase tracking-[0.5px]",
+                  "transition-all duration-300 cursor-pointer",
+                  "rounded-[8px] outline-none border-none",
+                  "bg-clip-padding saturate-[1.05] border border-black/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]",
+                  todayColors.bg === 'bg-calendar-blue' && "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] text-white",
+                  todayColors.bg === 'bg-calendar-green' && "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] text-white",
+                  todayColors.bg === 'bg-calendar-yellow' && "bg-gradient-to-br from-[#fde047] to-[#f59e0b] text-[#1A1A1A]",
+                  scaleType === 'adm' && "bg-gradient-to-b from-[#fef08a] to-[#facc15] hover:from-[#fef08a] hover:to-[#facc15] text-[#0B1221] hover:!text-[#0B1221] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] !border !border-[#facc15]/30"
+                )}
+              >
+                HOJE
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Bloco 2 - Navegação (Centro) */}
-        <div className="flex gap-2 items-center justify-center lg:justify-center lg:flex-1 lg:order-2 mt-2 lg:mt-0">
+        {/* Card 2 - Navegação */}
+        <div className={cn(
+          "flex items-center justify-center gap-2",
+          "lg:bg-white lg:rounded-[20px] lg:p-[18px_24px]",
+          "lg:shadow-[0_12px_30px_rgba(15,23,42,0.08),0_4px_10px_rgba(15,23,42,0.04)]",
+          "lg:border lg:border-[#0F172A]/[0.05]"
+        )}>
           <Button
             variant="outline"
             size="icon"
@@ -180,7 +170,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                        bg-white border-gray-200 shadow-sm border rounded-[12px] lg:rounded-md
                        hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white
                        focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                       focus-visible:border-red-600 outline-none ring-0"
+                       focus-visible:border-red-600 outline-none ring-0 shrink-0"
           >
             <ChevronLeft className="h-4 w-4 lg:h-5 lg:w-5" />
           </Button>
@@ -190,7 +180,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             onValueChange={(value) => onMonthChange(parseInt(value))}
           >
             <SelectTrigger
-              className="w-[140px] md:w-[220px] lg:w-[200px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
+              className="flex-1 max-w-[200px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
                          bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] rounded-[12px] lg:rounded-[11px]
                          focus:ring-0 focus:ring-offset-0 focus:border-gray-200 lg:focus:border-gray-300
                          focus-visible:border-red-600 focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
@@ -219,12 +209,12 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               <Button
                 variant="outline"
                 role="combobox"
-                className="w-[90px] md:w-[124px] lg:w-[110px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
+                className="w-[90px] lg:max-w-[110px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
                            bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] rounded-[12px] lg:rounded-[11px]
                            focus-visible:border-red-600 
                            focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
                            hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white
-                           data-[state=open]:!ring-2 data-[state=open]:!ring-red-600 data-[state=open]:!border-red-600"
+                           data-[state=open]:!ring-2 data-[state=open]:!ring-red-600 data-[state=open]:!border-red-600 shrink-0"
               >
                 {year}
                 <ChevronDown className="ml-1 h-3 w-3 shrink-0 opacity-50" />
@@ -281,70 +271,77 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                        bg-white border-gray-200 shadow-sm border rounded-[12px] lg:rounded-md
                        hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white
                        focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2
-                       focus-visible:border-red-600 outline-none ring-0"
+                       focus-visible:border-red-600 outline-none ring-0 shrink-0"
           >
             <ChevronRight className="h-4 w-4 lg:h-5 w-5" />
           </Button>
         </div>
 
-        {/* Bloco 3 - Feriados e Hoje (Direita) */}
-        <div className="hidden lg:flex items-center justify-end lg:flex-1 lg:order-3 gap-6 xl:gap-8">
-          <Select
-            key={`holiday-select-${month}-${year}`}
-            onValueChange={(dateStr) => {
-              const [y, m, d] = dateStr.split('-').map(Number);
-              onMonthChange(m - 1);
-              onYearChange(y);
-            }}
-          >
-            <SelectTrigger
-              className="lg:w-[280px] xl:w-[320px] h-11 justify-between font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
-                         bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] lg:rounded-[11px]
-                         focus-visible:border-red-600 focus-visible:ring-2 
-                         focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                         hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white"
+        {/* Card 3 - Filtros */}
+        <div className={cn(
+          "hidden lg:flex flex-col items-center justify-center w-full",
+          "lg:bg-white lg:rounded-[20px] lg:p-[18px_24px]",
+          "lg:shadow-[0_12px_30px_rgba(15,23,42,0.08),0_4px_10px_rgba(15,23,42,0.04)]",
+          "lg:border lg:border-[#0F172A]/[0.05]"
+        )}>
+          <div className="grid grid-cols-2 gap-[12px] w-full">
+            <Select
+              key={`holiday-select-${month}-${year}`}
+              onValueChange={(dateStr) => {
+                const [y, m, d] = dateStr.split('-').map(Number);
+                onMonthChange(m - 1);
+                onYearChange(y);
+              }}
             >
-              <SelectValue placeholder="FERIADOS" />
-            </SelectTrigger>
-            <SelectContent className="backdrop-blur-xl bg-popover/95 border border-white/20 z-50 max-h-[300px]">
-              {holidaysList.map((holiday, idx) => (
-                <SelectItem
-                  key={`${holiday.date}-${idx}`}
-                  value={holiday.date}
-                  className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white"
-                >
-                  <div className="flex items-center gap-2">
-                    <span>{holiday.emoji || '📅'}</span>
-                    <span>{holiday.name}</span>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+              <SelectTrigger
+                className="w-full h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.5px] transition-all
+                           bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] lg:rounded-[11px]
+                           focus-visible:border-red-600 focus-visible:ring-2 
+                           focus-visible:ring-red-600 focus-visible:ring-offset-2 
+                           hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white"
+              >
+                <SelectValue placeholder="FERIADOS" />
+              </SelectTrigger>
+              <SelectContent className="backdrop-blur-xl bg-popover/95 border border-white/20 z-50 max-h-[300px]">
+                {holidaysList.map((holiday, idx) => (
+                  <SelectItem
+                    key={`${holiday.date}-${idx}`}
+                    value={holiday.date}
+                    className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span>{holiday.emoji || '📅'}</span>
+                      <span>{holiday.name}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-          <Button
-            onClick={goToToday}
-            variant="ghost"
-            className={cn(
-              "h-11 px-6 text-xs md:text-[14px] lg:text-[15px] font-bold uppercase tracking-[0.5px]",
-              "transition-all duration-300 cursor-pointer",
-              "rounded-lg lg:rounded-[18px] outline-none border-none",
-              "bg-clip-padding saturate-[1.05] border border-black/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]",
-              todayColors.bg === 'bg-calendar-blue' && "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] text-white",
-              todayColors.bg === 'bg-calendar-green' && "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] text-white",
-              todayColors.bg === 'bg-calendar-yellow' && "bg-gradient-to-br from-[#fde047] to-[#f59e0b] text-[#1A1A1A]",
-              scaleType === 'adm' && "bg-gradient-to-b from-[#fef08a] to-[#facc15] hover:from-[#fef08a] hover:to-[#facc15] text-[#0B1221] hover:!text-[#0B1221] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] !border !border-[#facc15]/30"
-            )}
-          >
-            Hoje: {formatToday()}
-          </Button>
+            <Select
+              value={scaleType}
+              onValueChange={(val) => setScaleType(val as '24x48' | '12x36' | 'adm')}
+            >
+              <SelectTrigger
+                className="w-full h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
+                           bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] lg:rounded-[11px]
+                           focus-visible:border-red-600 focus-visible:ring-2 
+                           focus-visible:ring-red-600 focus-visible:ring-offset-2 
+                           hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white"
+              >
+                <SelectValue placeholder="ESCALA" />
+              </SelectTrigger>
+              <SelectContent className="backdrop-blur-xl bg-popover/95 border border-white/20 z-50">
+                <SelectItem value="24x48" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala 24x48</SelectItem>
+                <SelectItem value="12x36" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala 12x36</SelectItem>
+                <SelectItem value="adm" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala Adm</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
-        {/* Layout Mobile para os Filtros (Mantido fora do Card/Flex Desktop se necessário) */}
+        {/* Layout Mobile para os Filtros (Mantido oculto no desktop) */}
         <div className="flex flex-col gap-2 w-full lg:hidden">
-          {/* Aqui você pode manter os selects ocultos no desktop caso use a estrutura acima */}
-          {/* Mas como já movi para o bloco 'Centro' com 'hidden lg:flex', o mobile precisa ser tratado aqui */}
-          {/* (O mobile não tinha esses campos de feriados originalmente nos seus requests anteriores) */}
         </div>
       </div>
     </div>

@@ -9,10 +9,11 @@ import BrasilFlagIcon from '@/components/BrasilFlagIcon';
 interface HolidayMessagesProps {
   messages: string[];
   highlightedDay: number | null;
-  month: number; // Nova prop
+  month: number;
+  year: number;
 }
 
-const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlightedDay, month }) => {
+const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlightedDay, month, year }) => {
   const isEmpty = messages.length === 0;
 
   const monthName = (MONTHS[month] || '').substring(0, 3);
@@ -33,18 +34,26 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-600 z-10 rounded-r-md" />
 
         {/* Conteúdo do Header */}
-        <div className="relative flex items-center gap-2 px-3 md:px-6 z-20">
-          <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">📅</span>
-          <h4 className="font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
-            <span style={{
-              background: 'linear-gradient(135deg, #c62828 0%, #b71c1c 55%, #8e3030 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}>
-              Feriados e Eventos
-            </span>
-          </h4>
+        <div className="relative flex items-center justify-between px-3 md:px-6 z-20 w-full">
+          <div className="flex items-center gap-2">
+            <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">📅</span>
+            <h4 className="font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
+              <span style={{
+                background: 'linear-gradient(135deg, #c62828 0%, #b71c1c 55%, #8e3030 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>
+                Feriados e Eventos
+              </span>
+            </h4>
+          </div>
+
+          <div className="flex flex-row md:flex-col items-center justify-center py-[2px] md:py-[4px] px-[8px] md:px-[10px] rounded-[6px] md:rounded-[8px] text-[12px] md:text-[13px] bg-[#ef4444]/15 text-[#dc2626] leading-[1.1] ml-auto">
+            <span className="font-bold uppercase tracking-wide">{MONTHS[month]?.substring(0, 3)}</span>
+            <span className="hidden md:inline font-bold opacity-90">{year}</span>
+            <span className="inline md:hidden font-bold opacity-90 ml-[2px]">/{year}</span>
+          </div>
         </div>
       </div>
 

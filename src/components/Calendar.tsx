@@ -621,10 +621,10 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               {/* 2º e 3º - Feriados e Fases da Lua */}
               <div className="contents lg:flex lg:w-full lg:flex-1 lg:min-w-[370px] lg:flex-col lg:order-2 lg:gap-8 gap-3">
                 <div className={`w-full flex-1 order-2 lg:order-none ${holidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
-                  <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} />
+                  <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} year={year} />
                 </div>
                 <div className="w-full order-4 lg:order-none">
-                  <MoonPhasesDisplay moonPhases={moonPhases} month={month} />
+                  <MoonPhasesDisplay moonPhases={moonPhases} month={month} year={year} />
                 </div>
               </div>
 
