@@ -114,19 +114,19 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <div className={cn(
           "hidden lg:flex flex-col items-center justify-center w-full bg-transparent border-none shadow-none p-0"
         )}>
-          <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto 1fr auto', gridTemplateRows: '1fr 1fr', gap: '4px 12px' }}>
-            <div className="border-r border-gray-200 lg:border-[#2563eb] pr-3 mr-1 flex items-center justify-center h-full" style={{ gridRow: '1 / span 2' }}>
+          <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto 1fr auto', gridTemplateRows: '1fr 1fr', gap: '0px 12px' }}>
+            <div className="border-r border-gray-200 lg:border-[#1e2a44] pr-3 mr-1 flex items-center justify-center h-full" style={{ gridRow: '1 / span 2' }}>
               <span className="text-[44px] lg:text-[42px] font-[800] leading-[1] text-[#1f2937] px-1">{String(new Date().getDate()).padStart(2, '0')}</span>
             </div>
 
-            <div className="self-end" style={{ gridColumn: '2', gridRow: '1' }}>
-              <span className="text-[14px] font-[700] tracking-[1px] uppercase text-[#64748b] lg:text-[#1e40af]">
+            <div className="" style={{ gridColumn: '2', gridRow: '1' }}>
+              <span className="text-[14px] font-[700] tracking-[1px] uppercase text-[#64748b] lg:text-[18px] lg:text-[#1e40af]">
                 {MONTHS[new Date().getMonth()].substring(0, 3)}
               </span>
             </div>
 
-            <div className="self-start" style={{ gridColumn: '2', gridRow: '2' }}>
-              <span className="text-[14px] lg:text-[13px] font-[600] text-[#94a3b8] lg:text-[#374151]">
+            <div className="" style={{ gridColumn: '2', gridRow: '2' }}>
+              <span className="text-[14px] lg:text-[16px] font-[600] text-[#94a3b8] lg:text-[#374151]">
                 {new Date().getFullYear()}
               </span>
             </div>
