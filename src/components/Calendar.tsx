@@ -476,7 +476,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         </div>
       </section>
 
-      <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
+      <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative -mt-4 md:mt-0 md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
 
         {/* Mobile Flex Container para garantir 12px exatos de gap vertical entre os blocos (Card e Conteúdo) */}
         <div className="flex flex-col gap-3 lg:block w-full">
