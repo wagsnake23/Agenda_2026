@@ -450,10 +450,10 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       <section
         className={cn(
           "w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw]",
-          "pt-0 lg:pt-[96px] pb-0 lg:pb-12 mb-0 lg:mb-0 lg:max-w-full",
-          "bg-transparent lg:bg-[linear-gradient(180deg,#c9d8ec_0%,#dbeafe_50%,#eef4ff_100%)]",
+          "pt-0 lg:pt-[96px] pb-0 lg:pb-12 mb-0.5 lg:mb-0 lg:max-w-full",
+          "bg-transparent lg:bg-[linear-gradient(180deg,#c9d8ec_0%,#dbeafe_60%,#eef4ff_100%)]",
           "lg:border-t-[3px] lg:border-[#2563eb]",
-          "lg:shadow-[0_10px_24px_rgba(0,0,0,0.08)]"
+          "lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
         )}
       >
         <div className="w-full max-w-[1600px] mx-auto px-0 lg:px-[60px]">
@@ -476,7 +476,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         </div>
       </section>
 
-      <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative -mt-4 md:mt-0 md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
+      <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative md:mt-0 md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
 
         {/* Mobile Flex Container para garantir 12px exatos de gap vertical entre os blocos (Card e Conteúdo) */}
         <div className="flex flex-col gap-3 lg:block w-full">
@@ -647,9 +647,26 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               </div>
             </div>
           </div>
-
         </div>
       </div>
+
+      <DrawerAgendamento
+        isOpen={isDrawerOpen && drawerMode === 'create'}
+        onClose={handleCloseDrawer}
+        mode="create"
+        variant="modal"
+        initialDate={selectedDrawerDate}
+        agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+        todosAgendamentos={agendamentos}
+        onSave={salvarAgendamento}
+        onDelete={excluirAgendamento}
+        onUpdate={editarAgendamento}
+        anchorRef={null as any}
+        selectedPeriod={selectedPeriod}
+        onSelectPeriod={toggleHighlightPeriod}
+        selectedAgendamentoId={selectedAgendamentoId}
+        setSelectedAgendamentoId={setSelectedAgendamentoId}
+      />
     </div>
   );
 };

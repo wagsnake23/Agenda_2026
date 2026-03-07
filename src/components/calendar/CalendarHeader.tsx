@@ -136,15 +136,11 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                 onClick={goToToday}
                 variant="ghost"
                 className={cn(
-                  "py-[6px] px-[16px] h-auto text-[13px] font-[700] uppercase tracking-[0.5px]",
+                  "py-[8px] px-[18px] h-auto text-[13px] font-[700] uppercase tracking-[0.5px]",
                   "transition-all duration-300 cursor-pointer",
-                  "rounded-[8px] outline-none border-none",
-                  "bg-clip-padding saturate-[1.05] border border-black/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] lg:shadow-[0_4px_10px_rgba(0,0,0,0.15)]",
-                  todayColors.bg === 'bg-calendar-blue' && "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] text-white",
-                  todayColors.bg === 'bg-calendar-green' && "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] text-white",
-                  todayColors.bg === 'bg-calendar-yellow' && "bg-gradient-to-br from-[#fde047] to-[#f59e0b] text-[#1A1A1A]",
-                  "lg:bg-[#facc15] lg:text-[#111827] lg:hover:brightness-110",
-                  scaleType === 'adm' && "bg-gradient-to-b from-[#fef08a] to-[#facc15] hover:from-[#fef08a] hover:to-[#facc15] text-[#0B1221] hover:!text-[#0B1221] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] !border !border-[#facc15]/30 lg:shadow-[0_4px_12px_rgba(0,0_0,0.15)] lg:hover:-translate-y-[1px]"
+                  "rounded-[10px] outline-none border-none",
+                  "bg-[#2563eb] text-white hover:brightness-110",
+                  "shadow-[0_6px_14px_rgba(37,99,235,0.3)] hover:shadow-[0_8px_18px_rgba(37,99,235,0.35)] hover:-translate-y-[1px]"
                 )}
               >
                 HOJE
@@ -179,7 +175,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                          bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] rounded-[12px] lg:rounded-[10px]
                          focus:ring-0 focus:ring-offset-0 focus:border-gray-200 lg:focus:border-[#e5e7eb]
                          focus-visible:border-red-600 focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                         hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white
+                         hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]
                          data-[state=open]:!ring-2 data-[state=open]:!ring-red-600 data-[state=open]:!border-red-600"
             >
               <SelectValue />
@@ -208,7 +204,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                            bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] rounded-[12px] lg:rounded-[10px]
                            focus-visible:border-red-600 
                            focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                           hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white
+                           hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]
                            data-[state=open]:!ring-2 data-[state=open]:!ring-red-600 data-[state=open]:!border-red-600 shrink-0"
               >
                 {year}
@@ -276,7 +272,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <div className={cn(
           "hidden lg:flex items-center justify-center w-full bg-transparent border-none shadow-none p-0"
         )}>
-          <div className="flex justify-between items-center w-full gap-4">
+          <div className="flex justify-end items-center w-full gap-4">
             <Select
               key={`holiday-select-${month}-${year}`}
               onValueChange={(dateStr) => {
@@ -286,11 +282,11 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               }}
             >
               <SelectTrigger
-                className="w-full flex-1 h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.5px] transition-all
+                className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.5px] transition-all
                            bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[10px]
                            focus-visible:border-red-600 focus-visible:ring-2 
                            focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                           hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white"
+                           hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
               >
                 <SelectValue placeholder={window.innerWidth >= 1024 ? "📅 FERIADOS" : "FERIADOS"} />
               </SelectTrigger>
@@ -315,11 +311,11 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               onValueChange={(val) => setScaleType(val as '24x48' | '12x36' | 'adm')}
             >
               <SelectTrigger
-                className="w-full flex-1 h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
+                className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
                            bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[10px]
                            focus-visible:border-red-600 focus-visible:ring-2 
                            focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                           hover:!bg-red-500 hover:!text-white active:!bg-red-600 active:!text-white"
+                           hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
               >
                 <SelectValue placeholder={window.innerWidth >= 1024 ? "🔔 ESCALA" : "ESCALA"} />
               </SelectTrigger>
