@@ -133,7 +133,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 "shadow-[inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_4px_rgba(0,0,0,0.04),0_4px_12px_-4px_rgba(0,0,0,0.1)]",
                 // Efeito 3D Desktop (borda fina e sombra interna)
                 "md:border-[0.5px] md:border-slate-300/80",
-                "md:shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-2px_6px_rgba(0,0,0,0.06),0_12px_24px_-8px_rgba(0,0,0,0.15)]",
+                "md:shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-2px_6px_rgba(0,0,0,0.06),0_12px_30px_rgba(0,0,0,0.08)]",
                 "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent before:z-20",
                 "shadow-inner shadow-white/40",
                 "md:bg-white",
