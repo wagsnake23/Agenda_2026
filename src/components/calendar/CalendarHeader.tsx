@@ -273,9 +273,9 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
         {/* Card 3 - Filtros */}
         <div className={cn(
-          "hidden lg:flex flex-col items-center justify-center w-full bg-transparent border-none shadow-none p-0"
+          "hidden lg:flex items-center justify-center w-full bg-transparent border-none shadow-none p-0"
         )}>
-          <div className="grid grid-cols-2 gap-[12px] w-full">
+          <div className="flex justify-end items-center w-full gap-4">
             <Select
               key={`holiday-select-${month}-${year}`}
               onValueChange={(dateStr) => {
@@ -285,7 +285,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               }}
             >
               <SelectTrigger
-                className="w-full h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.5px] transition-all
+                className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.5px] transition-all
                            bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] lg:rounded-[11px]
                            focus-visible:border-red-600 focus-visible:ring-2 
                            focus-visible:ring-red-600 focus-visible:ring-offset-2 
@@ -314,7 +314,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               onValueChange={(val) => setScaleType(val as '24x48' | '12x36' | 'adm')}
             >
               <SelectTrigger
-                className="w-full h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
+                className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
                            bg-white border-gray-200 lg:border-gray-300 shadow-sm border text-[#334155] lg:rounded-[11px]
                            focus-visible:border-red-600 focus-visible:ring-2 
                            focus-visible:ring-red-600 focus-visible:ring-offset-2 
