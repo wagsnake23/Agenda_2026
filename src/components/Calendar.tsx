@@ -464,7 +464,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       <section
         className={cn(
           "w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw]",
-          "pt-0 lg:pt-[84px] pb-0 lg:pb-[24px] mb-0.5 lg:mb-0 lg:max-w-full",
+          "pt-0 lg:pt-[84px] pb-0 lg:pb-[9px] mb-0.5 lg:mb-0 lg:max-w-full",
           "bg-transparent lg:bg-[linear-gradient(180deg,#c9d8ec_0%,#dbeafe_60%,#eef4ff_100%)]",
           "lg:border-t-[3px] lg:border-[#2563eb]",
           "lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)]"

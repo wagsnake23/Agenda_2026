@@ -19,7 +19,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { MONTHS, DAYS_OF_WEEK } from "@/utils/calendar-utils";
+import { MONTHS, DAYS_OF_WEEK, getSeasonDataForDate } from "@/utils/calendar-utils";
 import { cn } from "@/lib/utils";
 import { useCalendarEventsContext } from "@/context/CalendarEventsContext";
 import { getEventsForDate } from "@/hooks/use-calendar-events";
@@ -171,18 +171,19 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                   </div>
                 </div>
 
-                <div style={{ gridColumn: '4', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center">
+                <div style={{ gridColumn: '4', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center lg:mt-[15px]">
                   <Button
                     onClick={goToToday}
                     variant="ghost"
                     className={cn(
-                      "py-[8px] px-[18px] h-auto text-[13px] font-[700] uppercase tracking-[0.5px]",
+                      "py-[8px] px-[24px] h-auto text-[13px] font-[700] uppercase tracking-[0.5px]",
                       "transition-all duration-300 cursor-pointer",
-                      "rounded-[10px] outline-none border-none",
-                      "bg-[#1e40af] text-white hover:brightness-110",
+                      "rounded-[12px] outline-none border-none",
+                      "bg-[#1e40af] text-white hover:brightness-110 flex items-center gap-2",
                       "shadow-[0_6px_14px_rgba(30,64,175,0.3)] hover:shadow-[0_8px_18px_rgba(30,64,175,0.35)] hover:-translate-y-[1px]"
                     )}
                   >
+                    <span>{getSeasonDataForDate(today.getMonth(), today.getDate()).emoji}</span>
                     HOJE
                   </Button>
                 </div>
