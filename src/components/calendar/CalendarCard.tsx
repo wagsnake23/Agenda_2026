@@ -70,9 +70,9 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
         // Definição de Gradientes Premium Suaves por Estação
         const gradients: Record<string, { bg: string, text: string, border: string }> = {
             'Primavera': {
-                bg: 'linear-gradient(to bottom, #fffce8, #fff3cd)',
-                text: '#856404',
-                border: '#fde047'
+                bg: 'linear-gradient(to bottom, #fff5f8, #ffe4e6)',
+                text: '#be185d',
+                border: '#fbcfe8'
             },
             'Verão': {
                 bg: 'linear-gradient(to bottom, #f0fdf4, #dcfce7)',
@@ -181,7 +181,19 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     />
                     <h3 className="text-lg md:text-2xl font-extrabold uppercase tracking-wide flex flex-col items-start leading-tight m-0">
                         {/* Badge Única: Mês e Ano */}
-                        <div className="hidden md:flex items-center justify-center px-[14px] py-0 rounded-[14px] bg-white/95 backdrop-blur-[6px] transition-all duration-300 gap-2 antialiased">
+                        <div
+                            className={cn(
+                                "hidden md:flex items-center justify-center px-[14px] py-0 transition-all duration-200 gap-2 antialiased",
+                                "shadow-[0_2px_0_rgba(0,0,0,0.06),0_4px_8px_rgba(0,0,0,0.1),inset_0_1.5px_1.5px_rgba(255,255,255,0.8)]",
+                                "cursor-pointer active:translate-y-[1px] active:shadow-[0_1px_0_rgba(0,0,0,0.05)] active:brightness-[0.98]"
+                            )}
+                            style={{
+                                background: season.style.bg,
+                                border: `0.5px solid ${season.style.border}`,
+                                borderBottom: `2.5px solid ${season.style.border}`,
+                                borderRadius: '20px',
+                            }}
+                        >
                             <span className="text-[#D14343] font-black text-base md:text-[18px] leading-none select-none" style={{ textShadow: 'none', WebkitFontSmoothing: 'antialiased' }}>
                                 {MONTHS[month]}
                             </span>
