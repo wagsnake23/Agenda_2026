@@ -35,6 +35,15 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## Supabase Structure
+Organização profissional dos ativos do Supabase:
+
+*   **migrations** → Alterações e versionamento do banco de dados.
+*   **seeds** → Dados iniciais e mocks de preenchimento.
+*   **policies** → Definições de RLS (Row Level Security).
+*   **setup** → Scripts iniciais de configuração (Storage, Tabelas base).
+*   **functions** → Edge Functions da aplicação.
+
 ## What technologies are used for this project?
 
 This project is built with:
