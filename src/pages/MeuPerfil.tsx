@@ -411,7 +411,7 @@ const MeuPerfil: React.FC = () => {
                                             {...form.register('nome')}
                                             type="text"
                                             placeholder="Seu nome"
-                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                         />
                                         {form.formState.errors.nome && (
                                             <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
@@ -429,7 +429,7 @@ const MeuPerfil: React.FC = () => {
                                             {...form.register('matricula')}
                                             type="text"
                                             placeholder="Nº"
-                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                         />
                                         {form.formState.errors.matricula && (
                                             <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
@@ -448,7 +448,7 @@ const MeuPerfil: React.FC = () => {
                                             {...form.register('apelido')}
                                             type="text"
                                             placeholder="Como prefere ser chamado"
-                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                         />
                                     </div>
 
@@ -461,7 +461,7 @@ const MeuPerfil: React.FC = () => {
                                             {...form.register('cargo')}
                                             type="text"
                                             placeholder="Ex: Soldado BM"
-                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                         />
                                         {form.formState.errors.cargo && (
                                             <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
@@ -493,7 +493,7 @@ const MeuPerfil: React.FC = () => {
                                         <input
                                             {...form.register('data_nascimento')}
                                             type="date"
-                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
                                         />
                                     </div>
 
@@ -504,7 +504,7 @@ const MeuPerfil: React.FC = () => {
                                         </label>
                                         <select
                                             {...form.register('escala')}
-                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm appearance-none cursor-pointer"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm appearance-none cursor-pointer"
                                         >
                                             <option value="">Não Definida</option>
                                             <option value="Adm">Escala Adm</option>
