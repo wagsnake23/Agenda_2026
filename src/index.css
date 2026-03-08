@@ -73,19 +73,12 @@ All colors MUST be HSL.
   }
 
   @media (min-width: 1024px) {
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 12% 22%, rgba(255, 255, 255, 0.95) 0px, rgba(255, 255, 255, 0.85) 60px, transparent 140px),
-        radial-gradient(circle at 18% 26%, rgba(255, 255, 255, 0.9) 0px, transparent 120px),
-        radial-gradient(circle at 88% 25%, rgba(255, 255, 255, 0.95) 0px, rgba(255, 255, 255, 0.85) 60px, transparent 140px),
-        radial-gradient(circle at 82% 30%, rgba(255, 255, 255, 0.9) 0px, transparent 120px),
-        radial-gradient(circle at 30% 85%, rgba(255, 255, 255, 0.9) 0px, rgba(255, 255, 255, 0.75) 70px, transparent 150px),
-        radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.9) 0px, rgba(255, 255, 255, 0.75) 70px, transparent 150px);
+    body {
+      background-image: url("/backgrounds/nuvens.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
   }
 
