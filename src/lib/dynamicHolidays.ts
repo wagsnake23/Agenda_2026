@@ -58,7 +58,7 @@ export const getNationalHolidays = (year: number) => {
         { id: 'sys-ano-novo', title: 'Ano Novo', date: `${year}-01-01`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🍾' },
         { id: 'sys-tiradentes', title: 'Tiradentes', date: `${year}-04-21`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '⚔️' },
         { id: 'sys-trabalho', title: 'Dia do Trabalho', date: `${year}-05-01`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '💼' },
-        { id: 'sys-independencia', title: 'Independência do Brasil', date: `${year}-09-07`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🇧🇷' },
+        { id: 'sys-independencia', title: 'Independência do Brasil', date: `${year}-09-07`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: null },
         { id: 'sys-aparecida', title: 'Nossa Senhora Aparecida', date: `${year}-10-12`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🙏' },
         { id: 'sys-finados', title: 'Finados', date: `${year}-11-02`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '💀' },
         { id: 'sys-republica', title: 'Proclamação da República', date: `${year}-11-15`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🏛️' },
