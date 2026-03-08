@@ -109,9 +109,9 @@ const MobileMenu = () => {
                 <div className="flex-1 overflow-y-auto py-3 px-3.5 flex flex-col gap-1.5 bg-[linear-gradient(180deg,#f8fafc_0%,#eef4ff_100%)]">
 
                     {/* Item 1: Escala */}
-                    <div className="px-1 py-0.5 flex items-center justify-between">
+                    <div className="px-1 py-1">
                         <Select value={mode} onValueChange={(val) => { setMode(val as any); setIsOpen(false); }}>
-                            <SelectTrigger className="w-full h-10 bg-white border-none shadow-none text-slate-700 font-bold text-sm px-2 hover:bg-slate-50 transition-colors focus:ring-0">
+                            <SelectTrigger className="w-full h-11 bg-blue-50/60 border border-blue-200/60 shadow-none text-slate-700 font-bold text-sm px-3 hover:bg-blue-100/40 transition-colors focus:ring-0 rounded-xl">
                                 <div className="flex items-center gap-3">
                                     <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.1)]">⏱️</span>
                                     <div className="flex gap-1">
@@ -121,14 +121,12 @@ const MobileMenu = () => {
                                 </div>
                             </SelectTrigger>
                             <SelectContent className="z-[202]">
-                                <SelectItem value="24x48" className="font-bold">🧑‍🚒 24x48 Horas</SelectItem>
-                                <SelectItem value="12x36" className="font-bold">👮 12x36 Horas</SelectItem>
-                                <SelectItem value="adm" className="font-bold">👔 Adm</SelectItem>
+                                <SelectItem value="24x48" className="font-bold">24x48 Horas</SelectItem>
+                                <SelectItem value="12x36" className="font-bold">12x36 Horas</SelectItem>
+                                <SelectItem value="adm" className="font-bold">Adm</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
-
-                    <div className="h-px w-full bg-slate-100 my-0.5 rounded-full" />
 
                     {/* Autenticado ou Não */}
                     {isAuthenticated ? (
@@ -218,6 +216,8 @@ const MobileMenu = () => {
                             </button>
 
                             <div className="h-px w-full bg-slate-100 my-0.5" />
+
+                            <div className="h-px w-full bg-blue-100/50 my-1 px-4" />
 
                             {/* Item 8: Sair */}
                             <button
