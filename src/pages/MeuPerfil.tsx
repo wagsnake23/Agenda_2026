@@ -565,7 +565,7 @@ const MeuPerfil: React.FC = () => {
                                         onChange={(e) => setNewPassword(e.target.value)}
                                         placeholder=""
                                         autoComplete="new-password"
-                                        className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-white/50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-bold"
+                                        className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-bold"
                                     />
                                     <button
                                         type="button"
@@ -585,7 +585,7 @@ const MeuPerfil: React.FC = () => {
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     placeholder=""
                                     autoComplete="new-password"
-                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white/50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-bold"
+                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-bold"
                                 />
                             </div>
                         </div>
