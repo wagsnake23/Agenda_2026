@@ -203,17 +203,16 @@ const AuthPage: React.FC = () => {
                 © {new Date().getFullYear()} - Calendário Agenda - by Vagner
             </div>
 
-            {/* Modal Recuperar Senha */}
             {showResetModal && (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center p-3">
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-2">
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowResetModal(false)} />
-                    <div className="relative bg-white rounded-[24px] shadow-2xl border border-gray-100 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                    <div className="relative bg-gradient-to-br from-[#f8fbff] to-[#e0efff] rounded-[24px] shadow-2xl border border-white/60 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
                         <div className="flex flex-col items-center gap-2 mb-6 text-center">
-                            <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mb-1">
+                            <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 mb-1">
                                 <span className="text-2xl">🔑</span>
                             </div>
                             <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Recuperar Senha</h3>
-                            <p className="text-slate-500 font-medium text-xs px-2 leading-relaxed">
+                            <p className="text-slate-600 font-medium text-xs px-2 leading-relaxed">
                                 Enviaremos um link seguro para o seu e-mail para você redefinir sua senha.
                             </p>
                         </div>
@@ -221,30 +220,33 @@ const AuthPage: React.FC = () => {
                         <form onSubmit={handleResetPassword}>
                             <div className="mb-6 space-y-2">
                                 <label className="text-slate-500 text-[10px] font-black uppercase tracking-wider ml-1">Email Cadastrado</label>
-                                <input
-                                    type="email"
-                                    required
-                                    value={resetEmail}
-                                    onChange={(e) => setResetEmail(e.target.value)}
-                                    placeholder="seu@email.com"
-                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition-all font-bold placeholder-slate-400"
-                                />
+                                <div className="relative">
+                                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xl">📧</span>
+                                    <input
+                                        type="email"
+                                        required
+                                        value={resetEmail}
+                                        onChange={(e) => setResetEmail(e.target.value)}
+                                        placeholder="seu@email.com"
+                                        className="w-full h-11 pl-11 pr-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition-all font-bold placeholder-slate-400"
+                                    />
+                                </div>
                             </div>
 
                             <div className="flex gap-3">
                                 <button
                                     type="button"
                                     onClick={() => setShowResetModal(false)}
-                                    className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
+                                    className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-base uppercase tracking-wider shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={isResetting}
-                                    className="flex-1 h-12 rounded-xl bg-blue-600 text-white font-bold text-sm shadow-[0_4px_0_#1E3A8A] hover:bg-blue-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center"
+                                    className="flex-1 h-12 rounded-xl bg-blue-600 text-white font-bold text-base uppercase tracking-wider shadow-[0_4px_0_#1E3A8A] hover:bg-blue-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center"
                                 >
-                                    {isResetting ? <Loader2 size={18} className="animate-spin" /> : 'Enviar Link'}
+                                    {isResetting ? <Loader2 size={18} className="animate-spin" /> : 'Enviar'}
                                 </button>
                             </div>
                         </form>
