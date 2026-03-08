@@ -284,9 +284,9 @@ const MeuPerfil: React.FC = () => {
                     {authLoading ? (
                         <ProfileSkeleton />
                     ) : (
-                        <form onSubmit={form.handleSubmit(handleSave)} className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                        <form onSubmit={form.handleSubmit(handleSave)} className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start md:items-stretch">
                             {/* 🟦 CARD 1 – PERFIL (COLUNA ESQUERDA 40% -> col-span-5) */}
-                            <div className="md:col-span-5 bg-white rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100/60 p-8 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+                            <div className="md:col-span-5 h-full bg-white rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100/60 p-8 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
                                 {/* Avatar */}
                                 <div className="relative group cursor-pointer mb-5" onClick={() => fileInputRef.current?.click()}>
                                     <div
@@ -372,18 +372,23 @@ const MeuPerfil: React.FC = () => {
 
                                 <p className="text-slate-400 text-[11px] mt-2 mb-1">JPG, PNG ou WebP · máx. 15MB</p>
 
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setNewPassword('');
-                                        setConfirmPassword('');
-                                        setShowPasswordModal(true);
-                                    }}
-                                    className="w-full h-11 rounded-xl bg-gradient-to-b from-orange-400 to-orange-600 text-white font-black uppercase text-xs sm:text-sm tracking-widest shadow-[0_4px_0_#c2410c] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2 border-none ring-0 outline-none"
-                                >
-                                    <Lock size={16} className="text-white/90" />
-                                    Alterar Senha de Acesso
-                                </button>
+                                {/* Espaçador para empurrar o botão de senha para o rodapé em desktop */}
+                                <div className="hidden md:block flex-1" />
+
+                                <div className="w-full mt-10 pt-6 border-t border-slate-200/60">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setNewPassword('');
+                                            setConfirmPassword('');
+                                            setShowPasswordModal(true);
+                                        }}
+                                        className="w-full h-11 rounded-xl bg-gradient-to-b from-orange-400 to-orange-600 text-white font-black uppercase text-xs sm:text-sm tracking-widest shadow-[0_4px_0_#c2410c] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2 border-none ring-0 outline-none"
+                                    >
+                                        <Lock size={16} className="text-white/90" />
+                                        Alterar Senha de Acesso
+                                    </button>
+                                </div>
                             </div>
 
                             {/* 🟩 CARD 2 – INFORMAÇÕES PESSOAIS (COLUNA DIREITA 60% -> col-span-7) */}
