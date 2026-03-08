@@ -387,7 +387,7 @@ const MeuPerfil: React.FC = () => {
                             </div>
 
                             {/* 🟩 CARD 2 – INFORMAÇÕES PESSOAIS (COLUNA DIREITA 60% -> col-span-7) */}
-                            <div className="md:col-span-7 bg-[#FAFAFA] rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-200/50 p-6 sm:p-8 flex flex-col h-full">
+                            <div className="md:col-span-7 bg-gradient-to-br from-[#f8fbff] to-[#e0efff] rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-white/60 p-6 sm:p-8 flex flex-col h-full">
                                 <div className="mb-6 flex items-center gap-3 border-b border-slate-200/60 pb-4">
                                     <span className="text-2xl select-none filter drop-shadow-sm">👤</span>
                                     <h3 className="font-bold text-slate-700 text-sm tracking-widest uppercase">
@@ -531,76 +531,74 @@ const MeuPerfil: React.FC = () => {
             {/* Footer exibido apenas em desktop */}
             <Footer className="hidden md:block" />
 
-            {/* Modal de Alterar Senha */}
             {showPasswordModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
-                    <div className="bg-slate-50 w-[98%] max-w-[98%] sm:max-w-sm rounded-[32px] overflow-hidden shadow-2xl border-4 border-white animate-in zoom-in-95 duration-200">
-                        <div className="relative p-6 sm:p-8">
-                            <button
-                                onClick={() => setShowPasswordModal(false)}
-                                className="absolute right-4 top-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"
-                            >
-                                <X size={20} />
-                            </button>
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 bg-black/60 backdrop-blur-sm">
+                    <div className="absolute inset-0" onClick={() => setShowPasswordModal(false)} />
+                    <div className="relative bg-gradient-to-br from-[#f8fbff] to-[#e0efff] rounded-[24px] shadow-2xl border border-white/60 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                        <button
+                            onClick={() => setShowPasswordModal(false)}
+                            className="absolute right-4 top-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-md active:scale-90 transition-all"
+                        >
+                            <X size={18} strokeWidth={3} />
+                        </button>
 
-                            <div className="flex flex-col items-center text-center mb-6">
-                                <span className="text-4xl mb-3 select-none filter drop-shadow-sm transform hover:scale-110 transition-transform duration-300">
-                                    🔐
-                                </span>
-                                <h3 className="text-xl font-black text-slate-800 tracking-tight">Alterar Senha</h3>
-                                <p className="text-slate-500 text-[13px] mt-1 font-medium">Defina sua nova senha de acesso</p>
+                        <div className="flex flex-col items-center text-center mb-6">
+                            <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 mb-1">
+                                <span className="text-2xl">🔐</span>
                             </div>
+                            <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Alterar Senha</h3>
+                            <p className="text-slate-600 font-medium text-xs px-2 leading-relaxed">Defina sua nova senha de acesso.</p>
+                        </div>
 
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Nova Senha</label>
-                                    <div className="relative">
-                                        <input
-                                            type={showPass ? 'text' : 'password'}
-                                            value={newPassword}
-                                            onChange={(e) => setNewPassword(e.target.value)}
-                                            placeholder=""
-                                            autoComplete="new-password"
-                                            className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-sans"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPass(!showPass)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                                        >
-                                            {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Confirmar Senha</label>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Nova Senha</label>
+                                <div className="relative">
                                     <input
                                         type={showPass ? 'text' : 'password'}
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
                                         placeholder=""
                                         autoComplete="new-password"
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-sans"
+                                        className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-white/50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-bold"
                                     />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPass(!showPass)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                    >
+                                        {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    </button>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3 mt-9">
-                                <button
-                                    onClick={() => setShowPasswordModal(false)}
-                                    className="flex-1 h-12 rounded-2xl bg-[#F1F5F9] hover:bg-[#E2E8F0] text-[#475569] font-black text-[15px] uppercase tracking-wider transition-all duration-300 shadow-[0_4px_0_rgb(203,213,225)] active:shadow-none active:translate-y-[4px] border border-slate-200"
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    onClick={handleUpdatePassword}
-                                    disabled={changingPassword}
-                                    className="flex-1 h-12 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-black text-[15px] uppercase tracking-wider transition-all duration-300 shadow-[0_4px_0_rgb(29,78,216)] active:shadow-none active:translate-y-[4px] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-blue-500/50"
-                                >
-                                    {changingPassword ? <Loader2 size={20} className="animate-spin" /> : 'Alterar'}
-                                </button>
+                            <div>
+                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Confirmar Senha</label>
+                                <input
+                                    type={showPass ? 'text' : 'password'}
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    placeholder=""
+                                    autoComplete="new-password"
+                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white/50 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-bold"
+                                />
                             </div>
+                        </div>
+
+                        <div className="flex items-center gap-3 mt-8">
+                            <button
+                                onClick={() => setShowPasswordModal(false)}
+                                className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-base uppercase tracking-wider shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleUpdatePassword}
+                                disabled={changingPassword}
+                                className="flex-1 h-12 rounded-xl bg-blue-600 text-white font-bold text-base uppercase tracking-wider shadow-[0_4px_0_#1E3A8A] hover:bg-blue-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            >
+                                {changingPassword ? <Loader2 size={20} className="animate-spin" /> : 'Alterar'}
+                            </button>
                         </div>
                     </div>
                 </div>
