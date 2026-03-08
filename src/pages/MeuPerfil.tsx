@@ -364,7 +364,7 @@ const MeuPerfil: React.FC = () => {
                                     type="button"
                                     onClick={() => fileInputRef.current?.click()}
                                     disabled={uploadingPhoto}
-                                    className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed border border-blue-500/60"
+                                    className="w-full h-11 rounded-xl bg-gradient-to-b from-blue-500 to-blue-700 text-white font-black uppercase text-xs sm:text-sm tracking-widest shadow-[0_4px_0_#1d4ed8] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2 border-none ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none"
                                 >
                                     <Camera size={16} className="text-white/90" />
                                     {uploadingPhoto ? 'Enviando...' : 'Alterar Foto de Perfil'}
@@ -379,7 +379,7 @@ const MeuPerfil: React.FC = () => {
                                         setConfirmPassword('');
                                         setShowPasswordModal(true);
                                     }}
-                                    className="w-full h-11 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all mt-4 shadow-md hover:shadow-lg border border-orange-600/50"
+                                    className="w-full h-11 rounded-xl bg-gradient-to-b from-orange-400 to-orange-600 text-white font-black uppercase text-xs sm:text-sm tracking-widest shadow-[0_4px_0_#c2410c] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2 border-none ring-0 outline-none"
                                 >
                                     <Lock size={16} className="text-white/90" />
                                     Alterar Senha de Acesso
@@ -510,14 +510,14 @@ const MeuPerfil: React.FC = () => {
                                 </div>
 
                                 {/* ── Botão Salvar ─────────────────────────────── */}
-                                <div className="mt-10 pt-6 border-t border-slate-200/60">
+                                <div className="mt-10 pt-6 border-t border-slate-200/60 flex justify-center">
                                     <button
                                         type="submit"
                                         disabled={saving || uploadingPhoto}
-                                        className="w-full h-14 rounded-xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] hover:from-[#1D4ED8] hover:to-[#1e40af] text-white font-bold uppercase tracking-widest text-[13px] shadow-[0_8px_20px_rgba(37,99,235,0.25)] hover:shadow-[0_12px_28px_rgba(37,99,235,0.35)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2.5"
+                                        className="w-full md:w-auto md:min-w-[280px] h-12 rounded-xl bg-gradient-to-b from-[#2563EB] to-[#1D4ED8] text-white font-black uppercase tracking-widest text-sm shadow-[0_4px_0_#1e3a8a] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2.5 disabled:opacity-70 disabled:pointer-events-none"
                                     >
                                         {saving ? (
-                                            <><Loader2 size={20} className="animate-spin" /> Salvando Alterações...</>
+                                            <><Loader2 size={20} className="animate-spin" /> Salvando...</>
                                         ) : (
                                             <>💾 Salvar Alterações</>
                                         )}
