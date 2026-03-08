@@ -202,7 +202,7 @@ const AgendamentosPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#eef4ff] flex flex-col items-center justify-start p-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible">
+        <div className="min-h-screen bg-[#eef4ff] flex flex-col items-center justify-start px-1 py-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible">
             <Header />
             <ConfirmDialog
                 open={!!confirmDelete}

@@ -270,7 +270,7 @@ const AdminCalendario: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#eef4ff] flex flex-col items-center justify-start p-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
+        <div className="min-h-screen bg-[#eef4ff] flex flex-col items-center justify-start px-1 py-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
             <Header />
 
             <div className="w-full lg:pt-[74px]">
@@ -430,7 +430,7 @@ const AdminCalendario: React.FC = () => {
                                             <div className="grid grid-cols-[55px_1fr_auto] grid-rows-[auto_auto_auto] gap-x-3 gap-y-2 items-center">
 
                                                 {/* EMOJI: Linha 1 e 2, Coluna 1 */}
-                                                <div className="row-start-1 row-end-3 col-start-1 flex items-center justify-center bg-slate-50/50 rounded-xl h-full py-1">
+                                                <div className="row-start-1 row-end-3 col-start-1 flex items-center justify-center bg-blue-100/80 rounded-xl h-full py-1 border border-blue-200/50 shadow-sm">
                                                     <span className="text-3xl" role="img" aria-label="emoji">
                                                         {ev.emoji || '📅'}
                                                     </span>
@@ -461,7 +461,7 @@ const AdminCalendario: React.FC = () => {
 
                                                 {/* DATA (ABAIXO DO EMOJI): Linha 3, Coluna 1 */}
                                                 <div className="col-start-1 row-start-3 flex justify-center border-t border-slate-50 pt-1">
-                                                    <span className="text-[11px] text-slate-500 font-mono font-bold uppercase tracking-wider leading-none">
+                                                    <span className="text-[11px] text-slate-600 font-mono font-black uppercase tracking-wider leading-none">
                                                         {formatDisplayDate(ev.date, ev.is_fixed)}
                                                     </span>
                                                 </div>
