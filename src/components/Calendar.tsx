@@ -31,6 +31,8 @@ import { useToast } from '@/contexts/ToastProvider';
 import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
 import { supabase } from '@/lib/supabase';
 import { dedupeById } from '@/utils/dedupeById';
+import { getDynamicHolidays, getNationalHolidays } from '@/lib/dynamicHolidays';
+import type { CalendarEvent } from '@/hooks/use-calendar-events';
 
 interface CalendarProps {
   month: number;
@@ -216,14 +218,31 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     return monthsArray;
   }, [isMobile, monthsArray, month, year]);
 
+  // --- LOGICA DE EVENTOS ENRIQUECIDA (SISTEMA + BANCO) ---
+  const enrichedEvents = useMemo(() => {
+    // Identifica todos os anos presentes nos cards que serão renderizados
+    const yearsToLoad = Array.from(new Set(monthsToRender.map(d => d.getFullYear())));
+
+    // Gera feriados do sistema para cada um desses anos
+    const systemEvents = yearsToLoad.flatMap(y => [
+      ...getDynamicHolidays(y),
+      ...getNationalHolidays(y)
+    ]) as CalendarEvent[];
+
+    // Combina com os eventos do banco (calendarEvents)
+    // Filtramos os do banco para não duplicar se o sistema já tiver algo no mesmo dia (opcional)
+    return [...calendarEvents, ...systemEvents];
+  }, [monthsToRender, calendarEvents]);
+
   const { todayColors } = useCalendarData({
     month: today.getMonth(),
     year: today.getFullYear(),
     today,
-    mode
+    mode,
+    calendarEvents: enrichedEvents
   });
 
-  const holidayMessages = useHolidayMessages(month, year, calendarEvents);
+  const holidayMessages = useHolidayMessages(month, year, enrichedEvents);
   const moonPhases = useMoonPhases(month, year);
 
   const hasAgendamentos = useMemo(() => {
@@ -545,7 +564,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                         onViewAgendamento={handleOpenViewDrawer}
                         onOpenCreateDrawer={handleOpenCreateDrawer}
                         selectedPeriod={selectedPeriod}
-                        calendarEvents={calendarEvents}
+                        calendarEvents={enrichedEvents}
                       />
                     </CarouselItem>
                   );

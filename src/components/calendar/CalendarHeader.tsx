@@ -23,6 +23,7 @@ import { MONTHS, DAYS_OF_WEEK, getSeasonDataForDate } from "@/utils/calendar-uti
 import { cn } from "@/lib/utils";
 import { useCalendarEventsContext } from "@/context/CalendarEventsContext";
 import { getEventsForDate } from "@/hooks/use-calendar-events";
+import { getDynamicHolidays, getNationalHolidays } from "@/lib/dynamicHolidays";
 
 interface CalendarHeaderProps {
   month: number;
@@ -65,19 +66,33 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
   const { events: calendarEvents } = useCalendarEventsContext();
 
-  // Gerar lista de feriados para o select (a partir do banco)
+  // Gerar lista de feriados para o select (Sistema + Banco)
   const holidaysList = useMemo(() => {
+    // 1. Gerar feriados do sistema específicos para o ano visualizado
+    const systemEvents = [...getDynamicHolidays(year), ...getNationalHolidays(year)];
+
+    // 2. Combinar com os eventos vindos do banco de dados (contexto)
+    const allEvents = [...calendarEvents, ...systemEvents];
+
     const list: { date: string; name: string; emoji: string | null }[] = [];
     const daysInYear = 366;
+    const seen = new Set<string>();
+
     for (let d = 0; d < daysInYear; d++) {
       const date = new Date(year, 0, d + 1);
       if (date.getFullYear() !== year) break;
-      const dayEvents = getEventsForDate(calendarEvents, date);
+
+      const dayEvents = getEventsForDate(allEvents, date);
       dayEvents
-        .filter(e => e.type === 'holiday')
+        .filter(e => e.type === 'holiday' || e.type === 'event')
         .forEach(e => {
           const dateStr = `${year}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-          list.push({ date: dateStr, name: e.title, emoji: e.emoji });
+          const key = `${e.title}-${dateStr}`; // Deduplicar por nome no mesmo dia
+
+          if (!seen.has(key)) {
+            list.push({ date: dateStr, name: e.title, emoji: e.emoji });
+            seen.add(key);
+          }
         });
     }
     return list.sort((a, b) => a.name.localeCompare(b.name));

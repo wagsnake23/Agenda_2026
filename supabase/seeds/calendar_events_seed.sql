@@ -87,29 +87,7 @@ FROM (VALUES
   ('Dia do Bombeiro',             '2000-07-02', 'event', true, 'event_only', '👨‍🚒', true)
 ) AS t(v_title, v_date, v_type, v_fixed, v_color, v_emoji, v_active);
 
--- ────────────────────────────────────────────────────────────
--- 5. ANIVERSARIANTES (type='birthday', is_fixed=true, color_mode='event_only')
--- ────────────────────────────────────────────────────────────
-
-INSERT INTO calendar_events (title, "date", type, is_fixed, color_mode, emoji, is_active)
-SELECT v_title, v_date::date, v_type::calendar_event_type, v_fixed, v_color::calendar_color_mode, v_emoji, v_active
-FROM (VALUES
-  ('Comandante Dias',      '2000-01-14', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Soares',      '2000-03-02', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Eduardo',     '2000-03-18', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Fabiano',     '2000-04-19', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Wolber',      '2000-05-16', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Rivabene',    '2000-06-12', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Vagner',      '2000-07-15', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Júlio Cesar', '2000-07-23', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Andreotti',   '2000-09-07', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Custódio',    '2000-09-28', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Oliveira',    '2000-11-11', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Vieira',      '2000-12-10', 'birthday', true, 'event_only', '🎂', true),
-  ('Bombeiro Sabino',      '2000-12-12', 'birthday', true, 'event_only', '🎂', true)
-) AS t(v_title, v_date, v_type, v_fixed, v_color, v_emoji, v_active);
-
--- ────────────────────────────────────────────────────────────
+-- ============================================================
 -- Verificação final
--- ────────────────────────────────────────────────────────────
+-- ============================================================
 SELECT type, count(*) as total FROM calendar_events GROUP BY type ORDER BY type;
