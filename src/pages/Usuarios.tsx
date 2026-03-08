@@ -408,7 +408,7 @@ const UsuariosPage: React.FC = () => {
         }
     };
     return (
-        <div className="min-h-screen bg-[#EFF3F6] flex flex-col items-center justify-start p-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
+        <div className="min-h-screen bg-[#eef4ff] flex flex-col items-center justify-start p-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
             <Header />
             <ConfirmDialog
                 open={!!confirmDelete}
