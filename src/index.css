@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
+    --background: 219 100% 96.5%;
     --foreground: 0 0% 16%;
 
     --card: 0 0% 100%;
@@ -66,8 +66,30 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: #eef4ff;
+    @apply text-foreground;
     font-family: 'Inter', sans-serif;
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      background-color: transparent;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(rgba(235, 245, 255, 0.65),
+          rgba(240, 248, 255, 0.75)),
+        url("/backgrounds/ceu-nuvens.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      filter: saturate(105%);
+    }
   }
 
   /* Adicione a regra @font-face aqui */
