@@ -48,20 +48,20 @@ export const getBackgroundByType = (type: string) => {
   switch (type) {
     case 'holiday':
       return {
-        bg: 'bg-red-100',
-        border: 'border-red-200',
-        text: 'text-red-800'
+        bg: 'bg-red-200',
+        border: 'border-red-400/80',
+        text: 'text-red-900'
       };
     case 'event':
       return {
-        bg: 'bg-blue-100',
-        border: 'border-blue-200',
-        text: 'text-blue-800'
+        bg: 'bg-blue-200',
+        border: 'border-blue-400/80',
+        text: 'text-blue-900'
       };
     case 'birthday':
       return {
         bg: 'bg-orange-100',
-        border: 'border-orange-200',
+        border: 'border-orange-300',
         text: 'text-orange-800'
       };
     default:
@@ -80,11 +80,11 @@ export const getColorForDateClean = (date: Date, eventColor: { bg: string; text:
 
   // Prioridade 2: Fim de semana
   if (isWeekend) {
-    return { bg: 'bg-[#FEE2E2]', border: 'border-red-300/45', text: 'text-[#991B1B]' };
+    return { bg: 'bg-[#FECACA]', border: 'border-red-400/80', text: 'text-[#991B1B]' };
   }
 
   // Padrão: Dia útil
-  return { bg: 'bg-white', border: 'border-transparent', text: 'text-black' };
+  return { bg: 'bg-white', border: 'border-slate-300', text: 'text-black' };
 };
 
 export const getColorForDateTwoTone = (date: Date): { bg: string; text: string } => {

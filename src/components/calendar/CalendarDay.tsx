@@ -96,33 +96,31 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
         "rounded-[9px] md:rounded-[11px]",
         "text-sm md:text-base font-semibold",
         "bg-clip-padding saturate-[1.05]",
-        "transition-colors duration-200 ease-out",
-        "will-change-[background-color,box-shadow,transform]",
-        "shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_2px_4px_rgba(0,0,0,0.08)]",
-        isSelected && "bg-[#FFFDDF] border border-orange-400/60 shadow-[0_0_12px_rgba(251,146,60,0.4)] z-10",
+        "transition-all duration-200 ease-out",
+        "will-change-[background-color,border-color,transform]",
+        "border-[0.5px] border-slate-300/60 shadow-none",
+        isSelected && "bg-[#FFFDDF] border-orange-400/60 z-10",
 
         mode === "adm"
-          ? !isSelected && dayData.colors.bg === 'bg-white'
-            ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.85),0_2px_4px_rgba(0,0,0,0.08)] border-none"
-            : cn(
-              "border",
-              !isSelected && dayData.colors.border ? dayData.colors.border : "border-transparent"
-            )
-          : !isSelected && "border-none",
+          ? cn(
+            "border-[0.5px]",
+            !isSelected && dayData.colors.border ? dayData.colors.border : "border-slate-300/80"
+          )
+          : !isSelected && "border-slate-300/50",
 
         !isSelected && (
           dayData.colors.bg === "bg-calendar-blue"
-            ? "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8]"
+            ? "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] border-blue-400/30"
             : dayData.colors.bg === "bg-calendar-green"
-              ? "bg-gradient-to-br from-[#2ecc71] to-[#27ae60]"
+              ? "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] border-green-400/30"
               : dayData.colors.bg === "bg-calendar-yellow"
-                ? "bg-gradient-to-br from-[#fde047] to-[#f59e0b]"
+                ? "bg-gradient-to-br from-[#fde047] to-[#f59e0b] border-yellow-400/30"
                 : dayData.colors.bg
         ),
         isSelected ? "text-black drop-shadow-none" : dayData.colors.text,
         dayData.isToday && cn(
           "ring-2 ring-inset ring-[#C62828] z-10",
-          mode !== "adm" && "shadow-[0_8px_16px_-4px_rgba(198,40,40,0.25)]",
+          "shadow-none",
           "md:font-black"
         ),
         isClicked && "opacity-90",

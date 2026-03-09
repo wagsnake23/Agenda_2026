@@ -482,8 +482,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">
       <section
         className={cn(
-          "w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw]",
-          "pt-0 lg:pt-[84px] pb-0 lg:pb-[9px] mb-0.5 lg:mb-0 lg:max-w-full",
+          "w-full lg:w-[100vw] lg:relative lg:left-1/2 lg:-translate-x-1/2",
+          "pt-0 lg:pt-[96px] pb-0 lg:pb-[20px] mb-0.5 lg:mb-0",
           "bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)]",
           "lg:border-t-[3px] lg:border-[#2563eb]",
           "lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
