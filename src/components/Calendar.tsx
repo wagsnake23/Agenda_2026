@@ -573,11 +573,11 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
               <CarouselPrevious
                 onClick={() => api?.scrollPrev()}
-                className="hidden lg:flex -left-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
+                className="hidden lg:flex -left-16 h-12 w-12 border border-blue-800 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white shadow-lg hover:from-red-500 hover:to-red-600 hover:border-red-400 transition-all active:scale-95"
               />
               <CarouselNext
                 onClick={() => api?.scrollNext()}
-                className="hidden lg:flex -right-16 h-12 w-12 border-none bg-white shadow-lg hover:bg-red-500 hover:text-white transition-colors"
+                className="hidden lg:flex -right-16 h-12 w-12 border border-blue-800 bg-gradient-to-b from-[#1e40af] to-[#1e3a8a] text-white shadow-lg hover:from-red-500 hover:to-red-600 hover:border-red-400 transition-all active:scale-95"
               />
             </Carousel>
 
