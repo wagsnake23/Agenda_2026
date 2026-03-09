@@ -10,8 +10,8 @@ import {
     ArrowLeft, Loader2, Plus, Trash2, Edit2, Shield,
     CheckCircle, XCircle, User, Search, RefreshCw, X, Key
 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/lib/supabase';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -93,7 +93,7 @@ const UserModal: React.FC<{
     editingUser?: Profile | null;
 }> = ({ open, onClose, onSaved, editingUser }) => {
     const isEditing = !!editingUser;
-    const { session } = useAuth();
+    const { session, checkSession } = useAuth();
     const [actionLoading, setActionLoading] = useState<string | null>(null);
     const [isConfirmResetOpen, setIsConfirmResetOpen] = useState(false);
     const { showSuccessToast, showErrorToast } = useToast();
@@ -128,6 +128,11 @@ const UserModal: React.FC<{
     }, [editingUser, open, form]);
 
     const handleSubmit = async (data: UserFormInput) => {
+        const s = await checkSession();
+        if (!s) {
+            showErrorToast('Sua sessão expirou. Por favor, faça login novamente.');
+            return;
+        }
         try {
             console.log("Iniciando salvamento:", data);
             if (isEditing && editingUser) {
@@ -185,7 +190,11 @@ const UserModal: React.FC<{
     };
 
     const handleResetPassword = async () => {
-        if (!editingUser || !session) return;
+        const s = await checkSession();
+        if (!editingUser || !s) {
+            if (!s) showErrorToast('Sua sessão expirou. Por favor, faça login novamente.');
+            return;
+        }
 
         setActionLoading("reset-password");
         try {
@@ -345,6 +354,7 @@ const UsuariosPage: React.FC = () => {
     const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const { showSuccessToast, showErrorToast } = useToast();
+    const { checkSession } = useAuth();
 
     const fetchUsuarios = useCallback(async () => {
         setLoading(true);
@@ -370,6 +380,11 @@ const UsuariosPage: React.FC = () => {
     );
 
     const handleDelete = async (id: string) => {
+        const s = await checkSession();
+        if (!s) {
+            showErrorToast('Sua sessão expirou. Por favor, faça login novamente.');
+            return;
+        }
         setDeletingId(id);
         try {
             // Chamando a função RPC do banco de dados que acabamos de criar via SQL
@@ -396,6 +411,11 @@ const UsuariosPage: React.FC = () => {
     };
 
     const handleToggleAtivo = async (user: Profile) => {
+        const s = await checkSession();
+        if (!s) {
+            showErrorToast('Sua sessão expirou. Por favor, faça login novamente.');
+            return;
+        }
         const { error } = await supabase
             .from('profiles')
             .update({ ativo: !user.ativo })
@@ -408,7 +428,7 @@ const UsuariosPage: React.FC = () => {
         }
     };
     return (
-        <div className="min-h-screen flex flex-col items-stretch justify-start px-1 py-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
+        <div className="min-h-screen flex flex-col items-stretch justify-start px-1 py-2 lg:p-0 gap-y-2 overflow-x-hidden text-slate-800">
             <Header />
             <ConfirmDialog
                 open={!!confirmDelete}
@@ -423,7 +443,7 @@ const UsuariosPage: React.FC = () => {
                 editingUser={editingUser}
             />
 
-            <section className="w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw] pt-0 lg:pt-[84px] pb-0 lg:pb-8 bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
+            <section className="w-full pt-0 lg:pt-[84px] pb-0 lg:pb-8 bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-0 sm:pt-6">
                     {/* Header interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

@@ -70,6 +70,11 @@ All colors MUST be HSL.
     background-color: #eaf4ff;
     @apply text-foreground;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: hidden;
   }
 
   @media (min-width: 1024px) {

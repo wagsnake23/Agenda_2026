@@ -13,6 +13,7 @@ interface AuthContextType {
     signOut: () => Promise<void>;
     refreshProfile: () => Promise<void>;
     updateProfile: (updates: Partial<Profile>) => void;
+    checkSession: () => Promise<Session | null>;
     isAdmin: boolean;
     isAuthenticated: boolean;
 }
@@ -60,6 +61,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     /**
+     * Valida o usuário diretamente no servidor do Supabase.
+     * Garante que o estado do React condiz com a realidade do Auth.
+     */
+    const ensureUser = useCallback(async () => {
+        try {
+            const { data, error } = await supabase.auth.getUser();
+            if (error || !data.user) {
+                clearAuthState();
+                return null;
+            }
+            return data.user;
+        } catch (err) {
+            console.error("[Auth] user validation failed:", err);
+            clearAuthState();
+            return null;
+        }
+    }, [clearAuthState]);
+
+    /**
      * Sincroniza o estado do React com os dados do Supabase.
      * Garante que user NUNCA seja undefined — sempre null ou User.
      */
@@ -70,7 +90,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
         setSession(currentSession);
-        const currentUser = currentSession?.user ?? null; // nunca undefined
+        // Fallback para ensureUser se a sessão não trouxer o usuário (raro, mas possível em race conditions)
+        const currentUser = currentSession?.user ?? await ensureUser();
         setUser(currentUser);
 
         if (currentUser) {
@@ -86,30 +107,54 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else {
             setProfile(null);
         }
-    }, [fetchProfile, clearAuthState]);
+    }, [fetchProfile, clearAuthState, ensureUser]);
 
     /**
-     * Efeito de inicialização e monitoramento global de sessão.
-     * Garante que:
-     * 1. getSession() → fonte primária (cache local, sem rede)
-     * 2. getUser() → valida token no servidor
-     * 3. loading só vira false UMA vez, no finally da initAuth
-     * 4. onAuthStateChange NÃO interfere durante a inicialização
+     * Helper centralizado para garantir sessão fresca.
+     * Pode ser usado antes de qualquer operação CRUD.
+     */
+    const checkSession = useCallback(async (): Promise<Session | null> => {
+        const { data, error } = await supabase.auth.getSession();
+
+        if (error) {
+            console.error('[Auth] Error checking session:', error);
+            return null;
+        }
+
+        return data.session ?? null;
+    }, []);
+
+    /**
+     * Listener global de autenticação.
+     * Sincroniza o estado do React com eventos do Supabase (Login, Logout, Refresh).
      */
     useEffect(() => {
-        if (initialized.current) return;
-        initialized.current = true;
-
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, newSession) => {
-            if (process.env.NODE_ENV === 'development') {
-                console.log(`[Auth] Evento detectado: ${event}`);
-            }
-
-            if (!initDone.current) {
-                if (process.env.NODE_ENV === 'development') {
-                    console.log('[Auth] Evento ignorado durante inicialização inicial.');
+        // 1. Carregar sessão inicial
+        const init = async () => {
+            try {
+                setLoading(true);
+                const { data: { session: s } } = await supabase.auth.getSession();
+                if (s) {
+                    await syncAuthState(s);
                 }
-                return;
+            } catch (err) {
+                console.error('[Auth] Erro ao carregar sessão inicial:', err);
+                clearAuthState();
+            } finally {
+                initDone.current = true;
+                setLoading(false);
+            }
+        };
+
+        if (!initialized.current) {
+            initialized.current = true;
+            init();
+        }
+
+        // 2. Escutar mudanças (Refresh de Token, SignOut, etc)
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, newSession) => {
+            if (process.env.NODE_ENV === 'development') {
+                console.log(`[Auth] Evento Supabase: ${event}`);
             }
 
             if (event === 'SIGNED_OUT') {
@@ -119,57 +164,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 event === 'TOKEN_REFRESHED' ||
                 event === 'USER_UPDATED'
             ) {
-                await syncAuthState(newSession);
+                if (newSession) {
+                    syncAuthState(newSession);
+                }
             }
         });
-
-        const initAuth = async () => {
-            try {
-                setLoading(true);
-
-                // Passo 1: Recuperar sessão do cache local (rápido, sem rede)
-                const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
-
-                if (sessionError) {
-                    console.error('[Auth] Erro ao recuperar sessão local:', sessionError.message);
-                    clearAuthState();
-                    return;
-                }
-
-                if (!currentSession) {
-                    // Sem sessão — garantir user = null
-                    if (process.env.NODE_ENV === 'development') {
-                        console.log('[Auth] Nenhuma sessão ativa. user = null.');
-                    }
-                    clearAuthState();
-                    return;
-                }
-
-                // Passo 2: Validar token no servidor (pode fazer refresh automático)
-                const { data: { user: serverUser }, error: userError } = await supabase.auth.getUser();
-
-                if (userError || !serverUser) {
-                    // Token inválido ou expirado e não recuperável
-                    console.warn('[Auth] Token inválido no servidor. Limpando sessão...');
-                    await supabase.auth.signOut();
-                    clearAuthState();
-                    return;
-                }
-
-                // Passo 3: Sessão válida — buscar dados atualizados e sincronizar
-                const { data: { session: freshSession } } = await supabase.auth.getSession();
-                await syncAuthState(freshSession);
-
-            } catch (err) {
-                console.error('[Auth] Erro crítico na inicialização:', err);
-                clearAuthState();
-            } finally {
-                initDone.current = true;
-                setLoading(false);
-            }
-        };
-
-        initAuth();
 
         return () => {
             subscription.unsubscribe();
@@ -276,6 +275,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             signOut,
             refreshProfile,
             updateProfile,
+            checkSession,
             isAdmin,
             isAuthenticated,
         }}>

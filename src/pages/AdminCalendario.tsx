@@ -73,7 +73,7 @@ const formatDisplayDate = (dateStr: string, isFixed: boolean): string => {
 
 const AdminCalendario: React.FC = () => {
     const navigate = useNavigate();
-    const { isAdmin, user, isAuthenticated, loading: authLoading } = useAuth();
+    const { isAdmin, user, isAuthenticated, loading: authLoading, checkSession } = useAuth();
     const { refetch } = useCalendarEventsContext();
     const { showSuccessToast, showErrorToast } = useToast();
 
@@ -180,6 +180,13 @@ const AdminCalendario: React.FC = () => {
             return;
         }
 
+        const session = await checkSession();
+        if (!session) {
+            showErrorToast('Sua sessão expirou. Por favor, faça login novamente.');
+            navigate('/auth');
+            return;
+        }
+
         setSaving(true);
         try {
             if (form.is_system && editingId) {
@@ -232,6 +239,13 @@ const AdminCalendario: React.FC = () => {
             showErrorToast('Você não tem permissão para alterar este evento.');
             return;
         }
+
+        const session = await checkSession();
+        if (!session) {
+            showErrorToast('Sua sessão expirou. Por favor, faça login novamente.');
+            return;
+        }
+
         setTogglingId(ev.id);
         const { error } = await supabase
             .from('calendar_events')
@@ -256,6 +270,13 @@ const AdminCalendario: React.FC = () => {
             setConfirmDeleteId(null);
             return;
         }
+
+        const session = await checkSession();
+        if (!session) {
+            showErrorToast('Sua sessão expirou. Por favor, faça login novamente.');
+            return;
+        }
+
         setDeleting(true);
         const { error } = await supabase.from('calendar_events').delete().eq('id', confirmDeleteId);
         if (error) {
@@ -270,10 +291,10 @@ const AdminCalendario: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-stretch justify-start px-1 py-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
+        <div className="min-h-screen flex flex-col items-stretch justify-start px-1 py-2 lg:p-0 gap-y-2 overflow-x-hidden text-slate-800">
             <Header />
 
-            <section className="w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw] pt-0 lg:pt-[84px] pb-0 lg:pb-8 bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
+            <section className="w-full pt-0 lg:pt-[84px] pb-0 lg:pb-8 bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-0 sm:pt-6">
                     {/* Cabeçalho interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -572,17 +593,52 @@ const AdminCalendario: React.FC = () => {
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
                                         <label className="text-xs font-black text-slate-500 uppercase tracking-wider mb-1 block">
-                                            {form.is_fixed ? 'Data (MM-DD) *' : 'Data Completa *'}
+                                            {form.is_fixed ? 'Data (Mês-Dia) *' : 'Data Completa *'}
                                         </label>
                                         {form.is_fixed ? (
                                             <input
                                                 value={form.date.slice(5)}
                                                 onChange={e => {
-                                                    const mmdd = e.target.value;
-                                                    setForm(p => ({ ...p, date: `2000-${mmdd}` }));
+                                                    let val = e.target.value.replace(/\D/g, ''); // Apenas dígitos
+
+                                                    if (val.length > 0) {
+                                                        // Validação do Mês (01-12)
+                                                        let m = val.slice(0, 2);
+                                                        if (m.length === 1 && parseInt(m) > 1) {
+                                                            m = '0' + m;
+                                                            val = m + val.slice(1);
+                                                        }
+                                                        if (m.length === 2) {
+                                                            if (parseInt(m) > 12) m = '12';
+                                                            if (parseInt(m) === 0) m = '01';
+                                                            val = m + val.slice(2);
+                                                        }
+
+                                                        // Validação do Dia (01-31)
+                                                        if (val.length > 2) {
+                                                            let d = val.slice(2, 4);
+                                                            if (d.length === 1 && parseInt(d) > 3) {
+                                                                d = '0' + d;
+                                                                val = val.slice(0, 2) + d;
+                                                            }
+                                                            if (d.length === 4) { // val can have up to 4 digits total
+                                                                let d2 = val.slice(2, 4);
+                                                                if (parseInt(d2) > 31) d2 = '31';
+                                                                if (parseInt(d2) === 0) d2 = '01';
+                                                                val = val.slice(0, 2) + d2;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    // Formatar com o traço
+                                                    let formatted = val.slice(0, 2);
+                                                    if (val.length > 2) {
+                                                        formatted += '-' + val.slice(2, 4);
+                                                    }
+
+                                                    setForm(p => ({ ...p, date: `2000-${formatted.slice(0, 5)}` }));
                                                 }}
-                                                placeholder="MM-DD (ex: 12-25)"
-                                                pattern="\d{2}-\d{2}"
+                                                placeholder="(Mês-Dia)"
                                                 maxLength={5}
                                                 disabled={form.is_system}
                                                 className="w-full h-11 px-4 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-mono disabled:opacity-50 disabled:bg-slate-50"

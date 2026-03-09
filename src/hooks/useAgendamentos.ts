@@ -6,7 +6,7 @@ import { useToast } from '@/contexts/ToastProvider';
 import { dedupeById } from '@/utils/dedupeById';
 
 export const useAgendamentos = () => {
-    const { user, isAdmin } = useAuth();
+    const { user, isAdmin, checkSession } = useAuth();
     const { showSuccessToast, showErrorToast } = useToast();
     const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
     const [loading, setLoading] = useState(true);
@@ -53,7 +53,8 @@ export const useAgendamentos = () => {
         tipo_agendamento: string;
         observacao?: string | null;
     }) => {
-        if (!user) return { error: 'Não autenticado' };
+        const isSessionValid = await checkSession();
+        if (!isSessionValid || !user) return { error: 'Sua sessão expirou. Por favor, saia e entre novamente.' };
 
         const start = new Date(input.data_inicial);
         const end = new Date(input.data_final);
@@ -103,6 +104,9 @@ export const useAgendamentos = () => {
     };
 
     const atualizar = async (id: string, updates: Partial<Agendamento>) => {
+        const isSessionValid = await checkSession();
+        if (!isSessionValid || !user) return { error: 'Sua sessão expirou. Por favor, saia e entre novamente.' };
+
         try {
             // Nova regra de negócio: Se o criador mudar as datas, status volta para pendente
             const { data: currentAg } = await supabase
@@ -165,6 +169,9 @@ export const useAgendamentos = () => {
     };
 
     const excluir = async (id: string) => {
+        const isSessionValid = await checkSession();
+        if (!isSessionValid || !user) return { error: 'Sua sessão expirou. Por favor, saia e entre novamente.' };
+
         try {
             const { error: deleteError } = await supabase
                 .from('agendamentos')
