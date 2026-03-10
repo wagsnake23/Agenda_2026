@@ -287,7 +287,7 @@ const MeuPerfil: React.FC = () => {
                 ) : (
                     <form onSubmit={form.handleSubmit(handleSave)} className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start md:items-stretch">
                         {/* 🟦 CARD 1 – PERFIL (COLUNA ESQUERDA 40% -> col-span-5) */}
-                        <div className="md:col-span-5 h-full bg-white rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100/60 p-8 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+                        <div className="md:col-span-5 h-full bg-white rounded-3xl shadow-[0_4px_15px_rgba(0,0,0,0.04),inset_0_1.5px_1px_white] border border-slate-200 p-8 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                             {/* Avatar */}
                             <div className="relative group cursor-pointer mb-5" onClick={() => fileInputRef.current?.click()}>
                                 <div
@@ -393,7 +393,7 @@ const MeuPerfil: React.FC = () => {
                         </div>
 
                         {/* 🟩 CARD 2 – INFORMAÇÕES PESSOAIS (COLUNA DIREITA 60% -> col-span-7) */}
-                        <div className="md:col-span-7 bg-white rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100/60 p-6 sm:p-8 flex flex-col h-full">
+                        <div className="md:col-span-7 bg-white rounded-3xl shadow-[0_4px_15px_rgba(0,0,0,0.04),inset_0_1.5px_1px_white] border border-slate-200 p-6 sm:p-8 flex flex-col h-full">
                             <div className="mb-6 flex items-center gap-3.5 border-b border-slate-200/60 pb-4">
                                 <div className="w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
                                     <span className="text-xl drop-shadow-sm">ℹ️</span>
