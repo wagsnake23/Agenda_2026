@@ -252,7 +252,7 @@ const MeuPerfil: React.FC = () => {
         : 'U';
 
     return (
-        <div className="min-h-screen flex flex-col items-stretch justify-start px-1 py-2 lg:p-0 md:gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
+        <div className="min-h-screen flex flex-col items-stretch justify-start px-[14px] py-2 lg:p-0 md:gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
 
             {/* Cropper Modal */}
             {showCropper && rawImageSrc && (
@@ -266,7 +266,7 @@ const MeuPerfil: React.FC = () => {
             {/* Header Global */}
             <Header />
 
-            <section className="w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw] pt-0 lg:pt-[96px] pb-0 lg:pb-8 bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
+            <section className="w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw] pt-0 lg:pt-[96px] pb-0 lg:pb-8 bg-[#eaf4ff] lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-0 sm:pt-6">
                     {/* Cabeçalho do Módulo Interno */}
                     <div className="flex items-center justify-center md:justify-start gap-3 flex-1">
@@ -280,7 +280,7 @@ const MeuPerfil: React.FC = () => {
                 </div>
             </section>
 
-            <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 pb-8">
+            <div className="w-full max-w-5xl mx-auto px-0 sm:px-6 pb-8">
 
                 {authLoading ? (
                     <ProfileSkeleton />

@@ -61,12 +61,14 @@ const ConfirmDialog: React.FC<{
     return (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-3">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onCancel} />
-            <div className="relative bg-white rounded-[24px] shadow-2xl border border-gray-100 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200">
-                <div className="flex flex-col items-center gap-2 mb-4">
-                    <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center text-red-600 mb-1">
-                        <Trash2 size={28} />
+            <div className="relative bg-gradient-to-br from-[#F4F9FF] to-[#E6F0FD] rounded-[24px] shadow-2xl border border-blue-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] p-6 w-[99%] md:w-full md:max-w-sm z-10 animate-in zoom-in-95 duration-200">
+                <div className="flex flex-col items-center gap-4 mb-6 text-center">
+                    <div className="flex items-center justify-center gap-3">
+                        <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_4px_0_#93c5fd] border border-blue-200 flex items-center justify-center text-red-600 shrink-0">
+                            <Trash2 size={22} strokeWidth={3} />
+                        </div>
+                        <h3 className="text-[1.35rem] font-black text-slate-800 leading-tight">Confirmar Exclusão</h3>
                     </div>
-                    <h3 className="text-[1.3rem] font-black text-slate-800 uppercase tracking-tight">Confirmar exclusão</h3>
                 </div>
 
                 <p className="text-slate-600 font-bold text-sm text-center mb-8 px-2 leading-relaxed">{message}</p>
@@ -74,8 +76,8 @@ const ConfirmDialog: React.FC<{
                 <div className="flex gap-3">
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm 
-                                 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
+                        className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-600 font-bold text-sm 
+                                 border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all"
                     >
                         Cancelar
                     </button>
@@ -471,7 +473,7 @@ const UsuariosPage: React.FC = () => {
         }
     };
     return (
-        <div className="min-h-screen flex flex-col items-stretch justify-start px-1 py-2 lg:p-0 gap-y-2 overflow-x-hidden text-slate-800">
+        <div className="min-h-screen flex flex-col items-stretch justify-start px-[14px] py-2 lg:p-0 gap-y-2 overflow-x-hidden text-slate-800">
             <Header />
             <ConfirmDialog
                 open={!!confirmDelete}
@@ -486,7 +488,7 @@ const UsuariosPage: React.FC = () => {
                 editingUser={editingUser}
             />
 
-            <section className="w-full pt-0 lg:pt-[96px] pb-0 lg:pb-8 bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
+            <section className="w-full pt-0 lg:pt-[96px] pb-0 lg:pb-8 bg-[#eaf4ff] lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-0 sm:pt-6">
                     {/* Header interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -517,7 +519,7 @@ const UsuariosPage: React.FC = () => {
                 </div>
             </section>
 
-            <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 pb-6">
+            <div className="w-full max-w-[1400px] mx-auto px-0 md:px-8 pb-6">
 
                 {/* Busca */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">

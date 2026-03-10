@@ -106,7 +106,7 @@ const MobileMenu = () => {
                 </div>
 
                 {/* Lista de Itens */}
-                <div className="flex-1 overflow-y-auto py-3 px-3.5 flex flex-col gap-1.5 bg-[linear-gradient(180deg,#f8fafc_0%,#eef4ff_100%)]">
+                <div className="flex-1 overflow-y-auto py-3 px-3.5 flex flex-col gap-1.5 bg-[linear-gradient(180deg,#f8fafc_0%,#eaf4ff_100%)]">
 
                     {/* Item 1: Escala */}
                     <div className="px-1 py-1">
