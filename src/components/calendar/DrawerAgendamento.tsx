@@ -564,18 +564,21 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         {(() => {
                                             const s = agendamentoEditando.status?.toLowerCase();
                                             let dateVal = null;
-                                            let label = '';
-                                            if (s === 'aprovado' && agendamentoEditando.approvedAt) { dateVal = agendamentoEditando.approvedAt; label = 'Aprovado em'; }
-                                            if (s === 'cancelado' && agendamentoEditando.cancelledAt) { dateVal = agendamentoEditando.cancelledAt; label = 'Cancelado em'; }
-                                            if (s === 'recusado' && agendamentoEditando.rejectedAt) { dateVal = agendamentoEditando.rejectedAt; label = 'Recusado em'; }
+                                            
+                                            if (s === 'aprovado' && agendamentoEditando.approvedAt) { dateVal = agendamentoEditando.approvedAt; }
+                                            if (s === 'cancelado' && agendamentoEditando.cancelledAt) { dateVal = agendamentoEditando.cancelledAt; }
+                                            if (s === 'recusado' && agendamentoEditando.rejectedAt) { dateVal = agendamentoEditando.rejectedAt; }
 
                                             if (!dateVal) return null;
 
                                             return (
-                                                <div className="flex items-center gap-1 text-slate-600 mt-0 md:mt-0.5">
-                                                    <span className="text-[14px] md:text-[16px] drop-shadow-sm">🕒</span>
-                                                    <span className="text-sm font-medium">
-                                                        {label} {format(parseISO(dateVal), "dd MMM yyyy 'às' HH:mm", { locale: ptBR })}
+                                                <div className="flex items-center gap-1.5 text-slate-600 mt-0 md:mt-0.5">
+                                                    <span className="text-[13px] md:text-[15px] drop-shadow-sm">🕒</span>
+                                                    <span className={cn(
+                                                        "font-medium",
+                                                        variant === 'modal' ? "text-[13px] md:text-[15px]" : "text-sm"
+                                                    )}>
+                                                        {format(parseISO(dateVal), "dd MMM yyyy 'às' HH:mm", { locale: ptBR })}
                                                     </span>
                                                 </div>
                                             );
