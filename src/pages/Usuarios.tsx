@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from '@/contexts/ToastProvider';
@@ -25,6 +25,13 @@ import {
 import { Profile } from '@/modules/auth/types';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 const userFormSchema = z.object({
     nome: z.string().min(3, 'Nome mínimo 3 caracteres'),
@@ -272,17 +279,45 @@ const UserModal: React.FC<{
                     <div className="grid grid-cols-2 gap-3">
                         <div>
                             <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Perfil</label>
-                            <select {...form.register('perfil')} className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all">
-                                <option value="conferente">Membro</option>
-                                <option value="administrador">Administrador</option>
-                            </select>
+                            <Controller
+                                name="perfil"
+                                control={form.control}
+                                render={({ field }) => (
+                                    <Select 
+                                        value={field.value} 
+                                        onValueChange={field.onChange}
+                                    >
+                                        <SelectTrigger className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:border-blue-400 transition-all bg-white">
+                                            <SelectValue placeholder="Selecione o perfil" />
+                                        </SelectTrigger>
+                                        <SelectContent className="rounded-xl border-slate-200 shadow-xl z-[250]">
+                                            <SelectItem value="conferente" className="rounded-lg">Membro</SelectItem>
+                                            <SelectItem value="administrador" className="rounded-lg">Administrador</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                )}
+                            />
                         </div>
                         <div>
                             <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Status</label>
-                            <select {...form.register('ativo', { setValueAs: v => v === 'true' || v === true })} className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all">
-                                <option value="true">Ativo</option>
-                                <option value="false">Inativo</option>
-                            </select>
+                            <Controller
+                                name="ativo"
+                                control={form.control}
+                                render={({ field }) => (
+                                    <Select 
+                                        value={String(field.value)} 
+                                        onValueChange={(v) => field.onChange(v === 'true')}
+                                    >
+                                        <SelectTrigger className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:border-blue-400 transition-all bg-white">
+                                            <SelectValue placeholder="Selecione o status" />
+                                        </SelectTrigger>
+                                        <SelectContent className="rounded-xl border-slate-200 shadow-xl z-[250]">
+                                            <SelectItem value="true" className="rounded-lg">Ativo</SelectItem>
+                                            <SelectItem value="false" className="rounded-lg">Inativo</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                )}
+                            />
                         </div>
                     </div>
 
@@ -606,7 +641,7 @@ const UsuariosPage: React.FC = () => {
                                                     onClick={() => handleToggleAtivo(u)}
                                                     className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none ${u.ativo ? 'bg-green-500' : 'bg-red-400/60'}`}
                                                 >
-                                                    <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform ${u.ativo ? 'translate-x-4.5' : 'translate-x-1'}`} />
+                                                    <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform ${u.ativo ? 'translate-x-[18px]' : 'translate-x-1'}`} />
                                                 </button>
                                             </div>
 
@@ -615,7 +650,6 @@ const UsuariosPage: React.FC = () => {
                                                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${u.perfil === 'administrador' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-blue-50 text-blue-700 border-blue-200'}`}>
                                                     {PERFIL_LABELS[u.perfil]}
                                                 </span>
-                                                {u.cargo && <span className="px-2 py-0.5 rounded-full text-[10px] bg-slate-50 text-slate-500 border border-slate-100">{u.cargo}</span>}
                                             </div>
                                         </div>
 
