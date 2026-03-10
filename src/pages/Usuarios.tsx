@@ -537,8 +537,11 @@ const UsuariosPage: React.FC = () => {
                                                 </span>
                                             </td>
                                             <td className="px-4 py-3">
-                                                <button onClick={() => handleToggleAtivo(u)} className={`px-2.5 py-0.5 rounded-full text-xs font-bold border flex items-center gap-1 ${u.ativo ? 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100' : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100'} transition-all`}>
-                                                    {u.ativo ? <><CheckCircle size={10} /> Ativo</> : <><XCircle size={10} /> Inativo</>}
+                                                <button
+                                                    onClick={() => handleToggleAtivo(u)}
+                                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${u.ativo ? 'bg-green-500' : 'bg-red-400/60'}`}
+                                                >
+                                                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${u.ativo ? 'translate-x-6' : 'translate-x-1'}`} />
                                                 </button>
                                             </td>
                                             <td className="px-4 py-3">
@@ -599,8 +602,11 @@ const UsuariosPage: React.FC = () => {
 
                                             {/* STATUS - LINHA 2 (ABAIXO DO AVATAR) */}
                                             <div className="col-start-1 row-start-2 flex justify-center mt-2">
-                                                <button onClick={() => handleToggleAtivo(u)} className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter border whitespace-nowrap ${u.ativo ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-500 border-gray-200'}`}>
-                                                    {u.ativo ? 'Ativo' : 'Inativo'}
+                                                <button
+                                                    onClick={() => handleToggleAtivo(u)}
+                                                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none ${u.ativo ? 'bg-green-500' : 'bg-red-400/60'}`}
+                                                >
+                                                    <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform ${u.ativo ? 'translate-x-4.5' : 'translate-x-1'}`} />
                                                 </button>
                                             </div>
 

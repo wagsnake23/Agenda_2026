@@ -421,7 +421,7 @@ const AdminCalendario: React.FC = () => {
                                                     <button
                                                         onClick={() => handleToggle(ev)}
                                                         disabled={togglingId === ev.id || !canEdit(ev)}
-                                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${ev.is_active ? 'bg-green-500' : 'bg-slate-300'} ${!canEdit(ev) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${ev.is_active ? 'bg-green-500' : 'bg-red-400/60'} ${!canEdit(ev) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                     >
                                                         <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${ev.is_active ? 'translate-x-6' : 'translate-x-1'}`} />
                                                     </button>
