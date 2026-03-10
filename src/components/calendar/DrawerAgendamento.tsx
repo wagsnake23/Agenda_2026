@@ -321,7 +321,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 )}>
                     <div className="flex flex-row items-center gap-2.5 md:gap-3.5 pt-0.5 md:pt-0">
                         {(!modoEdicao && mode !== 'create') ? (
-                            <span className="text-lg md:text-xl drop-shadow-sm shrink-0">📅</span>
+                            <span className="text-lg md:text-xl drop-shadow-sm shrink-0">📋</span>
                         ) : (
                             <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
                                 <span className="text-lg md:text-xl drop-shadow-sm">
@@ -714,7 +714,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     </span>
                                                 </div>
                                                 <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0">
-                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70">📅</span>
+                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70">📋</span>
                                                     <span className="text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis block">
                                                         {renderPeriod()}
                                                     </span>
