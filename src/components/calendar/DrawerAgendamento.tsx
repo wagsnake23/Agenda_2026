@@ -317,41 +317,39 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             : "px-6 md:px-5 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]")
                         : "p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)]"
                 )}>
-                    <div className="flex flex-row items-start md:items-center gap-1.5 md:gap-2 pt-0.5 md:pt-0">
-                        {modoEdicao ? (
-                            <span className="text-[1.1em] md:text-[1.25em] leading-none mt-[2px] md:mt-0">📝</span>
-                        ) : mode === 'create' ? (
-                            <span className="text-[1.1em] md:text-[1.25em] leading-none">📝</span>
-                        ) : (
-                            <span className="text-[1.1em] md:text-[1.25em] leading-none">📅</span>
-                        )}
+                    <div className="flex flex-row items-center gap-2.5 md:gap-3.5 pt-0.5 md:pt-0">
+                        <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
+                            <span className="text-lg md:text-xl drop-shadow-sm">
+                                {modoEdicao ? '📝' : mode === 'create' ? '📝' : '📅'}
+                            </span>
+                        </div>
 
-                        <div className="flex flex-col justify-center">
+                        <div className="flex flex-col justify-center min-w-0">
                             <h2 className={cn(
-                                "font-black uppercase md:tracking-[1px] whitespace-nowrap leading-tight transition-all",
-                                mode === 'create' ? "text-slate-900 text-[1.05rem] md:text-[1.3rem] tracking-[0.5px]" : "text-white text-[0.82rem] xs:text-[0.88rem] md:text-[1.1rem] tracking-tight md:tracking-[1px] drop-shadow-sm"
+                                "font-black leading-tight transition-all",
+                                mode === 'create' ? "text-slate-900 text-[1.05rem] md:text-[1.3rem]" : "text-white text-[0.9rem] xs:text-[1rem] md:text-[1.2rem] drop-shadow-sm"
                             )}>
                                 {modoEdicao ? (
-                                    <span>EDITAR AGENDAMENTO</span>
+                                    <span>Editar Agendamento</span>
                                 ) : mode === 'create' ? (
-                                    <span>NOVO AGENDAMENTO</span>
+                                    <span>Novo Agendamento</span>
                                 ) : (
-                                    <>
-                                        <span className="font-black opacity-100 md:opacity-90 mr-1.5">AGENDAMENTOS DO DIA</span>
-                                        <span className="font-black">
+                                    <div className="flex flex-wrap items-center gap-x-2">
+                                        <span className="opacity-100 md:opacity-90">Agendamentos Do Dia</span>
+                                        <span className="opacity-100 font-extrabold">
                                             {initialDate && (() => {
                                                 const d = new Date(initialDate + 'T12:00:00');
-                                                const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+                                                const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
                                                 return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
                                             })()}
                                         </span>
-                                    </>
+                                    </div>
                                 )}
                             </h2>
                             {modoEdicao && agendamentoEditando?.createdAt && (
                                 <div className={cn(
                                     "font-medium text-left leading-tight mt-0.5",
-                                    mode === 'create' ? "text-[#0B1221]/70 text-[11px] md:text-sm" : "text-white/80 text-[11px] md:text-sm"
+                                    mode === 'create' ? "text-[#0B1221]/70 text-[10px] md:text-[13px]" : "text-white/80 text-[10px] md:text-[13px]"
                                 )}>
                                     Criado em {format(parseISO(agendamentoEditando.createdAt), "dd MMM yyyy 'às' HH:mm", { locale: ptBR })}
                                 </div>

@@ -543,9 +543,16 @@ const AdminCalendario: React.FC = () => {
                         <div className="relative bg-white rounded-[24px] shadow-2xl w-[99%] max-w-lg z-10 animate-in zoom-in-95 duration-200 overflow-hidden">
                             {/* Header */}
                             <div className="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]">
-                                <h3 className="font-black text-white uppercase tracking-tight text-base">
-                                    {editingId ? '✏️ Editar Evento' : '➕ Novo Evento'}
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
+                                    <span className="text-lg drop-shadow-sm">
+                                        {editingId ? '✏️' : '➕'}
+                                    </span>
+                                </div>
+                                <h3 className="font-bold text-white text-base md:text-[1.1rem]">
+                                    {editingId ? 'Editar Evento' : 'Novo Evento'}
                                 </h3>
+                            </div>
                                 <button onClick={() => !saving && setModalOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-md active:scale-90 transition-all">
                                     <X size={18} strokeWidth={3} />
                                 </button>
@@ -740,11 +747,11 @@ const AdminCalendario: React.FC = () => {
                     <div className="fixed inset-0 z-[300] flex items-center justify-center p-1 md:p-3 animate-in fade-in duration-200">
                         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !deleting && setConfirmDeleteId(null)} />
                         <div className="relative bg-gradient-to-br from-[#F4F9FF] to-[#E6F0FD] rounded-[24px] shadow-2xl border border-blue-100 p-6 w-[99%] md:w-full md:max-w-sm z-10 animate-in zoom-in-95 duration-200">
-                            <div className="flex flex-col items-center gap-2 mb-4 text-center">
-                                <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center text-red-600 mb-1">
+                            <div className="flex flex-col items-center gap-4 mb-6 text-center">
+                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_3px_0_#93c5fd,inset_0_2px_1px_white] border border-blue-200 flex items-center justify-center text-red-600 mb-1">
                                     <Trash2 size={28} />
                                 </div>
-                                <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Excluir Evento</h3>
+                                <h3 className="text-xl font-black text-slate-800 tracking-tight">Excluir Evento</h3>
                             </div>
 
                             <p className="text-slate-600 font-bold text-sm text-center mb-8 px-2 leading-relaxed">

@@ -230,9 +230,14 @@ const UserModal: React.FC<{
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
             <div className="relative bg-white rounded-2xl shadow-2xl w-[99%] max-w-[99%] md:max-w-md z-10 overflow-hidden animate-in zoom-in-95 duration-200">
                 <div className="flex items-center justify-between p-4 md:p-5 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]">
-                    <h3 className="font-bold text-white uppercase tracking-wider text-sm md:text-base">
-                        {isEditing ? '✏️ Editar Usuário' : '👤 Novo Usuário'}
-                    </h3>
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
+                            <span className="text-lg drop-shadow-sm">{isEditing ? '✏️' : '👤'}</span>
+                        </div>
+                        <h3 className="font-bold text-white text-[17px] md:text-[1.15rem]">
+                            {isEditing ? 'Editar Usuário' : 'Novo Usuário'}
+                        </h3>
+                    </div>
                     <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-md active:scale-90" title="Fechar">
                         <X size={18} strokeWidth={3} />
                     </button>
@@ -350,8 +355,11 @@ const UserModal: React.FC<{
                 <AlertDialog open={isConfirmResetOpen} onOpenChange={setIsConfirmResetOpen}>
                     <AlertDialogContent className="w-[99%] max-w-sm rounded-[24px] border-none shadow-2xl p-6">
                         <AlertDialogHeader>
-                            <AlertDialogTitle className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center justify-center gap-2">
-                                🔑 Redefinir Senha
+                            <AlertDialogTitle className="text-xl font-black text-slate-800 tracking-tight flex items-center justify-center gap-3">
+                                <div className="w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
+                                    <span className="text-xl drop-shadow-sm">🔑</span>
+                                </div>
+                                Redefinir Senha
                             </AlertDialogTitle>
                             <AlertDialogDescription className="text-slate-600 font-bold text-sm leading-relaxed mt-2 text-center">
                                 Deseja redefinir a senha do usuário para <strong className="text-orange-600">Agenda1</strong>?
