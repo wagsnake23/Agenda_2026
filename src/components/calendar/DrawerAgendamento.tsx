@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Edit2, Trash2, User, Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { X, SquarePen, Trash2, User, Calendar as CalendarIcon, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -749,10 +749,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                                     setAgendamentoEditando(agenda);
                                                                 }
                                                             }}
-                                                            className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center rounded-full text-blue-600 hover:text-blue-800 hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
+                                                            className="w-8 h-8 md:w-11 md:h-11 flex items-center justify-center rounded-full text-blue-600 hover:text-blue-800 hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
                                                             title="Editar"
                                                         >
-                                                            <Edit2 className="w-4 h-4 md:w-[17px] md:h-[17px] group-hover/btn:scale-110 transition-transform" />
+                                                            <SquarePen className="w-[18px] h-[18px] md:w-[22px] md:h-[22px] group-hover/btn:scale-110 transition-transform" />
                                                         </button>
 
                                                         <div className="w-[60%] h-[1px] bg-blue-300/40 my-0.5 shadow-[0_1px_0_rgba(255,255,255,0.7)]" />
@@ -762,10 +762,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                                 e.stopPropagation();
                                                                 setConfirmDeleteId(agenda.id);
                                                             }}
-                                                            className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center rounded-full text-[#E53935] hover:text-[#C62828] hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
+                                                            className="w-8 h-8 md:w-11 md:h-11 flex items-center justify-center rounded-full text-[#E53935] hover:text-[#C62828] hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
                                                             title="Excluir"
                                                         >
-                                                            <Trash2 className="w-4 h-4 md:w-[17px] md:h-[17px] group-hover/btn:scale-110 transition-transform" />
+                                                            <Trash2 className="w-[18px] h-[18px] md:w-[22px] md:h-[22px] group-hover/btn:scale-110 transition-transform" />
                                                         </button>
                                                     </div>
                                                 )}

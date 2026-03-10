@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { useToast } from '@/contexts/ToastProvider';
 import {
     ArrowLeft, Loader2, Plus, Trash2, Edit2, Shield,
-    CheckCircle, XCircle, User, Search, RefreshCw, X, Key
+    CheckCircle, XCircle, User, Search, RefreshCw, X, Key, SquarePen
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
@@ -448,8 +448,11 @@ const UsuariosPage: React.FC = () => {
                     {/* Header interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div className="flex items-center justify-center md:justify-start gap-3 flex-1">
-                            <h2 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-2 flex-1 md:flex-none">
-                                👥 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Usuários</span>
+                            <h2 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-3 flex-1 md:flex-none">
+                                <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl shadow-[0_4px_0_#e2e8f0] border border-slate-200 flex items-center justify-center shrink-0">
+                                    <span className="text-xl md:text-3xl">👥</span>
+                                </div>
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Usuários</span>
                             </h2>
                         </div>
                         <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -539,19 +542,21 @@ const UsuariosPage: React.FC = () => {
                                                 </button>
                                             </td>
                                             <td className="px-4 py-3">
-                                                <div className="flex items-center gap-1">
+                                                <div className="flex items-center gap-2">
                                                     <button
                                                         onClick={() => { setEditingUser(u); setModalOpen(true); }}
-                                                        className="w-8 h-8 flex items-center justify-center rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all"
+                                                        className="w-10 h-10 flex items-center justify-center rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all border border-blue-50/50"
+                                                        title="Editar Usuário"
                                                     >
-                                                        <Edit2 size={14} />
+                                                        <SquarePen size={18} />
                                                     </button>
                                                     <button
                                                         onClick={() => setConfirmDelete(u.id)}
                                                         disabled={deletingId === u.id}
-                                                        className="w-8 h-8 flex items-center justify-center rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 transition-all disabled:opacity-50"
+                                                        className="w-10 h-10 flex items-center justify-center rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 transition-all disabled:opacity-50 border border-red-50/50"
+                                                        title="Excluir Usuário"
                                                     >
-                                                        {deletingId === u.id ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                                                        {deletingId === u.id ? <Loader2 size={18} className="animate-spin" /> : <Trash2 size={18} />}
                                                     </button>
                                                 </div>
                                             </td>
@@ -615,14 +620,14 @@ const UsuariosPage: React.FC = () => {
                                                 className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 active:scale-90 transition-all shadow-sm border border-blue-100"
                                                 title="Editar"
                                             >
-                                                <Edit2 size={16} />
+                                                <SquarePen size={18} />
                                             </button>
                                             <button
                                                 onClick={() => setConfirmDelete(u.id)}
                                                 className="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 text-red-600 active:scale-90 transition-all shadow-sm border border-red-100"
                                                 title="Excluir"
                                             >
-                                                <Trash2 size={16} />
+                                                <Trash2 size={18} />
                                             </button>
                                         </div>
                                     </div>

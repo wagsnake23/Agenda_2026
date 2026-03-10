@@ -9,7 +9,7 @@ import { useToast } from '@/contexts/ToastProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import {
-    Plus, Search, Edit2, Trash2,
+    Plus, Search, SquarePen, Trash2,
     Calendar, Loader2, X, Check, RefreshCw, Lock
 } from 'lucide-react';
 import type { CalendarEvent, CalendarEventType, ColorMode } from '@/hooks/use-calendar-events';
@@ -299,8 +299,10 @@ const AdminCalendario: React.FC = () => {
                     {/* Cabeçalho interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div className="flex flex-col items-center md:items-start text-center md:text-left flex-1">
-                            <h1 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-2">
-                                <span className="text-[1.1em]">📅</span>
+                            <h1 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-3">
+                                <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl shadow-[0_4px_0_#e2e8f0] border border-slate-200 flex items-center justify-center shrink-0">
+                                    <span className="text-xl md:text-3xl">📅</span>
+                                </div>
                                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Feriados e Eventos</span>
                             </h1>
                         </div>
@@ -428,11 +430,11 @@ const AdminCalendario: React.FC = () => {
                                                     <div className="flex items-center justify-end gap-2">
                                                         {canEdit(ev) ? (
                                                             <>
-                                                                <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all" title="Editar">
-                                                                    <Edit2 size={14} />
+                                                                <button onClick={() => openEdit(ev)} className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-all" title="Editar">
+                                                                    <SquarePen size={18} />
                                                                 </button>
-                                                                <button onClick={() => setConfirmDeleteId(ev.id)} className="p-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-all" title="Excluir">
-                                                                    <Trash2 size={14} />
+                                                                <button onClick={() => setConfirmDeleteId(ev.id)} className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-all" title="Excluir">
+                                                                    <Trash2 size={18} />
                                                                 </button>
                                                             </>
                                                         ) : (
@@ -506,7 +508,7 @@ const AdminCalendario: React.FC = () => {
                                                 {canEdit(ev) ? (
                                                     <>
                                                         <button onClick={() => openEdit(ev)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 active:scale-90 transition-all shadow-sm border border-blue-100">
-                                                            <Edit2 size={14} />
+                                                            <SquarePen size={16} />
                                                         </button>
                                                         <button onClick={() => setConfirmDeleteId(ev.id)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-red-50 text-red-600 active:scale-90 transition-all shadow-sm border border-red-100">
                                                             <Trash2 size={14} />

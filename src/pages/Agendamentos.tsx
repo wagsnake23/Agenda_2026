@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Loader2, Filter, Trash2, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, User, Edit2 } from 'lucide-react';
+import { Loader2, Filter, Trash2, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, User, SquarePen } from 'lucide-react';
 import { useToast } from '@/contexts/ToastProvider';
 import { useAuth } from '@/context/AuthContext';
 import { useAgendamentos } from '@/hooks/useAgendamentos';
@@ -216,8 +216,11 @@ const AgendamentosPage: React.FC = () => {
                     {/* Cabeçalho do Módulo */}
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start gap-3 flex-1">
-                            <h2 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-2 flex-1 md:flex-none">
-                                📋 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Agendamentos</span>
+                            <h2 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-3 flex-1 md:flex-none">
+                                <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl shadow-[0_4px_0_#e2e8f0] border border-slate-200 flex items-center justify-center shrink-0">
+                                    <span className="text-xl md:text-3xl">📋</span>
+                                </div>
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Agendamentos</span>
                             </h2>
                         </div>
                         <button
@@ -399,20 +402,21 @@ const AgendamentosPage: React.FC = () => {
                                                     </td>
                                                     <td className="px-4 py-3">
                                                         {isAdmin ? (
-                                                            <div className="relative">
-                                                                <select
-                                                                    value={ag.status}
-                                                                    onChange={e => handleAlterarStatus(ag.id, e.target.value as Agendamento['status'])}
-                                                                    disabled={alterandoStatusId === ag.id}
-                                                                    className={`appearance-none px-2.5 py-1 rounded-full text-xs font-bold border cursor-pointer pr-6 ${st.className}`}
-                                                                >
-                                                                    <option value="pendente">Pendente</option>
-                                                                    <option value="aprovado">Aprovado</option>
-                                                                    <option value="recusado">Recusado</option>
-                                                                    <option value="cancelado">Cancelado</option>
-                                                                </select>
-                                                                <ChevronDown size={10} className="absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none opacity-70" />
-                                                            </div>
+                                                            <Select
+                                                                value={ag.status}
+                                                                onValueChange={(v) => handleAlterarStatus(ag.id, v as Agendamento['status'])}
+                                                                disabled={alterandoStatusId === ag.id}
+                                                            >
+                                                                <SelectTrigger className={`h-7 px-2.5 rounded-full text-xs font-bold border cursor-pointer w-[110px] ${st.className}`}>
+                                                                    <SelectValue />
+                                                                </SelectTrigger>
+                                                                <SelectContent className="rounded-xl border-slate-200 shadow-xl">
+                                                                    <SelectItem value="pendente" className="rounded-lg text-xs font-semibold text-yellow-700">⏳ Pendente</SelectItem>
+                                                                    <SelectItem value="aprovado" className="rounded-lg text-xs font-semibold text-green-700">✅ Aprovado</SelectItem>
+                                                                    <SelectItem value="recusado" className="rounded-lg text-xs font-semibold text-red-700">🚫 Recusado</SelectItem>
+                                                                    <SelectItem value="cancelado" className="rounded-lg text-xs font-semibold text-slate-600">✖️ Cancelado</SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
                                                         ) : (
                                                             <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${st.className}`}>
                                                                 {st.label}
@@ -427,45 +431,45 @@ const AgendamentosPage: React.FC = () => {
                                                     <td className="px-4 py-3 text-right">
                                                         <div className="flex items-center justify-end gap-2">
                                                             {(isAdmin || ag.user_id === profile?.id) && (
-                                                                <button
-                                                                    onClick={() => {
-                                                                        const formattedAgenda = {
-                                                                            id: ag.id,
-                                                                            userId: ag.user_id,
-                                                                            dataInicio: ag.data_inicial,
-                                                                            dataFim: ag.data_final,
-                                                                            tipo: ag.tipo_agendamento,
-                                                                            totalDias: ag.dias,
-                                                                            status: ag.status || 'pendente',
-                                                                            observacao: ag.observacao || undefined,
-                                                                            userName: ag.profiles?.apelido || ag.profiles?.nome || undefined,
-                                                                            userPhoto: ag.profiles?.foto_url || undefined,
-                                                                            createdAt: ag.created_at,
-                                                                            approvedAt: ag.approved_at,
-                                                                            cancelledAt: ag.cancelled_at,
-                                                                            rejectedAt: ag.rejected_at,
-                                                                        };
-                                                                        window.dispatchEvent(
-                                                                            new CustomEvent('open-global-agendamento-modal', {
-                                                                                detail: { mode: 'edit', agendamento: formattedAgenda }
-                                                                            })
-                                                                        );
-                                                                    }}
-                                                                    className="w-8 h-8 flex items-center justify-center rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all"
-                                                                    title="Editar Agendamento"
-                                                                >
-                                                                    <Edit2 size={14} />
-                                                                </button>
-                                                            )}
-                                                            {isAdmin && (
-                                                                <button
-                                                                    onClick={() => setConfirmDelete(ag.id)}
-                                                                    disabled={deletingId === ag.id}
-                                                                    className="w-8 h-8 flex items-center justify-center rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 transition-all"
-                                                                    title="Excluir"
-                                                                >
-                                                                    {deletingId === ag.id ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
-                                                                </button>
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            const formattedAgenda = {
+                                                                                id: ag.id,
+                                                                                userId: ag.user_id,
+                                                                                dataInicio: ag.data_inicial,
+                                                                                dataFim: ag.data_final,
+                                                                                tipo: ag.tipo_agendamento,
+                                                                                totalDias: ag.dias,
+                                                                                status: ag.status || 'pendente',
+                                                                                observacao: ag.observacao || undefined,
+                                                                                userName: ag.profiles?.apelido || ag.profiles?.nome || undefined,
+                                                                                userPhoto: ag.profiles?.foto_url || undefined,
+                                                                                createdAt: ag.created_at,
+                                                                                approvedAt: ag.approved_at,
+                                                                                cancelledAt: ag.cancelled_at,
+                                                                                rejectedAt: ag.rejected_at,
+                                                                            };
+                                                                            window.dispatchEvent(
+                                                                                new CustomEvent('open-global-agendamento-modal', {
+                                                                                    detail: { mode: 'edit', agendamento: formattedAgenda }
+                                                                                })
+                                                                            );
+                                                                        }}
+                                                                        className="w-10 h-10 flex items-center justify-center rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all border border-blue-50/50"
+                                                                        title="Editar Agendamento"
+                                                                    >
+                                                                        <SquarePen size={18} />
+                                                                    </button>
+                                                                )}
+                                                                {isAdmin && (
+                                                                    <button
+                                                                        onClick={() => setConfirmDelete(ag.id)}
+                                                                        disabled={deletingId === ag.id}
+                                                                        className="w-10 h-10 flex items-center justify-center rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 transition-all border border-red-50/50"
+                                                                        title="Excluir"
+                                                                    >
+                                                                        {deletingId === ag.id ? <Loader2 size={18} className="animate-spin" /> : <Trash2 size={18} />}
+                                                                    </button>
                                                             )}
                                                         </div>
                                                     </td>
@@ -511,16 +515,21 @@ const AgendamentosPage: React.FC = () => {
                                         {(isAdmin || ag.user_id === profile?.id) && (
                                             <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-50">
                                                 {isAdmin ? (
-                                                    <select
+                                                    <Select
                                                         value={ag.status}
-                                                        onChange={e => handleAlterarStatus(ag.id, e.target.value as Agendamento['status'])}
-                                                        className={`text-xs font-bold border rounded-full px-2 py-0.5 ${st.className}`}
+                                                        onValueChange={(v) => handleAlterarStatus(ag.id, v as Agendamento['status'])}
+                                                        disabled={alterandoStatusId === ag.id}
                                                     >
-                                                        <option value="pendente">Pendente</option>
-                                                        <option value="aprovado">Aprovado</option>
-                                                        <option value="recusado">Recusado</option>
-                                                        <option value="cancelado">Cancelado</option>
-                                                    </select>
+                                                        <SelectTrigger className={`h-7 px-2.5 rounded-full text-xs font-bold border cursor-pointer w-[110px] ${st.className}`}>
+                                                            <SelectValue />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="rounded-xl border-slate-200 shadow-xl">
+                                                            <SelectItem value="pendente" className="rounded-lg text-xs font-semibold text-yellow-700">⏳ Pendente</SelectItem>
+                                                            <SelectItem value="aprovado" className="rounded-lg text-xs font-semibold text-green-700">✅ Aprovado</SelectItem>
+                                                            <SelectItem value="recusado" className="rounded-lg text-xs font-semibold text-red-700">🚫 Recusado</SelectItem>
+                                                            <SelectItem value="cancelado" className="rounded-lg text-xs font-semibold text-slate-600">✖️ Cancelado</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
                                                 ) : <div />}
                                                 <div className="flex items-center gap-2">
                                                     <button
@@ -549,7 +558,7 @@ const AgendamentosPage: React.FC = () => {
                                                         }}
                                                         className="flex items-center justify-center p-1.5 px-2.5 rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all border border-blue-100"
                                                     >
-                                                        <Edit2 size={16} />
+                                                        <SquarePen size={18} />
                                                     </button>
                                                     {isAdmin && (
                                                         <button
