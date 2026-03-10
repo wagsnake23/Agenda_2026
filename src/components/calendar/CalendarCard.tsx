@@ -116,7 +116,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             className={cn(
                 "w-full transition-all duration-500 ease-out flex flex-col",
                 "px-2 py-2 md:px-8 md:pt-4 md:pb-8",
-                "bg-white/95 md:bg-white backdrop-blur-sm md:backdrop-blur-none opacity-100",
+                "md:bg-white backdrop-blur-sm md:backdrop-blur-none opacity-100",
                 "antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [contain:paint]",
                 // Efeito 3D Mobile
                 "border-[0.5px] border-slate-300/60 shadow-[inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_4px_rgba(0,0,0,0.04),0_4px_12px_-4px_rgba(0,0,0,0.1)]",
@@ -125,6 +125,9 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 "rounded-2xl md:rounded-[29px] bg-clip-padding",
                 "relative group/card overflow-hidden"
             )}
+            style={{
+                background: !isDesktopState ? 'linear-gradient(to bottom, #fcfcfc, #f1f5f9)' : 'white'
+            }}
         >
             {/* Brilho superior sutil */}
             <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none opacity-50 z-20" />

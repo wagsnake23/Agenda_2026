@@ -115,7 +115,14 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
               ? "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] border-green-400/30"
               : dayData.colors.bg === "bg-calendar-yellow"
                 ? "bg-gradient-to-br from-[#fde047] to-[#f59e0b] border-yellow-400/30"
-                : dayData.colors.bg
+                : (dayData.colors.bg === "bg-white" 
+                   ? cn(
+                       "bg-white",
+                       mode === 'adm' 
+                         ? "bg-white border-[0.1px] border-slate-400/60 shadow-[inset_0_1px_3px_rgba(0,0,0,0.07)]" 
+                         : "max-md:bg-[#FBFBFA] max-md:border-slate-400/45"
+                     )
+                   : dayData.colors.bg)
         ),
         isSelected ? "text-black drop-shadow-none" : dayData.colors.text,
         dayData.isToday && cn(
