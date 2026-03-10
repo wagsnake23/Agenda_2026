@@ -749,7 +749,7 @@ const AdminCalendario: React.FC = () => {
                 confirmDeleteId && (
                     <div className="fixed inset-0 z-[300] flex items-center justify-center p-1 md:p-3 animate-in fade-in duration-200">
                         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !deleting && setConfirmDeleteId(null)} />
-                        <div className="relative bg-gradient-to-br from-[#F4F9FF] to-[#E6F0FD] rounded-[24px] shadow-2xl border border-blue-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] p-6 w-[99%] md:w-full md:max-w-sm z-10 animate-in zoom-in-95 duration-200">
+                        <div className="relative bg-gradient-to-br from-[#F4F9FF] to-[#E6F0FD] rounded-[24px] shadow-2xl border border-blue-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] p-6 md:p-8 w-[99%] md:w-full md:max-w-md z-10 animate-in zoom-in-95 duration-200">
                             <div className="flex flex-col items-center gap-4 mb-6 text-center">
                                 <div className="flex items-center justify-center gap-3">
                                     <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_4px_0_#93c5fd] border border-blue-200 flex items-center justify-center text-red-600 shrink-0">
