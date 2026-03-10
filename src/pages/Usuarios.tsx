@@ -66,7 +66,7 @@ const ConfirmDialog: React.FC<{
                     <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center text-red-600 mb-1">
                         <Trash2 size={28} />
                     </div>
-                    <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Confirmar exclusão</h3>
+                    <h3 className="text-[1.3rem] font-black text-slate-800 uppercase tracking-tight">Confirmar exclusão</h3>
                 </div>
 
                 <p className="text-slate-600 font-bold text-sm text-center mb-8 px-2 leading-relaxed">{message}</p>
@@ -234,7 +234,7 @@ const UserModal: React.FC<{
                         <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
                             <span className="text-lg drop-shadow-sm">{isEditing ? '✏️' : '👤'}</span>
                         </div>
-                        <h3 className="font-bold text-white text-[17px] md:text-[1.15rem]">
+                        <h3 className="font-bold text-white text-[18px] md:text-[1.2rem]">
                             {isEditing ? 'Editar Usuário' : 'Novo Usuário'}
                         </h3>
                     </div>
@@ -251,20 +251,20 @@ const UserModal: React.FC<{
                     className="p-5 space-y-4"
                 >
                     <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Nome</label>
+                        <label className="text-[13px] font-bold text-slate-500 ml-1 mb-1 block">Nome</label>
                         <input {...form.register('nome')} type="text" className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all" />
                         {form.formState.errors.nome && <p className="text-red-500 text-xs mt-1 ml-1">{form.formState.errors.nome.message}</p>}
                     </div>
 
                     <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Email</label>
+                        <label className="text-[13px] font-bold text-slate-500 ml-1 mb-1 block">Email</label>
                         <input {...form.register('email')} type="email" readOnly={isEditing} className={`w-full h-10 px-3 rounded-xl border text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all ${isEditing ? 'bg-slate-50 border-slate-100 text-slate-400 cursor-not-allowed' : 'border-slate-200'}`} />
                         {form.formState.errors.email && <p className="text-red-500 text-xs mt-1 ml-1">{form.formState.errors.email.message}</p>}
                     </div>
 
                     {!isEditing && (
                         <div>
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Senha</label>
+                            <label className="text-[13px] font-bold text-slate-500 ml-1 mb-1 block">Senha</label>
                             <input {...form.register('password')} type="password" className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all" />
                             {form.formState.errors.password && <p className="text-red-500 text-xs mt-1 ml-1">{form.formState.errors.password.message}</p>}
                         </div>
@@ -272,18 +272,18 @@ const UserModal: React.FC<{
 
                     <div className="grid grid-cols-2 gap-3">
                         <div>
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Cargo</label>
+                            <label className="text-[13px] font-bold text-slate-500 ml-1 mb-1 block">Cargo</label>
                             <input {...form.register('cargo')} type="text" className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all" />
                         </div>
                         <div>
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Matrícula</label>
+                            <label className="text-[13px] font-bold text-slate-500 ml-1 mb-1 block">Matrícula</label>
                             <input {...form.register('matricula')} type="text" className="w-full h-10 px-3 rounded-xl border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-blue-400 transition-all" />
                         </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                         <div>
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Perfil</label>
+                            <label className="text-[13px] font-bold text-slate-500 ml-1 mb-1 block">Perfil</label>
                             <Controller
                                 name="perfil"
                                 control={form.control}
@@ -304,7 +304,7 @@ const UserModal: React.FC<{
                             />
                         </div>
                         <div>
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide ml-1 mb-1 block">Status</label>
+                            <label className="text-[13px] font-bold text-slate-500 ml-1 mb-1 block">Status</label>
                             <Controller
                                 name="ativo"
                                 control={form.control}
@@ -355,7 +355,7 @@ const UserModal: React.FC<{
                 <AlertDialog open={isConfirmResetOpen} onOpenChange={setIsConfirmResetOpen}>
                     <AlertDialogContent className="w-[99%] max-w-sm rounded-[24px] border-none shadow-2xl p-6">
                         <AlertDialogHeader>
-                            <AlertDialogTitle className="text-xl font-black text-slate-800 tracking-tight flex items-center justify-center gap-3">
+                            <AlertDialogTitle className="text-[1.3rem] font-black text-slate-800 tracking-tight flex items-center justify-center gap-3">
                                 <div className="w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
                                     <span className="text-xl drop-shadow-sm">🔑</span>
                                 </div>

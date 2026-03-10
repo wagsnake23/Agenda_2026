@@ -327,7 +327,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                         <div className="flex flex-col justify-center min-w-0">
                             <h2 className={cn(
                                 "font-black leading-tight transition-all",
-                                mode === 'create' ? "text-slate-900 text-[1.05rem] md:text-[1.3rem]" : "text-white text-[0.9rem] xs:text-[1rem] md:text-[1.2rem] drop-shadow-sm"
+                                mode === 'create' ? "text-slate-900 text-[1.1rem] md:text-[1.35rem]" : "text-white text-[0.95rem] xs:text-[1.05rem] md:text-[1.25rem] drop-shadow-sm"
                             )}>
                                 {modoEdicao ? (
                                     <span>Editar Agendamento</span>

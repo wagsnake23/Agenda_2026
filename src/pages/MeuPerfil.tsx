@@ -554,7 +554,7 @@ const MeuPerfil: React.FC = () => {
                                 <span className="text-xl md:text-2xl drop-shadow-sm">🔐</span>
                             </div>
                             <div className="flex flex-col">
-                                <h3 className="text-lg md:text-[1.35rem] font-black tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">
+                                <h3 className="text-[1.2rem] md:text-[1.4rem] font-black tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">
                                     Alterar Senha
                                 </h3>
                                 <p className="text-slate-500 font-medium text-[11px] md:text-[13px] leading-tight mt-0.5">Defina sua nova senha de acesso.</p>

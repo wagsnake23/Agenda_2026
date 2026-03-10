@@ -540,7 +540,7 @@ const AdminCalendario: React.FC = () => {
                 modalOpen && (
                     <div className="fixed inset-0 z-[200] flex items-center justify-center p-1 sm:p-3">
                         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !saving && setModalOpen(false)} />
-                        <div className="relative bg-white rounded-[24px] shadow-2xl w-[99%] max-w-lg z-10 animate-in zoom-in-95 duration-200 overflow-hidden">
+                        <div className="relative bg-white rounded-[24px] shadow-2xl border border-slate-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] w-[99%] max-w-lg z-10 animate-in zoom-in-95 duration-200 overflow-hidden">
                             {/* Header */}
                             <div className="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]">
                             <div className="flex items-center gap-3">
@@ -549,19 +549,22 @@ const AdminCalendario: React.FC = () => {
                                         {editingId ? '✏️' : '➕'}
                                     </span>
                                 </div>
-                                <h3 className="font-bold text-white text-base md:text-[1.1rem]">
+                                <h3 className="font-bold text-white text-[1.05rem] md:text-[1.15rem]">
                                     {editingId ? 'Editar Evento' : 'Novo Evento'}
                                 </h3>
                             </div>
-                                <button onClick={() => !saving && setModalOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-md active:scale-90 transition-all">
-                                    <X size={18} strokeWidth={3} />
+                                <button
+                                    onClick={() => !saving && setModalOpen(false)}
+                                    className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-lg active:scale-90 transition-all"
+                                >
+                                    <X className="w-4 h-4 md:w-[22px] md:h-[22px]" strokeWidth={4} />
                                 </button>
                             </div>
 
                             <form onSubmit={handleSave} className="p-6 space-y-4 overflow-y-auto max-h-[75vh]">
                                 {/* Nome */}
                                 <div>
-                                    <label className="text-xs font-black text-slate-500 uppercase tracking-wider mb-1 block">Nome *</label>
+                                    <label className="text-[13px] font-black text-slate-500 mb-1 block">Nome *</label>
                                     <input
                                         value={form.title}
                                         onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
@@ -573,7 +576,7 @@ const AdminCalendario: React.FC = () => {
 
                                 {/* Descrição */}
                                 <div>
-                                    <label className="text-xs font-black text-slate-500 uppercase tracking-wider mb-1 block">Descrição</label>
+                                    <label className="text-[13px] font-black text-slate-500 mb-1 block">Descrição</label>
                                     <input
                                         value={form.description}
                                         onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
@@ -584,7 +587,7 @@ const AdminCalendario: React.FC = () => {
 
                                 {/* Tipo */}
                                 <div>
-                                    <label className="text-xs font-black text-slate-500 uppercase tracking-wider mb-1 block">Tipo *</label>
+                                    <label className="text-[13px] font-black text-slate-500 mb-1 block">Tipo *</label>
                                     <select
                                         value={form.type}
                                         onChange={e => handleTypeChange(e.target.value as CalendarEventType)}
@@ -600,7 +603,7 @@ const AdminCalendario: React.FC = () => {
                                 {/* Data e formato */}
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="text-xs font-black text-slate-500 uppercase tracking-wider mb-1 block">
+                                        <label className="text-[13px] font-black text-slate-500 mb-1 block">
                                             {form.is_fixed ? 'Data (Mês-Dia) *' : 'Data Completa *'}
                                         </label>
                                         {form.is_fixed ? (
@@ -662,7 +665,7 @@ const AdminCalendario: React.FC = () => {
                                         )}
                                     </div>
                                     <div>
-                                        <label className="text-xs font-black text-slate-500 uppercase tracking-wider mb-1 block">Emoji</label>
+                                        <label className="text-[13px] font-black text-slate-500 mb-1 block">Emoji</label>
                                         <button
                                             type="button"
                                             onClick={() => setEmojiPickerOpen(true)}
@@ -700,7 +703,7 @@ const AdminCalendario: React.FC = () => {
                                             className="w-4 h-4 accent-amber-500"
                                         />
                                         <div>
-                                            <p className="text-xs font-black text-slate-700 uppercase tracking-wide">Evento Anual</p>
+                                            <p className="text-[13px] font-black text-slate-700">Evento Anual</p>
                                             <p className="text-[10px] text-slate-500">Repete todo ano automaticamente</p>
                                         </div>
                                     </label>
@@ -746,12 +749,12 @@ const AdminCalendario: React.FC = () => {
                 confirmDeleteId && (
                     <div className="fixed inset-0 z-[300] flex items-center justify-center p-1 md:p-3 animate-in fade-in duration-200">
                         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => !deleting && setConfirmDeleteId(null)} />
-                        <div className="relative bg-gradient-to-br from-[#F4F9FF] to-[#E6F0FD] rounded-[24px] shadow-2xl border border-blue-100 p-6 w-[99%] md:w-full md:max-w-sm z-10 animate-in zoom-in-95 duration-200">
+                        <div className="relative bg-gradient-to-br from-[#F4F9FF] to-[#E6F0FD] rounded-[24px] shadow-2xl border border-blue-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] p-6 w-[99%] md:w-full md:max-w-sm z-10 animate-in zoom-in-95 duration-200">
                             <div className="flex flex-col items-center gap-4 mb-6 text-center">
                                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_3px_0_#93c5fd,inset_0_2px_1px_white] border border-blue-200 flex items-center justify-center text-red-600 mb-1">
                                     <Trash2 size={28} />
                                 </div>
-                                <h3 className="text-xl font-black text-slate-800 tracking-tight">Excluir Evento</h3>
+                                <h3 className="text-[1.3rem] font-black text-slate-800 tracking-tight">Excluir Evento</h3>
                             </div>
 
                             <p className="text-slate-600 font-bold text-sm text-center mb-8 px-2 leading-relaxed">
