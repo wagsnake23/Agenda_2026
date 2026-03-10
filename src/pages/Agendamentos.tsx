@@ -407,7 +407,7 @@ const AgendamentosPage: React.FC = () => {
                                                                 onValueChange={(v) => handleAlterarStatus(ag.id, v as Agendamento['status'])}
                                                                 disabled={alterandoStatusId === ag.id}
                                                             >
-                                                                <SelectTrigger className={`h-7 px-2.5 rounded-full text-xs font-bold border cursor-pointer w-[110px] ${st.className}`}>
+                                                                <SelectTrigger className={`h-7 px-3 rounded-full text-xs font-bold border cursor-pointer w-32 ${st.className}`}>
                                                                     <SelectValue />
                                                                 </SelectTrigger>
                                                                 <SelectContent className="rounded-xl border-slate-200 shadow-xl">
@@ -520,7 +520,7 @@ const AgendamentosPage: React.FC = () => {
                                                         onValueChange={(v) => handleAlterarStatus(ag.id, v as Agendamento['status'])}
                                                         disabled={alterandoStatusId === ag.id}
                                                     >
-                                                        <SelectTrigger className={`h-7 px-2.5 rounded-full text-xs font-bold border cursor-pointer w-[110px] ${st.className}`}>
+                                                        <SelectTrigger className={`h-7 px-3 rounded-full text-xs font-bold border cursor-pointer w-32 ${st.className}`}>
                                                             <SelectValue />
                                                         </SelectTrigger>
                                                         <SelectContent className="rounded-xl border-slate-200 shadow-xl">

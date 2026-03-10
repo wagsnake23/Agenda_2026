@@ -327,7 +327,7 @@ const UserModal: React.FC<{
                                 type="button"
                                 onClick={() => setIsConfirmResetOpen(true)}
                                 disabled={actionLoading === "reset-password"}
-                                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 border border-orange-500 shadow-sm transition-all disabled:opacity-60"
+                                className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-[15px] shadow-[0_4px_0_#C2410C] hover:from-orange-400 hover:to-orange-500 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-60"
                             >
                                 {actionLoading === "reset-password" ? (
                                     <Loader2 size={16} className="animate-spin" />
@@ -339,7 +339,7 @@ const UserModal: React.FC<{
                         )}
 
                         <div className="flex gap-3">
-                            <button type="button" onClick={onClose} className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-[15px] shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all">Cancelar</button>
+                            <button type="button" onClick={onClose} className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-700 font-bold text-[15px] shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all">Cancelar</button>
                             <button type="submit" disabled={form.formState.isSubmitting} className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-[15px] shadow-[0_4px_0_#1E3A8A] hover:from-blue-500 hover:to-blue-600 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-60 flex items-center justify-center gap-2">
                                 {form.formState.isSubmitting ? <><Loader2 size={16} className="animate-spin" /> Salvando...</> : 'Salvar'}
                             </button>
@@ -358,7 +358,7 @@ const UserModal: React.FC<{
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter className="flex flex-row items-center gap-3 mt-6 sm:space-x-0 sm:justify-center w-full">
-                            <AlertDialogCancel className="m-0 mt-0 flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-[15px] border border-slate-200 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all">
+                            <AlertDialogCancel className="m-0 mt-0 flex-1 h-12 rounded-xl bg-slate-200 text-slate-700 font-bold text-[15px] border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all">
                                 Cancelar
                             </AlertDialogCancel>
                             <AlertDialogAction
