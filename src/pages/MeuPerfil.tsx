@@ -269,15 +269,9 @@ const MeuPerfil: React.FC = () => {
             <section className="w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw] pt-0 lg:pt-[84px] pb-0 lg:pb-8 bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-0 sm:pt-6">
                     {/* Cabeçalho do Módulo Interno */}
-                    <div className="flex items-center justify-center md:justify-start gap-3">
-                        <button
-                            onClick={() => navigate(-1)}
-                            className="hidden md:flex w-10 h-10 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all shadow-sm"
-                        >
-                            <ArrowLeft size={20} />
-                        </button>
-                        <h2 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-                            👤 Meu Perfil
+                    <div className="flex items-center justify-center md:justify-start gap-3 flex-1">
+                        <h2 className="text-2xl md:text-4xl font-black tracking-tight flex items-center gap-2">
+                            👤 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Meu Perfil</span>
                         </h2>
                     </div>
                 </div>

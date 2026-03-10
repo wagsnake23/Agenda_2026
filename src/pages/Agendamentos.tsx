@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { ArrowLeft, Loader2, Filter, Trash2, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, User, Edit2 } from 'lucide-react';
+import { Loader2, Filter, Trash2, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, User, Edit2 } from 'lucide-react';
 import { useToast } from '@/contexts/ToastProvider';
 import { useAuth } from '@/context/AuthContext';
 import { useAgendamentos } from '@/hooks/useAgendamentos';
@@ -216,14 +216,8 @@ const AgendamentosPage: React.FC = () => {
                     {/* Cabeçalho do Módulo */}
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start gap-3 flex-1">
-                            <button
-                                onClick={() => navigate(-1)}
-                                className="hidden md:flex w-10 h-10 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all shadow-sm"
-                            >
-                                <ArrowLeft size={20} />
-                            </button>
-                            <h2 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight flex items-center justify-center md:justify-start gap-2 flex-1 md:flex-none">
-                                📋 Agendamentos
+                            <h2 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-2 flex-1 md:flex-none">
+                                📋 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Agendamentos</span>
                             </h2>
                         </div>
                         <button

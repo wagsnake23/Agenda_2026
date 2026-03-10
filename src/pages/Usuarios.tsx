@@ -448,14 +448,8 @@ const UsuariosPage: React.FC = () => {
                     {/* Header interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div className="flex items-center justify-center md:justify-start gap-3 flex-1">
-                            <button
-                                onClick={() => navigate(-1)}
-                                className="hidden md:flex w-10 h-10 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all shadow-sm"
-                            >
-                                <ArrowLeft size={20} />
-                            </button>
-                            <h2 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight flex items-center justify-center md:justify-start gap-2 flex-1 md:flex-none">
-                                👥 Usuários
+                            <h2 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-2 flex-1 md:flex-none">
+                                👥 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Usuários</span>
                             </h2>
                         </div>
                         <div className="flex items-center gap-2 w-full sm:w-auto">
