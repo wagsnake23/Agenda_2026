@@ -94,13 +94,13 @@ const Header = () => {
     return (
         <>
             {/* Barra de Título Institucional - Desktop Apenas */}
-            <header className="hidden lg:flex fixed top-0 w-full h-[68px] bg-gradient-to-r from-[#1e2a44] to-[#243552] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
+            <header className="hidden lg:flex fixed top-0 w-full h-[76px] bg-gradient-to-r from-[#1e2a44] to-[#243552] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
                 <div className="w-full max-w-[1600px] mx-auto px-8 flex items-center justify-between">
                     <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer">
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
-                            className="w-14 h-14 drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
+                            className="w-[60px] h-[60px] drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
                         />
                         <h1
                             className="font-black md:text-[1.15rem] tracking-wider text-white uppercase leading-none inline-flex items-center pointer-events-auto"
@@ -167,7 +167,7 @@ const Header = () => {
                                     {/* Botão Agendar */}
                                     <button
                                         onClick={handleAgendar}
-                                        className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_0_#eab308] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
+                                        className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-md hover:brightness-110 transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
                                     >
                                         <span className="relative top-[-1px]">📝</span> Agendar
                                     </button>
@@ -178,7 +178,7 @@ const Header = () => {
                             ) : (
                                 <button
                                     onClick={() => navigate('/auth')}
-                                    className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_0_#eab308] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
+                                    className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-md hover:brightness-110 transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
                                 >
                                     <LogIn size={16} strokeWidth={3} /> Entrar
                                 </button>
