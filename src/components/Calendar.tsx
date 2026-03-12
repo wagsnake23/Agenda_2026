@@ -302,7 +302,32 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   useEffect(() => {
     setHighlightedDay(null);
-  }, [month, year]);
+    
+    // Se o drawer estiver aberto visualizando um dia e mudarmos o mês/ano do calendário, 
+    // fechamos o drawer se o dia não pertencer ao mês e nenhum agendamento que estava sendo visto for visível no novo mês.
+    if (isDrawerOpen && drawerMode === 'view' && selectedDrawerDate) {
+      const d = new Date(selectedDrawerDate + 'T12:00:00');
+      const isDayInCurrentMonth = d.getMonth() === month && d.getFullYear() === year;
+
+      // Pegamos os agendamentos que estão sendo visualizados no drawer (naquela data)
+      const visibleAgs = agendamentosComEventosGerais.filter(
+        a => a.dataInicio <= selectedDrawerDate && a.dataFim >= selectedDrawerDate
+      );
+
+      // Verificamos se algum deles ainda "existe" no card de agendamentos do mês navegado
+      const anyStillInCard = visibleAgs.some(ag => {
+        const inicio = new Date(ag.dataInicio + 'T12:00:00');
+        const fim = new Date(ag.dataFim + 'T12:00:00');
+        const monthStart = new Date(year, month, 1);
+        const monthEnd = new Date(year, month + 1, 0, 23, 59, 59);
+        return inicio <= monthEnd && fim >= monthStart;
+      });
+
+      if (!isDayInCurrentMonth && !anyStillInCard) {
+        handleCloseDrawer();
+      }
+    }
+  }, [month, year, isDrawerOpen, drawerMode, selectedDrawerDate, agendamentosComEventosGerais]);
 
   // Notificações de hoje (Sino)
   const todayStr = useMemo(() => {
