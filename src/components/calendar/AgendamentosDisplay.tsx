@@ -113,6 +113,14 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                             const tipoNome = agendamento.tipo.replace(emoji, '').trim();
                             const isEventSpecial = agendamento.userName === '_SPECIAL_EVENT_';
                             const userName = isEventSpecial ? '' : (agendamento.userName ? agendamento.userName.split(' ')[0] : 'Usuário');
+
+                            let displayTipoNome = tipoNome;
+                            let timeStr = "";
+                            if (isEventSpecial && tipoNome.includes(' - 🕗 ')) {
+                                const parts = tipoNome.split(' - 🕗 ');
+                                displayTipoNome = parts[0].trim();
+                                timeStr = parts[1].trim();
+                            }
                             const dateText = renderDate(agendamento);
                             const hasContinuation = agendamento.dataInicio !== agendamento.dataFim;
 
@@ -133,15 +141,34 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                             <span className="bg-[#3b82f6]/15 text-[#2563eb] text-[12px] md:text-[14px] font-bold px-[8px] py-[4px] rounded-[8px] shrink-0 uppercase">
                                                 {dateText}
                                             </span>
-                                            <span className="flex items-start gap-1 text-[#334155] whitespace-normal">
+                                            <span className={cn(
+                                                "flex gap-1.5 text-[#334155] min-w-0 flex-1 pr-1",
+                                                isEventSpecial ? "items-center overflow-hidden" : "items-start whitespace-normal"
+                                            )}>
                                                 {emoji && (
-                                                    <span className="text-base md:text-lg filter saturate-[1.3] brightness-[1.1] pt-0.5">
+                                                    <span className={cn(
+                                                        "text-base md:text-lg filter saturate-[1.3] brightness-[1.1] shrink-0",
+                                                        !isEventSpecial && "pt-[1px]"
+                                                    )}>
                                                         {emoji}
                                                     </span>
                                                 )}
-                                                <span className="break-words">
-                                                    {tipoNome}{userName ? ` - ${userName}` : ''}
-                                                </span>
+                                                {isEventSpecial ? (
+                                                    <span className="flex items-center min-w-0 flex-1">
+                                                        <span className="truncate">
+                                                            {displayTipoNome}
+                                                        </span>
+                                                        {timeStr && (
+                                                            <span className="shrink-0 whitespace-nowrap ml-1">
+                                                                - <span className="text-[13px] md:text-[14px] saturate-150 drop-shadow-sm mx-[1px]">🕗</span> {timeStr}
+                                                            </span>
+                                                        )}
+                                                    </span>
+                                                ) : (
+                                                    <span className="break-words">
+                                                        {displayTipoNome}{userName ? ` - ${userName}` : ''}
+                                                    </span>
+                                                )}
                                             </span>
                                         </div>
                                         {hasContinuation && (
