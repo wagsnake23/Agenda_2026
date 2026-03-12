@@ -29,7 +29,7 @@ const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month
         style={{ background: 'linear-gradient(180deg, #818cf8 0%, #6366f1 100%)' }}
       >
         {/* Conteúdo do Header */}
-        <div className="relative flex items-center justify-between pl-3 pr-2 md:pl-6 md:pr-4 z-20 w-full">
+        <div className="relative flex items-center justify-between pl-1.5 pr-1.5 md:pl-6 md:pr-4 z-20 w-full">
           <div className="flex items-center gap-2">
             <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none">🌙</span>
             <h4 className="font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
@@ -46,7 +46,7 @@ const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month
       </div>
 
 
-      <div className="px-3 md:px-6 pt-0.5 md:pt-3 pb-0 md:pb-5 flex flex-col justify-center items-center flex-1 w-full">
+      <div className="px-1.5 md:px-6 pt-0.5 md:pt-3 pb-0 md:pb-5 flex flex-col justify-center items-center flex-1 w-full">
         <div className="flex flex-nowrap gap-3 md:gap-8 justify-center w-full overflow-x-auto pb-2">
           {moonPhases.map((phase, index) => {
             const monthAbbr = (MONTHS[month] || 'Mês').substring(0, 3);
