@@ -33,7 +33,7 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
         {/* Conteúdo do Header */}
         <div className="relative flex items-center justify-between pl-3 pr-2 md:pl-6 md:pr-4 z-20 w-full">
           <div className="flex items-center gap-2">
-            <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">📅</span>
+            <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none">📅</span>
             <h4 className="font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
               Feriados e Eventos
             </h4>
@@ -86,17 +86,18 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
                   >
                     <div className={cn(
                       "flex items-start gap-[8px] flex-1 relative",
-                      "before:content-[''] before:absolute before:left-[-12px] before:top-[7px] md:before:top-[8px] before:w-[8px] before:h-[8px] before:rounded-full",
+                      "before:content-[''] before:absolute before:left-[-12px] before:top-[8px] md:before:top-[14px] before:w-[8px] before:h-[8px] before:rounded-full",
                       isInfoEvent ? "before:bg-[#94a3b8]" : "before:bg-[#ef4444]"
                     )}>
-                      <span className={cn(
-                        "text-[12px] md:text-[14px] font-bold px-[8px] py-[3px] rounded-[6px] shrink-0",
+                      <div className={cn(
+                        "flex flex-row items-center justify-center py-[2px] md:py-[4px] px-[8px] md:px-[10px] rounded-[6px] md:rounded-[8px] text-[11px] md:text-[13px] leading-[1.1] border-[0.5px] shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] md:shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] shrink-0",
                         !event.is_fixed && event.type === 'event' 
-                          ? "bg-[#dbeafe] text-[#1e40af]" 
-                          : isInfoEvent ? "bg-[#e2e8f0] text-[#1e293b]" : "bg-[#ef4444]/15 text-[#c62828]"
+                          ? "bg-[#dbeafe] md:bg-gradient-to-b md:from-blue-400 md:to-blue-500 text-[#1e40af] md:text-white border-[#bfdbfe] md:border-white/30" 
+                          : isInfoEvent ? "bg-[#e2e8f0] text-[#1e293b] border-[#cbd5e1]" : "bg-[#ef4444]/15 md:bg-gradient-to-b md:from-red-400 md:to-red-500 text-[#c62828] md:text-white border-[#fca5a5]/40 md:border-white/30"
                       )}>
-                        {String(day).padStart(2, '0')}/{formattedMonth}
-                      </span>
+                        <span className="font-bold uppercase tracking-wide">{String(day).padStart(2, '0')}</span>
+                        <span className="font-bold opacity-90 ml-[2px] uppercase">/{formattedMonth}</span>
+                      </div>
 
                       <span className={cn("flex items-start gap-1 whitespace-normal", isInfoEvent ? "text-[#475569]" : "text-[#334155]")}>
                         <span className="break-words">

@@ -317,8 +317,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     variant === 'modal'
                         ? (mode === 'create'
                             ? "px-6 md:px-5 py-4 bg-gradient-to-b from-[#facc15] to-[#eab308]"
-                            : "px-6 md:px-5 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]")
-                        : "p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)]"
+                            : "px-6 md:px-5 py-4 bg-[linear-gradient(180deg,#60a5fa_0%,#3b82f6_100%)]")
+                        : "p-2 md:p-3 bg-[linear-gradient(180deg,#60a5fa_0%,#3b82f6_100%)]"
                 )}>
                     <div className="flex flex-row items-center gap-2.5 md:gap-3.5 pt-0.5 md:pt-0">
                         {(!modoEdicao && mode !== 'create') ? (

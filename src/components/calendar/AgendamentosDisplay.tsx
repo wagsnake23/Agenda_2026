@@ -37,12 +37,11 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
 
     const isEmpty = currentMonthAgendamentos.length === 0;
 
-    const renderDate = (agendamento: Agendamento) => {
-        const dInicio = new Date(agendamento.dataInicio + 'T12:00:00');
-        const diaInicio = String(dInicio.getDate()).padStart(2, '0');
-        const mesInicioAbbr = (MONTHS[dInicio.getMonth()] || '').substring(0, 3);
-
-        return `${diaInicio} ${mesInicioAbbr.toUpperCase()}`;
+    const getDiaMes = (data: string) => {
+        const d = new Date(data + 'T12:00:00');
+        const dia = String(d.getDate()).padStart(2, '0');
+        const mes = (MONTHS[d.getMonth()] || '').substring(0, 3).toUpperCase();
+        return { dia, mes };
     };
 
     return (
@@ -64,7 +63,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                 {/* Conteúdo do Header */}
                 <div className="relative flex items-center justify-between pl-3 pr-2 md:pl-6 md:pr-4 z-20 w-full">
                     <div className="flex items-center gap-2">
-                        <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">📋</span>
+                        <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none">📋</span>
                         <h4 className="font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
                             AGENDAMENTOS
                         </h4>
@@ -110,7 +109,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                 displayTipoNome = parts[0].trim();
                                 timeStr = parts[1].trim();
                             }
-                            const dateText = renderDate(agendamento);
+                            const { dia, mes } = getDiaMes(agendamento.dataInicio);
                             const hasContinuation = agendamento.dataInicio !== agendamento.dataFim;
 
                             return (
@@ -127,9 +126,10 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                             "flex items-start gap-[8px] w-full relative",
                                             "before:content-[''] before:absolute before:left-[-12px] before:top-[8px] md:before:top-[10px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#3b82f6]"
                                         )}>
-                                            <span className="bg-[#3b82f6]/15 text-[#2563eb] text-[12px] md:text-[14px] font-bold px-[8px] py-[4px] rounded-[8px] shrink-0 uppercase">
-                                                {dateText}
-                                            </span>
+                                            <div className="flex flex-row items-center justify-center py-[3px] md:py-[4px] px-[8px] md:px-[10px] rounded-[8px] md:rounded-[10px] text-[12px] md:text-[13px] bg-[#3b82f6]/15 md:bg-gradient-to-b md:from-blue-400 md:to-blue-500 text-[#2563eb] md:text-white leading-[1.1] border-[0.5px] border-[#3b82f6]/30 md:border-white/30 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] md:shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] shrink-0">
+                                                <span className="font-bold uppercase tracking-wide">{dia}</span>
+                                                <span className="font-bold opacity-90 ml-[2px]">/{mes}</span>
+                                            </div>
                                             <span className={cn(
                                                 "flex gap-1.5 text-[#334155] min-w-0 flex-1 pr-1",
                                                 isEventSpecial ? "items-center overflow-hidden" : "items-start whitespace-normal"

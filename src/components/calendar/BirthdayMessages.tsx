@@ -15,17 +15,17 @@ interface BirthdayMessagesProps {
 }
 
 const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highlightedDay, calendarEvents = [] }) => {
-  const currentMonthBirthdays = useMemo(() => {
-    const monthName = (MONTHS[month] || '').substring(0, 3);
-    const formattedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1).toLowerCase();
+  const monthName = (MONTHS[month] || '').substring(0, 3);
+  const formattedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1).toLowerCase();
 
+  const currentMonthBirthdays = useMemo(() => {
     return getBirthdaysForMonth(calendarEvents, month, year)
       .map(b => ({
         day: b.day,
         name: b.name,
         dateFormatted: `${String(b.day).padStart(2, '0')}/${formattedMonth}`
       }));
-  }, [month, year, calendarEvents]);
+  }, [month, year, calendarEvents, formattedMonth]);
 
   const isEmpty = currentMonthBirthdays.length === 0;
 
@@ -46,7 +46,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
         {/* Conteúdo do Header */}
         <div className="relative flex items-center justify-between pl-3 pr-2 md:pl-6 md:pr-4 z-20 w-full">
           <div className="flex items-center gap-2">
-            <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">🎂</span>
+            <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none">🎂</span>
             <h4 className="font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
               Aniversariantes
             </h4>
@@ -81,15 +81,16 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
                   <div
                     className={cn(
                       "relative transition-all duration-150 ease-in-out flex items-center gap-[8px] py-[3px] md:py-[6px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full",
-                      "before:content-[''] before:absolute before:left-[-12px] before:top-[12px] md:before:top-[14px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#f97316]",
+                      "before:content-[''] before:absolute before:left-[-12px] before:top-[12px] md:before:top-[15px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#f97316]",
                       "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
                       isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md z-20 animate-bounce-twice font-semibold"
                     )}
                   >
                     <div className="flex items-center gap-[8px] flex-1">
-                      <span className="bg-[#f97316]/15 text-[#b45309] text-[12px] md:text-[14px] font-bold px-[8px] py-[3px] rounded-[6px] shrink-0">
-                        {data.dateFormatted}
-                      </span>
+                      <div className="flex flex-row items-center justify-center py-[2px] md:py-[4px] px-[8px] md:px-[10px] rounded-[6px] md:rounded-[8px] text-[11px] md:text-[13px] bg-[#f97316]/15 md:bg-gradient-to-b md:from-amber-400 md:to-amber-500 text-[#b45309] md:text-white leading-[1.1] border-[0.5px] border-[#f97316]/30 md:border-white/30 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] md:shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] shrink-0">
+                        <span className="font-bold uppercase tracking-wide">{String(data.day).padStart(2, '0')}</span>
+                        <span className="font-bold opacity-90 ml-[2px] uppercase">/{formattedMonth}</span>
+                      </div>
                       <span className="flex items-center gap-1 text-[#334155] truncate">
                         <span className="truncate">{data.name.replace(/Bombeiro\s+/i, '')}</span>
                         <span className="text-sm md:text-base transition-transform hover:scale-110 shrink-0 transform -translate-y-[1px]">

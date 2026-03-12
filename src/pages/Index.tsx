@@ -73,7 +73,6 @@ const Index = () => {
             />
           </main>
 
-
           <InstallPWAButton />
         </div>
 

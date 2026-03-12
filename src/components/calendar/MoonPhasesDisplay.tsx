@@ -31,7 +31,7 @@ const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month
         {/* Conteúdo do Header */}
         <div className="relative flex items-center justify-between pl-3 pr-2 md:pl-6 md:pr-4 z-20 w-full">
           <div className="flex items-center gap-2">
-            <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">🌙</span>
+            <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none">🌙</span>
             <h4 className="font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
               Fases da Lua
             </h4>
@@ -61,9 +61,10 @@ const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month
                 <span className="text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] text-center leading-[1.6] uppercase tracking-tighter opacity-90">
                   {phase.phaseName}
                 </span>
-                <span className="text-[11px] md:text-[13px] lg:text-[14px] text-[#475569] mt-0.5 font-semibold leading-[1.6]">
-                  {String(phase.date).padStart(2, '0')}/{formattedMonth}
-                </span>
+                <div className="flex flex-row mt-1.5 items-center justify-center py-[2.5px] md:py-[4px] px-[8px] md:px-[10px] rounded-[6px] md:rounded-[8px] text-[10px] md:text-[12px] bg-[#818cf8]/15 md:bg-gradient-to-b md:from-indigo-400 md:to-indigo-500 text-[#4338ca] md:text-white leading-[1.1] border-[0.5px] border-[#818cf8]/30 md:border-white/30 shadow-[inset_0_1px_4px_rgba(0,0,0,0.04)] md:shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] shrink-0">
+                  <span className="font-bold uppercase tracking-wide">{String(phase.date).padStart(2, '0')}</span>
+                  <span className="font-bold opacity-90 ml-[2px] uppercase">/{formattedMonth}</span>
+                </div>
               </div>
             );
           })}
