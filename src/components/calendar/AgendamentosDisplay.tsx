@@ -111,7 +111,8 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
 
                             const emoji = agendamento.tipo.split(' ')[0];
                             const tipoNome = agendamento.tipo.replace(emoji, '').trim();
-                            const userName = agendamento.userName ? agendamento.userName.split(' ')[0] : 'Usuário';
+                            const isEventSpecial = agendamento.userName === '_SPECIAL_EVENT_';
+                            const userName = isEventSpecial ? '' : (agendamento.userName ? agendamento.userName.split(' ')[0] : 'Usuário');
                             const dateText = renderDate(agendamento);
                             const hasContinuation = agendamento.dataInicio !== agendamento.dataFim;
 
@@ -138,7 +139,9 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                                         {emoji}
                                                     </span>
                                                 )}
-                                                <span className="break-words">{tipoNome} - {userName}</span>
+                                                <span className="break-words">
+                                                    {tipoNome}{userName ? ` - ${userName}` : ''}
+                                                </span>
                                             </span>
                                         </div>
                                         {hasContinuation && (

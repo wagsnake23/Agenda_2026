@@ -81,6 +81,42 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   // Este useMemo é uma transformção pura de formato, sem lógica de integridade.
   const agendamentos = useMemo(() => agendamentosDB.map(toDrawerFormat), [agendamentosDB]);
 
+  // Cria uma versão estendida apenas para exibição no card de Agendamentos,
+  // incluindo os Eventos com data específica (não anuais).
+  const agendamentosComEventosGerais = useMemo(() => {
+    const eventosMapeados = calendarEvents
+      .filter(ev => ev.type === 'event' && !ev.is_fixed)
+      .map(ev => {
+         const datePart = ev.date.includes('T') ? ev.date.split('T')[0] : (ev.date.includes(' ') ? ev.date.split(' ')[0] : ev.date);
+         
+         let timeDisplay = '';
+         if (ev.date.includes('T') && ev.date.length >= 16) {
+             const time = ev.date.substring(11, 16);
+             if (time !== '00:00') timeDisplay = ` - 🕗 ${time}`;
+         } else if (ev.date.includes(' ') && ev.date.length >= 16) {
+             const time = ev.date.substring(11, 16);
+             if (time !== '00:00') timeDisplay = ` - 🕗 ${time}`;
+         }
+
+         const emojiStr = ev.emoji ? `${ev.emoji} ` : '📌 ';
+         const titleStr = `${emojiStr}${ev.title}${timeDisplay}`;
+
+         return {
+           id: `evento-${ev.id}`,
+           userId: ev.created_by || 'system',
+           dataInicio: datePart,
+           dataFim: datePart,
+           tipo: titleStr,
+           totalDias: 1,
+           status: 'aprovado' as const,
+           observacao: ev.description || undefined,
+           userName: '_SPECIAL_EVENT_',
+         } as DrawerAgendamentoType;
+      });
+
+    return [...agendamentos, ...eventosMapeados];
+  }, [agendamentos, calendarEvents]);
+
   // Estados do Drawer
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerMode, setDrawerMode] = useState<'create' | 'view'>('create');
@@ -244,10 +280,17 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   });
 
   const holidayMessages = useHolidayMessages(month, year, enrichedEvents);
+
+  // Filtra as mensagens de Feriados para esconder os 'Eventos' não anuais 
+  // (já que eles vão aparecer no card de Agendamentos)
+  const filteredHolidayMessages = useMemo(() => {
+    return holidayMessages.filter(msg => !(msg.type === 'event' && !msg.is_fixed));
+  }, [holidayMessages]);
+
   const moonPhases = useMoonPhases(month, year);
 
   const hasAgendamentos = useMemo(() => {
-    return agendamentos.some(ag => {
+    return agendamentosComEventosGerais.some(ag => {
       const inicio = new Date(ag.dataInicio + 'T12:00:00');
       const fim = new Date(ag.dataFim + 'T12:00:00');
       const dateStart = new Date(inicio.getFullYear(), inicio.getMonth(), 1);
@@ -255,7 +298,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       const current = new Date(year, month, 1);
       return current >= dateStart && current <= dateEnd;
     });
-  }, [agendamentos, month, year]);
+  }, [agendamentosComEventosGerais, month, year]);
 
   useEffect(() => {
     setHighlightedDay(null);
@@ -667,7 +710,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 !hasAgendamentos && "hidden md:flex"
               )}>
                 <AgendamentosDisplay
-                  agendamentos={agendamentos}
+                  agendamentos={agendamentosComEventosGerais}
                   month={month}
                   year={year}
                   highlightedDay={highlightedDay}
@@ -677,8 +720,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
               {/* 2º e 3º - Feriados e Fases da Lua */}
               <div className="contents lg:flex lg:w-full lg:flex-1 lg:min-w-[370px] lg:flex-col lg:order-2 lg:gap-8 gap-3">
-                <div className={`w-full flex-1 order-2 lg:order-none ${holidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
-                  <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} year={year} />
+                <div className={`w-full flex-1 order-2 lg:order-none ${filteredHolidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
+                  <HolidayMessages messages={filteredHolidayMessages} highlightedDay={highlightedDay} month={month} year={year} />
                 </div>
                 <div className="w-full order-4 lg:order-none">
                   <MoonPhasesDisplay moonPhases={moonPhases} month={month} year={year} />
