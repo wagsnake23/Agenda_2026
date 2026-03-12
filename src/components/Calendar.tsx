@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { addMonths, subMonths } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CalendarHeader from './calendar/CalendarHeader';
@@ -71,6 +71,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const { isAuthenticated } = useAuth();
   const { events: calendarEvents, setEvents } = useCalendarEventsContext();
   const { showSuccessToast, showErrorToast } = useToast();
+  const isInitialScroll = useRef(true);
 
   // Hook de agendamentos do Supabase
   const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch, setAgendamentos } = useAgendamentos();
@@ -292,8 +293,17 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
       const desiredIndex = isDesktop ? Math.max(0, targetIndex - 1) : targetIndex;
       const currentIndex = api.selectedScrollSnap();
+      
       if (desiredIndex !== currentIndex) {
-        api.scrollTo(desiredIndex);
+        // No carregamento inicial, usamos o jump (true) para evitar o efeito de "rodar bastante"
+        if (isInitialScroll.current) {
+          api.scrollTo(desiredIndex, true);
+          isInitialScroll.current = false;
+        } else {
+          api.scrollTo(desiredIndex);
+        }
+      } else {
+        isInitialScroll.current = false;
       }
     }
   }, [api, month, year, monthsArray, isMobile]);
