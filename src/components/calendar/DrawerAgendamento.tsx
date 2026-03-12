@@ -322,7 +322,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 )}>
                     <div className="flex flex-row items-center gap-2.5 md:gap-3.5 pt-0.5 md:pt-0">
                         {(!modoEdicao && mode !== 'create') ? (
-                            <span className="text-lg md:text-xl drop-shadow-sm shrink-0">📋</span>
+                            <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none shrink-0">📋</span>
                         ) : (
                             <div className={cn(
                                 "w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl shrink-0 transition-all duration-300",
@@ -330,7 +330,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     ? "bg-yellow-50/90 shadow-[0_2px_0_#facc15/30,inset_0_1.5px_1px_white] border border-yellow-200/50"
                                     : "bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80"
                             )}>
-                                <span className="text-lg md:text-xl drop-shadow-sm">
+                                <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none text-blue-600">
                                     📝
                                 </span>
                             </div>
@@ -338,8 +338,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                         <div className="flex flex-col justify-center min-w-0">
                             <h2 className={cn(
-                                "font-black leading-tight transition-all",
-                                mode === 'create' ? "text-slate-900 text-[1.1rem] md:text-[1.35rem]" : "text-white text-[0.95rem] xs:text-[1.05rem] md:text-[1.25rem] drop-shadow-sm"
+                                "leading-tight transition-all",
+                                mode === 'create' ? "font-black text-slate-900 text-[1.1rem] md:text-[1.35rem]" : "font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]"
                             )}>
                                 {modoEdicao ? (
                                     <span>Editar Agendamento</span>
