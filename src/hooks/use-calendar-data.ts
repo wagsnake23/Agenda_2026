@@ -53,7 +53,7 @@ export const useCalendarData = ({ month, year, today, mode = '24x48', calendarEv
       if (dayEvents.length > 0) {
         const priorityOrder = ['holiday', 'event', 'birthday'];
         for (const type of priorityOrder) {
-          const match = dayEvents.find(e => e.type === type && (type !== 'event' || e.is_fixed !== false));
+          const match = dayEvents.find(e => e.type === type);
           if (match) {
             eventColor = getBackgroundByType(type);
             break;

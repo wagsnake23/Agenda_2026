@@ -647,9 +647,16 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             ) : (
                                 agendamentosNoDia.map((agenda) => {
                                     const emoji = agenda.tipo.split(' ')[0];
-                                    const tipoNome = agenda.tipo.replace(emoji, '').trim();
+                                    let tipoNome = agenda.tipo.replace(emoji, '').trim();
                                     const isEventSpecial = agenda.userName === '_SPECIAL_EVENT_';
                                     const displayUserName = isEventSpecial ? 'Evento' : (agenda.userName || "Usuário");
+
+                                    let timeStr = "";
+                                    if (isEventSpecial && tipoNome.includes(' - 🕗 ')) {
+                                        const parts = tipoNome.split(' - 🕗 ');
+                                        tipoNome = parts[0];
+                                        timeStr = parts[1];
+                                    }
 
                                     const formatDateAbbr = (dateStr: string, isStart: boolean) => {
                                         const d = new Date(dateStr + 'T12:00:00');
@@ -705,7 +712,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                             <img src={agenda.userPhoto} alt={agenda.userName} className="w-full h-full object-cover" />
                                                         ) : (
                                                             <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
-                                                                {isEventSpecial ? <CalendarIcon className="w-5 h-5 md:w-7 md:h-7" /> : <User className="w-4.5 h-4.5 md:w-[22px] md:h-[22px]" />}
+                                                                {isEventSpecial ? <span className="text-[1.8rem] md:text-[2.5rem] saturate-150 drop-shadow-sm">{emoji}</span> : <User className="w-4.5 h-4.5 md:w-[22px] md:h-[22px]" />}
                                                             </div>
                                                         )}
                                                     </div>
@@ -716,15 +723,16 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                                 {/* COLUNA 2: CONTEÚDO */}
                                                 <div className="col-start-2 row-start-1 flex items-center gap-1.5 md:gap-2 overflow-hidden py-0.5 -ml-1 md:ml-0">
-                                                    <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0">{emoji}</span>
+                                                    {!isEventSpecial && <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0">{emoji}</span>}
                                                     <span className="text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight truncate">
                                                         {tipoNome}
                                                     </span>
                                                 </div>
                                                 <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0">
                                                     <span className="text-[13px] md:text-[14px] leading-none opacity-70">📋</span>
-                                                    <span className="text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis block">
+                                                    <span className="text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis flex items-center">
                                                         {renderPeriod()}
+                                                        {timeStr ? <span className="ml-[4px] md:ml-[6px] inline-flex items-center gap-[3px] text-slate-800 font-black">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}</span> : null}
                                                     </span>
                                                 </div>
                                                 {agenda.observacao && (
@@ -735,7 +743,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO */}
                                                 <div className="col-start-3 row-start-1 justify-self-end py-0.5">
-                                                    {(() => {
+                                                    {!isEventSpecial && (() => {
                                                         const statusKey = (agenda.status || 'pendente').toLowerCase();
                                                         const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
                                                         return (
@@ -746,9 +754,11 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     })()}
                                                 </div>
                                                 <div className="col-start-3 row-start-2 justify-self-end flex items-center">
-                                                    <span className="text-[10px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
-                                                        {agenda.totalDias} dias
-                                                    </span>
+                                                    {!isEventSpecial && (
+                                                        <span className="text-[10px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+                                                            {agenda.totalDias} dias
+                                                        </span>
+                                                    )}
                                                 </div>
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
