@@ -7,7 +7,7 @@ import { Calendar } from 'lucide-react';
 import BrasilFlagIcon from '@/components/BrasilFlagIcon';
 
 interface HolidayMessagesProps {
-  messages: { day: number; name: string; emoji: string | null; type: string; is_fixed?: boolean }[];
+  messages: { day: number; name: string; emoji: string | null; type: string; is_fixed?: boolean; is_system?: boolean }[];
   highlightedDay: number | null;
   month: number;
   year: number;

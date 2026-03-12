@@ -284,7 +284,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   // Filtra as mensagens de Feriados para esconder os 'Eventos' não anuais 
   // (já que eles vão aparecer no card de Agendamentos)
   const filteredHolidayMessages = useMemo(() => {
-    return holidayMessages.filter(msg => !(msg.type === 'event' && !msg.is_fixed));
+    return holidayMessages.filter(msg => msg.is_system || !(msg.type === 'event' && !msg.is_fixed));
   }, [holidayMessages]);
 
   const moonPhases = useMoonPhases(month, year);

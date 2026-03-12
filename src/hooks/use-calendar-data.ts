@@ -75,7 +75,7 @@ export const useCalendarData = ({ month, year, today, mode = '24x48', calendarEv
       const birthdayName = birthdayEvent?.title;
 
       // Verifica evento (para exibir emoji se tiver) - exclui eventos não-fixos, pois vão para o card de agendamentos
-      const specialEvent = dayEvents.find(e => e.type === 'event' && e.is_fixed !== false);
+      const specialEvent = dayEvents.find(e => e.type === 'event' && (e.is_fixed !== false || e.is_system));
       const specialEmojiName = specialEvent?.title;
       const specialEmojiIcon = specialEvent?.emoji || undefined;
 

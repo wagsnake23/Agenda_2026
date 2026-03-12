@@ -132,8 +132,8 @@ export const getEventsForMonth = (
     events: CalendarEvent[],
     month: number,  // 0-indexed
     year: number
-): { day: number; name: string; emoji: string | null; type: CalendarEventType; is_fixed: boolean }[] => {
-    const result: { day: number; name: string; emoji: string | null; type: CalendarEventType; is_fixed: boolean }[] = [];
+): { day: number; name: string; emoji: string | null; type: CalendarEventType; is_fixed: boolean; is_system: boolean }[] => {
+    const result: { day: number; name: string; emoji: string | null; type: CalendarEventType; is_fixed: boolean; is_system: boolean }[] = [];
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -146,7 +146,8 @@ export const getEventsForMonth = (
                     name: event.title, 
                     emoji: event.emoji, 
                     type: event.type,
-                    is_fixed: event.is_fixed 
+                    is_fixed: event.is_fixed,
+                    is_system: event.is_system || false
                 });
             }
         }

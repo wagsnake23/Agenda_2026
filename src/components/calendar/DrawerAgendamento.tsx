@@ -736,7 +736,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     </span>
                                                 </div>
                                                 {agenda.observacao && (
-                                                    <div className="col-start-2 col-span-2 row-start-3 italic text-[9.5px] md:text-[10.5px] text-slate-500 leading-tight py-0.5 pr-1 md:pr-2 break-words -ml-1 md:ml-0">
+                                                    <div className={cn(
+                                                        "col-start-2 col-span-2 row-start-3 italic text-[9.5px] text-slate-500 leading-tight py-0.5 pr-1 md:pr-2 break-words -ml-1 md:ml-0",
+                                                        isEventSpecial ? "md:text-[12px]" : "md:text-[10.5px]"
+                                                    )}>
                                                         "{agenda.observacao}"
                                                     </div>
                                                 )}
