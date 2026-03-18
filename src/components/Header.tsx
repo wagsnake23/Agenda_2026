@@ -293,7 +293,7 @@ const Header = () => {
                         />
                         {todayAppointmentsCount > 0 && (
                             <span className={cn(
-                                "absolute -top-[8px] -right-[10px] text-white text-[9px] font-black rounded-full px-[5px] py-[1.5px]",
+                                "absolute -top-[6px] -right-[5px] text-white text-[9px] font-black rounded-full px-[5px] py-[1.5px]",
                                 "flex items-center justify-center",
                                 "bg-[radial-gradient(circle_at_30%_30%,#ff6b6b_0%,#ef4444_60%,#b91c1c_100%)]",
                                 "shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4)]",
