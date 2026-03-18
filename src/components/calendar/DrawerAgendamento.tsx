@@ -459,7 +459,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             <div className="text-center mt-1 min-w-0">
                                                 <span className={cn(
                                                     "font-bold text-slate-500 uppercase tracking-tight block truncate w-full",
-                                                    mode === 'create' ? "text-[11px]" : "text-[10px]"
+                                                    mode === 'create' ? "text-[11.5px]" : "text-[11px]"
                                                 )}>
                                                     {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                                 </span>
@@ -534,7 +534,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     <div className="text-center mt-1.5 min-w-0">
                                         <span className={cn(
                                             "font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[100px]",
-                                            variant === 'modal' ? "text-[10.5px] md:text-[13px]" : "text-[10px] md:text-[11px]"
+                                            variant === 'modal' ? "text-[11px] md:text-[13.5px]" : "text-[11px] md:text-[12px]"
                                         )}>
                                             {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                         </span>
@@ -764,7 +764,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <span className="text-[9px] md:text-[10px] md:-mt-1.5 font-bold text-slate-500 leading-tight text-center break-words max-w-[60px] md:max-w-[70px] uppercase">
+                                                    <span className="text-[10.5px] md:text-[11px] md:-mt-1.5 font-bold text-slate-500 leading-tight text-center break-words max-w-[60px] md:max-w-[75px] uppercase">
                                                         {displayUserName}
                                                     </span>
                                                 </div>
