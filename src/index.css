@@ -71,7 +71,8 @@ All colors MUST be HSL.
     color: hsl(var(--foreground));
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    background-color: hsl(210, 100%, 97%); /* Suave azul claro para Mobile */
+    background-color: hsl(210, 100%, 97%);
+    /* Suave azul claro para Mobile */
   }
 
   @media (min-width: 1024px) {
