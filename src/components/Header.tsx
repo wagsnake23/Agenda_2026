@@ -258,7 +258,7 @@ const Header = () => {
                             className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0 relative -left-[4px]"
                         />
                         <h1
-                            className="text-[1.1rem] md:text-[1.5rem] font-black tracking-[0.025em] uppercase leading-none flex flex-row gap-0.5 select-none relative -left-[14px] md:-left-0 antialiased"
+                            className="text-[1.1rem] md:text-[1.5rem] font-extrabold tracking-[0.025em] uppercase leading-none flex flex-row gap-0.5 select-none relative -left-[14px] md:-left-0 antialiased"
                             style={{
                                 textShadow: '0 1px 2px rgba(0,0,0,0.08)',
                                 WebkitFontSmoothing: 'antialiased',
@@ -266,8 +266,8 @@ const Header = () => {
                                 textRendering: 'optimizeLegibility'
                             }}
                         >
-                            <span style={{ color: '#f87171', filter: 'saturate(2.0)' }}>CALENDÁRIO</span>
-                            <span style={{ color: '#f87171', filter: 'saturate(2.0)' }}>AGENDA</span>
+                            <span style={{ color: '#1e40af' }}>CALENDÁRIO</span>
+                            <span style={{ color: '#1e40af' }}>AGENDA</span>
                         </h1>
                     </div>
                 </div>
@@ -285,7 +285,7 @@ const Header = () => {
                     >
                         <Bell
                             size={24}
-                            color={todayAppointmentsCount > 0 ? "#C62828" : "#94a3b8"}
+                            color={todayAppointmentsCount > 0 ? "#1e40af" : "#94a3b8"}
                             strokeWidth={2.5}
                             className={cn(
                                 todayAppointmentsCount > 0 && "filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]"
