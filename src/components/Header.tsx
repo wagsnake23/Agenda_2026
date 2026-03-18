@@ -1,8 +1,11 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { LogIn, LogOut, Users, Calendar as CalendarIcon, ChevronDown } from 'lucide-react';
+import { LogIn, LogOut, Users, Calendar as CalendarIcon, ChevronDown, Bell } from 'lucide-react';
 import MobileMenu from './MobileMenu';
+import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
+import { useAgendamentos } from '@/hooks/useAgendamentos';
+import { cn } from '@/lib/utils';
 
 export const UserMenu = () => {
     const { profile, signOut, isAdmin } = useAuth();
@@ -86,6 +89,36 @@ const Header = () => {
     const { isAuthenticated, isAdmin, loading } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+
+    const { events: calendarEvents } = useCalendarEventsContext();
+    const { agendamentos: agendamentosDB } = useAgendamentos();
+
+    const todayStr = useMemo(() => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }, []);
+
+    const todayAppointmentsCount = useMemo(() => {
+        // Combinar agendamentos do DB com eventos do calendário de hoje
+        const countAgs = agendamentosDB.filter(ag => ag.data_inicial === todayStr).length;
+        const countEvents = calendarEvents.filter(ev => {
+            const datePart = ev.date.includes('T') ? ev.date.split('T')[0] : (ev.date.includes(' ') ? ev.date.split(' ')[0] : ev.date);
+            return datePart === todayStr && (ev.type === 'holiday' || ev.type === 'event');
+        }).length;
+        return countAgs + countEvents;
+    }, [agendamentosDB, calendarEvents, todayStr]);
+
+    const handleOpenTodayAppointments = () => {
+        if (location.pathname !== '/') {
+            navigate('/');
+            // Pequeno delay para garantir que o componente Calendar foi montado
+            setTimeout(() => {
+                window.dispatchEvent(new CustomEvent('open-today-appointments'));
+            }, 100);
+        } else {
+            window.dispatchEvent(new CustomEvent('open-today-appointments'));
+        }
+    };
 
     const handleAgendar = () => {
         window.dispatchEvent(new CustomEvent('open-global-agendamento-modal'));
@@ -216,16 +249,16 @@ const Header = () => {
             </header>
 
             {/* Header Mobile/Tablet */}
-            <header className="sticky top-0 z-50 w-full h-[64px] bg-transparent flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
+            <header className="sticky top-0 z-50 w-full h-[64px] bg-transparent flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-1 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
                 <div className="flex items-center cursor-pointer relative -top-[1px]" onClick={() => navigate('/')}>
                     <div className="flex items-center gap-4 w-full max-w-[320px]">
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
-                            className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0"
+                            className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0 relative -left-[4px]"
                         />
                         <h1
-                            className="text-[1.1rem] md:text-[1.5rem] font-black tracking-[0.025em] uppercase leading-none flex flex-row gap-0.5 select-none relative -left-[4px] md:-left-0 antialiased"
+                            className="text-[1.1rem] md:text-[1.5rem] font-black tracking-[0.025em] uppercase leading-none flex flex-row gap-0.5 select-none relative -left-[14px] md:-left-0 antialiased"
                             style={{
                                 textShadow: '0 1px 2px rgba(0,0,0,0.08)',
                                 WebkitFontSmoothing: 'antialiased',
@@ -239,8 +272,41 @@ const Header = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center shrink-0 w-12 justify-end">
-                    <MobileMenu />
+                <div className="flex items-center gap-3 shrink-0 pr-0.5">
+                    {/* Sino de Notificações Mobile */}
+                    <div
+                        onClick={todayAppointmentsCount > 0 ? handleOpenTodayAppointments : undefined}
+                        className={cn(
+                            "relative transition-transform -left-[8px]",
+                            todayAppointmentsCount > 0
+                                ? "cursor-pointer active:scale-90"
+                                : "opacity-40"
+                        )}
+                    >
+                        <Bell
+                            size={24}
+                            color={todayAppointmentsCount > 0 ? "#C62828" : "#94a3b8"}
+                            strokeWidth={2.5}
+                            className={cn(
+                                todayAppointmentsCount > 0 && "filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]"
+                            )}
+                        />
+                        {todayAppointmentsCount > 0 && (
+                            <span className={cn(
+                                "absolute -top-[8px] -right-[10px] text-white text-[9px] font-black rounded-full px-[5px] py-[1.5px]",
+                                "flex items-center justify-center",
+                                "bg-[radial-gradient(circle_at_30%_30%,#ff6b6b_0%,#ef4444_60%,#b91c1c_100%)]",
+                                "shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4)]",
+                                "border border-red-600/20"
+                            )}>
+                                {todayAppointmentsCount}
+                            </span>
+                        )}
+                    </div>
+
+                    <div className="flex items-center justify-end w-10 relative -bottom-[1px] -left-[11px]">
+                        <MobileMenu />
+                    </div>
                 </div>
             </header>
         </>

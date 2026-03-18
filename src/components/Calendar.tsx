@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { addMonths, subMonths } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CalendarHeader from './calendar/CalendarHeader';
@@ -364,10 +364,10 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     return agendamentosComEventosGerais.filter(ag => ag.dataInicio === todayStr).length;
   }, [agendamentosComEventosGerais, todayStr]);
 
-  const handleOpenTodayAppointmentsBell = () => {
+  const handleOpenTodayAppointmentsBell = useCallback(() => {
     goToToday();
     handleOpenViewDrawer(todayStr);
-  };
+  }, [goToToday, handleOpenViewDrawer, todayStr]);
 
   useEffect(() => {
     if (!api) return;
@@ -474,12 +474,14 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
     window.addEventListener('open-agendamento-drawer', handleOpenDrawer);
     window.addEventListener('agendamento-criado', handleGlobalCreated);
+    window.addEventListener('open-today-appointments', handleOpenTodayAppointmentsBell);
 
     return () => {
       window.removeEventListener('open-agendamento-drawer', handleOpenDrawer);
       window.removeEventListener('agendamento-criado', handleGlobalCreated);
+      window.removeEventListener('open-today-appointments', handleOpenTodayAppointmentsBell);
     };
-  }, [isAuthenticated, refetch]);
+  }, [isAuthenticated, refetch, handleOpenTodayAppointmentsBell]);
 
   // ---> INÍCIO: SETUP SUPABASE REALTIME <---
   useEffect(() => {
