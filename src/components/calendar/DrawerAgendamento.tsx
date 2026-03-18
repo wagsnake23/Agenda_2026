@@ -17,8 +17,14 @@ import { Calendar } from '@/components/ui/calendar';
 import { DateRange } from 'react-day-picker';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MoreVertical } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export interface Agendamento {
     id: string;
@@ -699,11 +705,11 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             className={cn(
                                                 "p-1 md:pt-3 md:pb-1.5 md:px-1.5 rounded-2xl border overflow-hidden bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
                                                 isSelected
-                                                    ? "border-blue-500 ring-2 ring-blue-200 shadow-lg scale-[1.01] md:scale-[1.02]"
+                                                    ? "border-blue-500 shadow-lg scale-[1.01] md:scale-[1.02]"
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
                                             )}
                                         >
-                                            <div className="grid grid-rows-[auto_auto_auto] grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative">
+                                            <div className="grid grid-rows-[auto_auto_auto] grid-cols-[65px_1fr_minmax(52px,auto)] md:grid-cols-[80px_1fr_auto_50px] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative">
                                                 {/* COLUNA 1: USUÁRIO */}
                                                 <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-1 md:ml-0">
                                                     <div className="w-[54px] h-[54px] md:w-[78px] md:h-[78px] md:-translate-y-1.5 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
@@ -728,10 +734,17 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     </span>
                                                 </div>
                                                 <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0 mt-0.5">
-                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70 shrink-0">📋</span>
-                                                    <span className={cn("text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 flex items-center gap-x-1 flex-wrap md:flex-nowrap", isEventSpecial ? "whitespace-normal" : "whitespace-nowrap text-ellipsis")}>
-                                                        {renderPeriod()}
-                                                        {timeStr ? <span className="ml-[2px] md:ml-[6px] inline-flex items-center gap-[3px] shrink-0">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}</span> : null}
+                                                    {!isEventSpecial && <span className="text-[13px] md:text-[14px] leading-none opacity-70 shrink-0">📋</span>}
+                                                    <span className={cn(
+                                                        "text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 flex items-center gap-x-1 flex-wrap md:flex-nowrap", 
+                                                        "whitespace-nowrap text-ellipsis"
+                                                    )}>
+                                                        <span>{renderPeriod()}</span>
+                                                        {timeStr ? (
+                                                            <span className="inline-flex items-center gap-[3px] shrink-0 ml-[2px] md:ml-[6px]">
+                                                                <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}
+                                                            </span>
+                                                        ) : null}
                                                     </span>
                                                 </div>
                                                 {agenda.observacao && (
@@ -763,9 +776,52 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     )}
                                                 </div>
 
-                                                {/* COLUNA 4: AÇÕES VERTICAL */}
+                                                {/* COLUNA 4: AÇÕES VERTICAL (DESKTOP) */}
                                                 {profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && (
-                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-blue-200/70 bg-gradient-to-b from-[#d9e7fa] to-[#c1d6f0] shadow-[inset_1px_0_2px_rgba(255,255,255,0.8),inset_-3px_-2px_6px_rgba(0,0,50,0.08)] -mt-1 -mb-1 -mr-1 md:-mt-3 md:-mb-1.5 md:-mr-1.5 flex flex-col items-center justify-center gap-0.5 md:gap-1 acoes rounded-r-2xl">
+                                                    <>
+                                                        {/* Menu Mobile Dropdown */}
+                                                        <div className="absolute top-1 right-1 md:hidden z-10">
+                                                            <DropdownMenu modal={false}>
+                                                                <DropdownMenuTrigger asChild>
+                                                                    <button
+                                                                        onClick={(e) => e.stopPropagation()}
+                                                                        className="w-8 h-10 flex items-center justify-center rounded-xl bg-blue-100/40 text-blue-400 hover:text-blue-600 hover:bg-blue-200/60 transition-all active:scale-95 shadow-sm"
+                                                                    >
+                                                                        <MoreVertical className="w-5 h-5" />
+                                                                    </button>
+                                                                </DropdownMenuTrigger>
+                                                                <DropdownMenuContent align="end" className="w-[140px] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-slate-200/60 p-1.5 animate-in fade-in slide-in-from-top-1 duration-200 z-[400]">
+                                                                    <DropdownMenuItem
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            if (onEditRequest) {
+                                                                                onEditRequest(agenda);
+                                                                            } else {
+                                                                                setModoEdicao(true);
+                                                                                setAgendamentoEditando(agenda);
+                                                                            }
+                                                                        }}
+                                                                        className="flex items-center gap-2.5 py-2.5 px-3 cursor-pointer hover:bg-slate-50 focus:bg-slate-50 transition-colors rounded-lg group"
+                                                                    >
+                                                                        <SquarePen className="w-4 h-4 text-blue-600 group-hover:scale-110 transition-transform" />
+                                                                        <span className="font-bold text-slate-700 text-sm">Editar</span>
+                                                                    </DropdownMenuItem>
+                                                                    <DropdownMenuItem
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            setConfirmDeleteId(agenda.id);
+                                                                        }}
+                                                                        className="flex items-center gap-2.5 py-2.5 px-3 cursor-pointer hover:bg-red-50 focus:bg-red-50 transition-colors rounded-lg group"
+                                                                    >
+                                                                        <Trash2 className="w-4 h-4 text-red-600 group-hover:scale-110 transition-transform" />
+                                                                        <span className="font-bold text-red-600 text-sm">Excluir</span>
+                                                                    </DropdownMenuItem>
+                                                                </DropdownMenuContent>
+                                                            </DropdownMenu>
+                                                        </div>
+
+                                                        {/* Botões Laterais (Desktop) */}
+                                                        <div className="hidden md:flex col-start-4 row-start-1 row-span-3 self-stretch border-l border-blue-200/70 bg-gradient-to-b from-[#d9e7fa] to-[#c1d6f0] shadow-[inset_1px_0_2px_rgba(255,255,255,0.8),inset_-3px_-2px_6px_rgba(0,0,50,0.08)] -mt-1 -mb-1 -mr-1 md:-mt-3 md:-mb-1.5 md:-mr-1.5 flex-col items-center justify-center gap-0.5 md:gap-1 acoes rounded-r-2xl">
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
@@ -795,7 +851,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                             <Trash2 className="w-[18px] h-[18px] md:w-[22px] md:h-[22px] group-hover/btn:scale-110 transition-transform" />
                                                         </button>
                                                     </div>
-                                                )}
+                                                </>
+                                            )}
                                             </div>
                                         </div>
                                     );
