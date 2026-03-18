@@ -559,8 +559,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 </div>
                             </div>
 
-                            {/* Data de Criação Informativa e Status */}
-                            {agendamentoEditando && (
+                            {/* Data de Criação Informativa e Status (Não exibir para Doação de Sangue) */}
+                            {agendamentoEditando && !agendamentoEditando.tipo.toLowerCase().includes('doação de sangue') && (
                                 <div className="mt-2 md:mt-2 flex flex-col gap-2.5">
                                     {/* Exibir Status Atual do Agendamento e Data da Ação */}
                                     <div className="flex flex-col items-start gap-1 md:gap-2 ml-1">
@@ -770,17 +770,17 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </div>
 
                                                 {/* COLUNA 2: CONTEÚDO */}
-                                                <div className="col-start-2 row-start-1 flex items-center justify-between md:justify-start gap-1.5 md:gap-2 py-0.5 -ml-1 md:ml-0 overflow-hidden pr-10 md:pr-0">
-                                                    <div className="flex items-center gap-1.5 md:gap-2 overflow-hidden truncate">
-                                                        {!isEventSpecial && <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0">{emoji}</span>}
-                                                        <span className={cn("text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight truncate")}>
+                                                <div className="col-start-2 row-start-1 flex items-start justify-between md:justify-start gap-1.5 md:gap-2 py-0.5 -ml-1 md:ml-0 overflow-hidden pr-10 md:pr-0">
+                                                    <div className="flex items-start gap-1.5 md:gap-2 overflow-hidden">
+                                                        {!isEventSpecial && <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0 mt-0.5">{emoji}</span>}
+                                                        <span className={cn("text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight whitespace-normal break-words leading-tight")}>
                                                             {tipoNome}
                                                         </span>
                                                     </div>
 
-                                                    {/* Badge de Status (Mobile apenas, no Desktop fica na Col 3) */}
+                                                    {/* Badge de Status (Mobile apenas, no Desktop fica na Col 3) - Não exibir para Doação de Sangue */}
                                                     <div className="md:hidden shrink-0 ml-1">
-                                                        {!isEventSpecial && (() => {
+                                                        {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && (() => {
                                                             const statusKey = (agenda.status || 'pendente').toLowerCase();
                                                             const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
                                                             return (
@@ -808,7 +808,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     </div>
 
                                                     {/* Duração (Mobile apenas, no Desktop fica na Col 3) */}
-                                                    {!isEventSpecial && (
+                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && (
                                                         <span className="md:hidden text-[10px] font-black text-blue-700 bg-blue-50/50 px-1.5 py-0.5 rounded-md whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] border border-blue-100/50 shrink-0">
                                                             {agenda.totalDias} dias
                                                         </span>
@@ -829,7 +829,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO (DESKTOP APENAS) */}
                                                 <div className="hidden md:block col-start-3 row-start-1 justify-self-end py-0.5">
-                                                    {!isEventSpecial && (() => {
+                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && (() => {
                                                         const statusKey = (agenda.status || 'pendente').toLowerCase();
                                                         const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
                                                         return (
@@ -840,7 +840,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     })()}
                                                 </div>
                                                 <div className="hidden md:flex col-start-3 row-start-2 justify-self-end flex items-center">
-                                                    {!isEventSpecial && (
+                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && (
                                                         <span className="text-[10px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
                                                             {agenda.totalDias} dias
                                                         </span>
