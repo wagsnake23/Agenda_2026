@@ -16,6 +16,7 @@ import { CalendarEventsProvider } from "@/context/CalendarEventsContext";
 import AdminCalendario from "./pages/AdminCalendario";
 
 import GlobalAgendamentoModal from "@/components/GlobalAgendamentoModal";
+import GlobalEventModal from "@/components/GlobalEventModal";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const AppProviders = () => (
         <CalendarModeProvider>
           <CalendarEventsProvider>
             <GlobalAgendamentoModal />
+            <GlobalEventModal />
             <Outlet />
           </CalendarEventsProvider>
         </CalendarModeProvider>
