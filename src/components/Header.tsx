@@ -170,7 +170,7 @@ const Header = () => {
                                                 : 'text-white hover:bg-white/[0.08]'
                                                 }`}
                                         >
-                                            Feriados e Eventos
+                                            Feriados e Datas
                                             {location.pathname.startsWith('/admin/calendario') && (
                                                 <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#fef08a] to-transparent rounded-full shadow-[0_0_12px_rgba(254,240,138,0.5)] animate-in fade-in slide-in-from-bottom-1 duration-500" />
                                             )}

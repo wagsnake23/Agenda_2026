@@ -313,7 +313,7 @@ const AdminCalendario: React.FC = () => {
                                 <div className="w-9 h-9 md:w-12 md:h-12 bg-gradient-to-br from-[#f0f7ff] via-[#e1effe] to-[#dbeafe] rounded-xl md:rounded-2xl border border-blue-200/50 shadow-[inset_0_1.5px_1.5px_white,0_2px_4px_rgba(37,99,235,0.06)] flex items-center justify-center shrink-0">
                                     <span className="text-lg md:text-2xl">📅</span>
                                 </div>
-                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Feriados e Eventos</span>
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Feriados e Datas</span>
                             </h1>
                         </div>
                         <div className="flex items-center gap-2 w-full sm:w-auto">

@@ -182,7 +182,7 @@ const MobileMenu = () => {
                                         )}
                                     >
                                         <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)] group-hover:scale-110 transition-transform">📅</span>
-                                        <span className="font-bold text-sm">Feriados e Eventos</span>
+                                        <span className="font-bold text-sm">Feriados e Datas</span>
                                     </button>
 
                                     {/* Item 6: Usuários */}
