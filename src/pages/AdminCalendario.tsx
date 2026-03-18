@@ -338,7 +338,7 @@ const AdminCalendario: React.FC = () => {
             <div className="w-full max-w-[1400px] mx-auto px-0 md:px-8 pb-6">
 
                 {/* Filtros */}
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6">
+                <div className="premium-module-bg rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6">
                     <div className="flex flex-col md:flex-row md:items-center gap-4">
                         {/* Busca */}
                         <div className="flex-1 md:flex-[0.6]">
@@ -389,7 +389,7 @@ const AdminCalendario: React.FC = () => {
                 </div>
 
                 {/* Tabela / Cards */}
-                <div className="mt-6 md:bg-white md:rounded-2xl md:border md:border-slate-200 md:shadow-sm md:overflow-hidden">
+                <div className="mt-6 premium-module-bg md:rounded-2xl md:border md:border-slate-200 md:shadow-sm md:overflow-hidden">
                     {loading ? (
                         <div className="flex items-center justify-center py-20">
                             <Loader2 size={32} className="animate-spin text-blue-600" />

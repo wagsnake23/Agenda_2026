@@ -31,7 +31,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
 
   return (
     <div className={cn(
-      "bg-[#ffffff] rounded-[16px] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.05)]",
+      "premium-module-bg rounded-[16px] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.05)]",
       isEmpty ? "hidden lg:flex" : "flex"
     )}>
       {/* Highlight de topo sutil */}

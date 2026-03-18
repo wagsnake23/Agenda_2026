@@ -71,8 +71,8 @@ All colors MUST be HSL.
     color: hsl(var(--foreground));
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    background-color: hsl(210, 100%, 97%);
-    /* Suave azul claro para Mobile */
+    background: linear-gradient(135deg, #f8faff 0%, #f0f5ff 50%, #e6f0ff 100%);
+    background-attachment: fixed;
   }
 
   @media (min-width: 1024px) {
@@ -104,6 +104,19 @@ All colors MUST be HSL.
   @media (min-width: 1024px) {
     .premium-aurora-bg {
       background-attachment: fixed;
+    }
+  }
+
+  /* Gradiente Premium para Módulos/Cards */
+  .premium-module-bg {
+    background: #ffffff;
+  }
+
+  @media (max-width: 1023px) {
+    .premium-module-bg {
+      background: linear-gradient(160deg, #ffffff 60%, #eef6ff 100%) !important;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
     }
   }
 

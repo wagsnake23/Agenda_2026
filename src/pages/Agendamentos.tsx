@@ -237,7 +237,7 @@ const AgendamentosPage: React.FC = () => {
 
             <div className="w-full max-w-[1400px] mx-auto px-0 md:px-8 pb-6">
                 {/* Filtros */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
+                <div className="premium-module-bg rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
                     <div className="flex items-center gap-2 mb-4">
                         <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100/50 shadow-[inset_0_1px_1px_white]">
                             <Filter size={14} className="text-blue-600" />
@@ -357,14 +357,14 @@ const AgendamentosPage: React.FC = () => {
                         </div>
                     </div>
                 ) : filtrados.length === 0 ? (
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+                    <div className="premium-module-bg rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
                         <span className="text-4xl mb-3 block">📋</span>
                         <p className="text-slate-400 font-medium">Nenhum agendamento encontrado</p>
                     </div>
                 ) : (
                     <>
                         {/* Desktop Table */}
-                        <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="hidden md:block premium-module-bg rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                             <div className="overflow-x-auto">
                                 <table className="w-full">
                                     <thead>
@@ -502,7 +502,7 @@ const AgendamentosPage: React.FC = () => {
                             {filtrados.map(ag => {
                                 const st = STATUS_STYLES[ag.status] || STATUS_STYLES.pendente;
                                 return (
-                                    <div key={ag.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+                                    <div key={ag.id} className="premium-module-bg rounded-2xl shadow-sm border border-gray-100 p-4">
                                         <div className="flex items-start justify-between mb-3">
                                             <div className="flex items-center gap-2">
                                                 {ag.profiles?.foto_url ? (

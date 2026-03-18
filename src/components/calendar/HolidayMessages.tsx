@@ -20,7 +20,7 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
   const formattedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1).toLowerCase();
 
   return (
-    <div className="bg-[#ffffff] rounded-[16px] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.05)]">
+    <div className="premium-module-bg rounded-[16px] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.05)]">
       {/* Highlight de topo sutil */}
       <div 
         className="absolute inset-x-0 top-0 h-[1.5px] z-30 pointer-events-none" 

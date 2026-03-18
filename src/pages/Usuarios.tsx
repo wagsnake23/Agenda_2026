@@ -522,7 +522,7 @@ const UsuariosPage: React.FC = () => {
             <div className="w-full max-w-[1400px] mx-auto px-0 md:px-8 pb-6">
 
                 {/* Busca */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
+                <div className="premium-module-bg rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
                         <input
@@ -542,7 +542,7 @@ const UsuariosPage: React.FC = () => {
                 ) : (
                     <>
                         {/* Desktop Table */}
-                        <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="hidden md:block premium-module-bg rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                             <table className="w-full">
                                 <thead>
                                     <tr className="bg-gradient-to-r from-[#dbeafe] via-[#f1f8ff] to-[#dbeafe] border-b border-blue-200/60 shadow-[inset_0_-1px_0_rgba(37,99,235,0.1)]">
@@ -623,7 +623,7 @@ const UsuariosPage: React.FC = () => {
                         {/* Mobile Cards */}
                         <div className="md:hidden space-y-3">
                             {filtrados.map(u => (
-                                <div key={u.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+                                <div key={u.id} className="premium-module-bg rounded-2xl shadow-sm border border-gray-100 p-4">
                                     <div className="flex items-start justify-between">
                                         <div className="grid grid-cols-[56px_1fr] gap-x-3 flex-1">
                                             {/* ÁREA DO AVATAR - LINHA 1 */}
