@@ -81,13 +81,13 @@ const ConfirmDialog: React.FC<{
                 <div className="flex gap-3">
                     <button
                         onClick={(e) => { e.stopPropagation(); onCancel(); }}
-                        className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-600 font-bold text-[17px] border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all"
+                        className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-600 font-bold text-[19px] border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all"
                     >
                         Cancelar
                     </button>
                     <button
                         onClick={(e) => { e.stopPropagation(); onConfirm(); }}
-                        className="flex-1 h-12 rounded-xl bg-red-600 text-white font-bold text-[17px] shadow-[0_4px_0_#991B1B] hover:bg-red-700 active:translate-y-[2px] active:shadow-none transition-all"
+                        className="flex-1 h-12 rounded-xl bg-red-600 text-white font-bold text-[19px] shadow-[0_4px_0_#991B1B] hover:bg-red-700 active:translate-y-[2px] active:shadow-none transition-all"
                     >
                         Excluir
                     </button>
@@ -612,7 +612,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             }
                                         }}
                                         variant="outline"
-                                        className="flex-1 h-10.5 md:h-12 rounded-2xl text-[0.9rem] md:text-[1rem] font-black uppercase tracking-wider bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200 hover:text-slate-700 transition-all duration-300 shadow-sm"
+                                        className="flex-1 h-10.5 md:h-12 rounded-2xl text-[1.05rem] md:text-[1.15rem] font-black uppercase tracking-wider bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200 hover:text-slate-700 transition-all duration-300 shadow-sm"
                                     >
                                         Cancelar
                                     </Button>
@@ -621,7 +621,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     onClick={handleAgendar}
                                     disabled={!isFormValid}
                                     className={cn(
-                                        "h-10.5 md:h-12 rounded-2xl text-[0.9rem] md:text-[1rem] font-black uppercase tracking-wider transition-all duration-300",
+                                        "h-10.5 md:h-12 rounded-2xl text-[1.05rem] md:text-[1.15rem] font-black uppercase tracking-wider transition-all duration-300",
                                         modoEdicao ? "flex-1" : "w-full",
                                         isFormValid
                                             ? (mode === 'create'

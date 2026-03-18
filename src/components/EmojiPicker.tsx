@@ -103,7 +103,7 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({ open, onClose, onSelect, curr
                 <div className="px-4 py-3 border-t border-slate-100 bg-slate-50 rounded-b-[24px] shrink-0">
                     <button
                         onClick={() => { onSelect(''); onClose(); }}
-                        className="w-full h-10 rounded-xl bg-slate-200 text-slate-600 hover:bg-slate-300 hover:text-slate-800 text-sm font-bold transition-all shadow-sm active:translate-y-[2px] active:shadow-none"
+                        className="w-full h-10 rounded-xl bg-slate-200 text-slate-600 hover:bg-slate-300 hover:text-slate-800 text-[17px] font-bold transition-all shadow-sm active:translate-y-[2px] active:shadow-none"
                     >
                         ✖ Remover emoji
                     </button>
