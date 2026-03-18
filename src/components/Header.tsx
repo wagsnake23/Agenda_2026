@@ -233,8 +233,8 @@ const Header = () => {
                                 textRendering: 'optimizeLegibility'
                             }}
                         >
-                            <span style={{ color: '#f87171', filter: 'saturate(1.5)' }}>CALENDÁRIO</span>
-                            <span style={{ color: '#f87171', filter: 'saturate(1.5)' }}>AGENDA</span>
+                            <span style={{ color: '#f87171', filter: 'saturate(1.8)' }}>CALENDÁRIO</span>
+                            <span style={{ color: '#f87171', filter: 'saturate(1.8)' }}>AGENDA</span>
                         </h1>
                     </div>
                 </div>
