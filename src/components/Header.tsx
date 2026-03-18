@@ -225,7 +225,7 @@ const Header = () => {
                             className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
-                            className="text-[1.1rem] md:text-[1.5rem] font-black tracking-[0.05em] uppercase leading-none flex flex-row gap-0.5 select-none relative -left-[4px] md:-left-0 antialiased"
+                            className="text-[1.1rem] md:text-[1.5rem] font-black tracking-[0.025em] uppercase leading-none flex flex-row gap-0.5 select-none relative -left-[4px] md:-left-0 antialiased"
                             style={{
                                 textShadow: '0 1px 2px rgba(0,0,0,0.08)',
                                 WebkitFontSmoothing: 'antialiased',
@@ -233,8 +233,8 @@ const Header = () => {
                                 textRendering: 'optimizeLegibility'
                             }}
                         >
-                            <span style={{ color: '#f87171', filter: 'saturate(1.8)' }}>CALENDÁRIO</span>
-                            <span style={{ color: '#f87171', filter: 'saturate(1.8)' }}>AGENDA</span>
+                            <span style={{ color: '#f87171', filter: 'saturate(2.0)' }}>CALENDÁRIO</span>
+                            <span style={{ color: '#f87171', filter: 'saturate(2.0)' }}>AGENDA</span>
                         </h1>
                     </div>
                 </div>
