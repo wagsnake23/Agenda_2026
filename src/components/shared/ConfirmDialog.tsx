@@ -57,7 +57,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     return (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-3">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onCancel} />
-            <div className="relative bg-white rounded-[24px] shadow-2xl border border-gray-100 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200">
+            <div className="relative bg-white rounded-[24px] shadow-2xl border-2 border-slate-200 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200">
                 <div className="flex flex-col items-center gap-2 mb-4">
                     <div className={`w-14 h-14 rounded-full ${iconBg} flex items-center justify-center ${iconColor} mb-1`}>
                         <Icon size={28} />

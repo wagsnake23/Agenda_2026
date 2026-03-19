@@ -312,7 +312,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 className={cn(
                     "bg-white flex flex-col overflow-hidden",
                     variant === 'modal' 
-                        ? "rounded-[24px] shadow-2xl border border-slate-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] w-[99%] md:max-w-[515px] relative z-10 animate-in zoom-in-95 duration-200" 
+                        ? "rounded-[24px] shadow-2xl border-2 border-slate-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] w-[99%] md:max-w-[515px] relative z-10 animate-in zoom-in-95 duration-200" 
                         : "rounded-2xl md:rounded-[29px] w-full h-full md:pointer-events-auto border border-[#0F172A]/[0.05] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)]"
                 )}
                 style={variant === 'modal' ? { maxHeight: '95vh' } : {}}

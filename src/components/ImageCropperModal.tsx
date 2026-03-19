@@ -52,7 +52,7 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
             />
 
             {/* Modal */}
-            <div className="relative bg-[#0f1b2d] rounded-2xl shadow-[0_32px_64px_-12px_rgba(0,0,0,0.7)] border border-white/10 w-full max-w-[480px] overflow-hidden animate-in zoom-in-95 fade-in duration-200 z-10">
+            <div className="relative bg-[#0f1b2d] rounded-2xl shadow-[0_32px_64px_-12px_rgba(0,0,0,0.7)] border-2 border-white/10 w-full max-w-[480px] overflow-hidden animate-in zoom-in-95 fade-in duration-200 z-10">
                 {/* Header */}
                 <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]">
                     <div className="flex items-center gap-2">
