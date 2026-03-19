@@ -1,51 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Agendamento } from '@/modules/auth/types';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/contexts/ToastProvider';
 import { dedupeById } from '@/utils/dedupeById';
+import { useAgendamentosContext } from '@/context/AgendamentosContext';
 
 export const useAgendamentos = () => {
     const { user, isAdmin, checkSession } = useAuth();
     const { showSuccessToast, showErrorToast } = useToast();
-    const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    // Agendamentos públicos: carregados independentemente de login.
-    // Não inclui 'user' ou 'isAdmin' como dependências para evitar re-fetch
-    // ao restaurar sessão, e garantir exibição mesmo sem autenticação.
-    const fetch = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-
-        try {
-            const { data, error: fetchError } = await supabase
-                .from('agendamentos')
-                .select(`
-          *,
-          profiles:user_id (
-            id, nome, apelido, email, foto_url, cargo, matricula, perfil
-          )
-        `)
-                .order('data_inicial', { ascending: true });
-
-            if (fetchError) throw fetchError;
-
-            // Deduplicação centralizada: garante estado limpo na carga inicial
-            setAgendamentos(dedupeById((data as Agendamento[]) || []));
-        } catch (err: any) {
-            console.error('Error fetching agendamentos:', err);
-            setError(err.message || 'Erro ao carregar agendamentos');
-        } finally {
-            setLoading(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // Sem dependências de auth — a query é pública
-
-    useEffect(() => {
-        fetch();
-    }, [fetch]);
+    const { agendamentos, setAgendamentos, loading, error, refetch } = useAgendamentosContext();
 
     const criar = async (input: {
         data_inicial: string;
@@ -202,7 +166,7 @@ export const useAgendamentos = () => {
         agendamentos,
         loading,
         error,
-        refetch: fetch,
+        refetch,
         criar,
         atualizar,
         excluir,
@@ -210,3 +174,4 @@ export const useAgendamentos = () => {
         setAgendamentos,
     };
 };
+

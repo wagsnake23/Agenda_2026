@@ -13,6 +13,7 @@ import { ToastProvider } from '@/contexts/ToastProvider';
 
 import { CalendarModeProvider } from "@/hooks/use-calendar-mode";
 import { CalendarEventsProvider } from "@/context/CalendarEventsContext";
+import { AgendamentosProvider } from "@/context/AgendamentosContext";
 import AdminCalendario from "./pages/AdminCalendario";
 
 import GlobalAgendamentoModal from "@/components/GlobalAgendamentoModal";
@@ -27,15 +28,18 @@ const AppProviders = () => (
       <AuthProvider>
         <CalendarModeProvider>
           <CalendarEventsProvider>
-            <GlobalAgendamentoModal />
-            <GlobalEventModal />
-            <Outlet />
+            <AgendamentosProvider>
+              <GlobalAgendamentoModal />
+              <GlobalEventModal />
+              <Outlet />
+            </AgendamentosProvider>
           </CalendarEventsProvider>
         </CalendarModeProvider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
+
 
 const router = createBrowserRouter(
   [

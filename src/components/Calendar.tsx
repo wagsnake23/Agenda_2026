@@ -30,7 +30,6 @@ import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/contexts/ToastProvider';
 import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
 import { supabase } from '@/lib/supabase';
-import { dedupeById } from '@/utils/dedupeById';
 import { getDynamicHolidays, getNationalHolidays } from '@/lib/dynamicHolidays';
 import type { CalendarEvent } from '@/hooks/use-calendar-events';
 
@@ -74,7 +73,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const isInitialScroll = useRef(true);
 
   // Hook de agendamentos do Supabase
-  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch, setAgendamentos } = useAgendamentos();
+  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch } = useAgendamentos();
+
 
   // Converter para o formato que o Drawer e CalendarCard esperam.
   // A deduplicação é responsabilidade exclusiva do hook useAgendamentos.
@@ -483,108 +483,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     };
   }, [isAuthenticated, refetch, handleOpenTodayAppointmentsBell]);
 
-  // ---> INÍCIO: SETUP SUPABASE REALTIME <---
-  useEffect(() => {
-    const channel = supabase.channel("calendar-realtime");
-
-    async function atualizarEventosDoDia(payload: any) {
-      if (payload.eventType === "DELETE") {
-        setEvents((prev: any) => prev.filter((e: any) => e.id !== payload.old.id));
-        return;
-      }
-
-      if (payload.eventType === "INSERT" || payload.eventType === "UPDATE") {
-        const { data, error } = await supabase
-          .from("calendar_events")
-          .select("*")
-          .eq("id", payload.new.id)
-          .single();
-
-        if (error || !data) {
-          console.error("Erro ao buscar evento completo pro realtime:", error);
-          return;
-        }
-
-        const newEvent = { ...data, is_system: false };
-
-        if (payload.eventType === "INSERT") {
-          setEvents((prev: any) => {
-            if (prev.some((e: any) => e.id === newEvent.id)) return prev;
-            return [...prev, newEvent];
-          });
-        }
-        if (payload.eventType === "UPDATE") {
-          setEvents((prev: any) => prev.map((e: any) => (e.id === newEvent.id ? newEvent : e)));
-        }
-      }
-    }
-
-    async function atualizarCardAgendamentos(payload: any) {
-      if (payload.eventType === "DELETE") {
-        setAgendamentos((prev: any) => prev.filter((a: any) => a.id !== payload.old.id));
-        return;
-      }
-
-      if (payload.eventType === "INSERT" || payload.eventType === "UPDATE") {
-        const { data, error } = await supabase
-          .from("agendamentos")
-          .select(`
-            *,
-            profiles:user_id (
-              id, nome, apelido, email, foto_url, cargo, matricula, perfil
-            )
-          `)
-          .eq("id", payload.new.id)
-          .single();
-
-        if (error || !data) {
-          console.error("Erro ao buscar agendamento completo pro realtime:", error);
-          return;
-        }
-
-        if (payload.eventType === "INSERT") {
-          // dedupeById garante que o Realtime não crie duplicatas em relação ao insert otimista
-          setAgendamentos((prev: any) =>
-            dedupeById([...prev, data]).sort(
-              (a: any, b: any) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime()
-            )
-          );
-        }
-        if (payload.eventType === "UPDATE") {
-          // dedupeById garante que o mapa de updates não introduza duplicatas
-          setAgendamentos((prev: any) =>
-            dedupeById(prev.map((a: any) => (a.id === data.id ? data : a)))
-          );
-        }
-      }
-    }
-
-    channel
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "agendamentos" },
-        (payload) => {
-          if (process.env.NODE_ENV === 'development') console.log("Realtime agendamentos:", payload);
-          atualizarCardAgendamentos(payload);
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "calendar_events" },
-        (payload) => {
-          if (process.env.NODE_ENV === 'development') console.log("Realtime eventos:", payload);
-          atualizarEventosDoDia(payload);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [setEvents, setAgendamentos]);
-  // ---> FIM: SETUP SUPABASE REALTIME <---
-
   return (
+
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">
       <section
         className={cn(
