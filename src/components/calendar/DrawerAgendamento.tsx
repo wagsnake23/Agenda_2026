@@ -777,19 +777,6 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                             {tipoNome}
                                                         </span>
                                                     </div>
-
-                                                    {/* Badge de Status (Mobile apenas, no Desktop fica na Col 3) - Não exibir para Doação de Sangue */}
-                                                    <div className="md:hidden shrink-0 ml-1">
-                                                        {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && (() => {
-                                                            const statusKey = (agenda.status || 'pendente').toLowerCase();
-                                                            const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
-                                                            return (
-                                                                <span className={cn("px-2 py-1 rounded-full text-[8.5px] font-bold uppercase tracking-tight shadow-sm border leading-none block text-center min-w-[55px]", style.className)}>
-                                                                    {style.label}
-                                                                </span>
-                                                            );
-                                                        })()}
-                                                    </div>
                                                 </div>
                                                 <div className="col-start-2 row-start-2 flex items-center gap-x-1.5 md:gap-x-2 overflow-hidden -ml-1 md:ml-0 mt-0.5 pr-10 md:pr-0">
                                                     <div className="flex items-center gap-1 md:gap-1.5 overflow-hidden">

@@ -226,8 +226,8 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             <div
                 className="relative p-0 md:px-4 md:pt-6 md:pb-4 md:mt-0 bg-transparent md:rounded-[20px] opacity-100 transition-colors duration-500 md:shadow-[inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)]"
                 style={{
-                    background: isDesktopState ? 'linear-gradient(to bottom, #f0f9ff, #e0f2fe)' : 'transparent',
-                    border: isDesktopState ? '0.5px solid rgba(14, 165, 233, 0.2)' : 'none'
+                    background: isDesktopState ? 'linear-gradient(to bottom, #f8fafc, #f1f5f9)' : 'transparent',
+                    border: isDesktopState ? '0.5px solid rgba(148, 163, 184, 0.2)' : 'none'
                 }}
             >
                 <CalendarGrid

@@ -69,7 +69,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 "rounded-[9px] md:rounded-[11px]",
                 "aspect-square md:aspect-auto",
                 "w-full md:h-[38px] lg:h-[48px]",
-                "py-1 relative overflow-hidden border border-slate-300/70 md:border-[0.5px] md:border-slate-300/80",
+                "py-1 relative overflow-hidden border border-blue-300/55 md:border-[0.5px] md:border-blue-300/45",
                 "saturate-[1.05]",
 
                 // Transição segura (somente cores e sombra)
@@ -84,8 +84,8 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 mode === 'adm'
                   ? cn(
                     "shadow-[inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,0,0,0.1)]",
-                    "bg-gradient-to-br from-[#f1f5f9] to-[#cbd5e1] md:from-[#f1f5f9] md:to-[#acb6c5]",
-                    isWeekend ? "text-red-900" : "text-slate-900",
+                    "bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe]",
+                    index === 0 ? "text-red-900" : "text-[#1e3a8a]",
                     isToday && "z-20"
                   )
 
@@ -110,8 +110,8 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                         "bg-gradient-to-br from-[#fde047] to-[#f59e0b] text-[#1A1A1A]"
                       )
                       : cn(
-                        isWeekend ? 'text-red-900' : 'text-slate-900',
-                        "bg-gradient-to-br from-[#f1f5f9] to-[#cbd5e1] md:from-[#f1f5f9] md:to-[#acb6c5]"
+                        index === 0 ? 'text-red-900' : 'text-[#1e3a8a]',
+                        "bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe]"
                       )
                   )
               )}
