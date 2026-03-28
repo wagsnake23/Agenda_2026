@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import { addMonths, subMonths } from 'date-fns';
+import { addMonths, subMonths, format } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CalendarHeader from './calendar/CalendarHeader';
 import TodayButton from './calendar/TodayButton';
@@ -123,6 +123,30 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const [selectedDrawerDate, setSelectedDrawerDate] = useState<string | undefined>();
   const [selectedAgendamentoId, setSelectedAgendamentoId] = useState<string | null>(null);
   const [selectedPeriod, setSelectedPeriod] = useState<{ start: string, end: string } | null>(null);
+
+  // --- LÓGICA DE FILTRAGEM CENTRALIZADA (REQUISITO: CONSISTÊNCIA CARD/DRAWER) ---
+  const filteredMonthAgendamentos = useMemo(() => {
+    // Mesma lógica do AgendamentosDisplay: dataInicio <= fimDoMes E dataFim >= inicioDoMes
+    const firstDayOfMonthStr = `${year}-${String(month + 1).padStart(2, '0')}-01`;
+    const lastDayOfMonthStr = format(new Date(year, month + 1, 0), 'yyyy-MM-dd');
+
+    return agendamentosComEventosGerais
+      .filter(ag => {
+        // Range overlap logic
+        return ag.dataInicio <= lastDayOfMonthStr && ag.dataFim >= firstDayOfMonthStr;
+      })
+      .sort((a, b) => {
+        return new Date(a.dataInicio + 'T12:00:00').getTime() - new Date(b.dataInicio + 'T12:00:00').getTime();
+      });
+  }, [agendamentosComEventosGerais, month, year]);
+
+  const drawerAgendamentos = useMemo(() => {
+    if (!selectedDrawerDate) return [];
+    // Filtra agendamentos do mês que interceptam o dia selecionado no drawer
+    return filteredMonthAgendamentos.filter(a => 
+      a.dataInicio <= selectedDrawerDate && a.dataFim >= selectedDrawerDate
+    );
+  }, [filteredMonthAgendamentos, selectedDrawerDate]);
 
   const toggleHighlightPeriod = (period: { start: string, end: string } | null) => {
     if (!period) {
@@ -599,8 +623,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 mode="view"
                 variant="drawer"
                 initialDate={selectedDrawerDate}
-                agendamentosNoDia={agendamentosComEventosGerais.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-                todosAgendamentos={agendamentosComEventosGerais}
+                agendamentosNoDia={drawerAgendamentos}
+                todosAgendamentos={filteredMonthAgendamentos}
                 onSave={salvarAgendamento}
                 onDelete={excluirAgendamento}
                 onUpdate={editarAgendamento}
@@ -620,8 +644,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               mode="create"
               variant="modal"
               initialDate={selectedDrawerDate}
-              agendamentosNoDia={agendamentosComEventosGerais.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-              todosAgendamentos={agendamentosComEventosGerais}
+              agendamentosNoDia={drawerAgendamentos}
+              todosAgendamentos={filteredMonthAgendamentos}
               onSave={salvarAgendamento}
               onDelete={excluirAgendamento}
               onUpdate={editarAgendamento}
@@ -663,7 +687,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 !hasAgendamentos && "hidden md:flex"
               )}>
                 <AgendamentosDisplay
-                  agendamentos={agendamentosComEventosGerais}
+                  agendamentos={filteredMonthAgendamentos}
                   month={month}
                   year={year}
                   highlightedDay={highlightedDay}
@@ -690,23 +714,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         </div>
       </div>
 
-      <DrawerAgendamento
-        isOpen={isDrawerOpen && drawerMode === 'create'}
-        onClose={handleCloseDrawer}
-        mode="create"
-        variant="modal"
-        initialDate={selectedDrawerDate}
-        agendamentosNoDia={agendamentosComEventosGerais.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-        todosAgendamentos={agendamentosComEventosGerais}
-        onSave={salvarAgendamento}
-        onDelete={excluirAgendamento}
-        onUpdate={editarAgendamento}
-        anchorRef={null as any}
-        selectedPeriod={selectedPeriod}
-        onSelectPeriod={toggleHighlightPeriod}
-        selectedAgendamentoId={selectedAgendamentoId}
-        setSelectedAgendamentoId={setSelectedAgendamentoId}
-      />
     </div>
   );
 };
