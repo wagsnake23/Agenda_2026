@@ -39,7 +39,7 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
             </h4>
           </div>
 
-          <div className="flex flex-row items-center justify-center py-[4px] md:py-[6px] px-[12px] md:px-[18px] rounded-[10px] md:rounded-[11px] text-[12px] md:text-[15px] bg-white/20 md:bg-slate-50 text-white md:text-slate-700 leading-[1.1] ml-auto border-[0.5px] border-white/30 md:border-red-200 shadow-[inset_0_1px_4px_rgba(0,0,0,0.05)]">
+          <div className="flex flex-row items-center justify-center py-[4px] md:py-[6px] px-[12px] rounded-[10px] md:rounded-[11px] text-[12px] md:text-[15px] bg-white/20 md:bg-slate-50 text-white md:text-slate-700 leading-[1.1] ml-auto border-[0.5px] border-white/30 md:border-red-200 shadow-[inset_0_1px_4px_rgba(0,0,0,0.05)]">
             <span className="font-bold uppercase tracking-wide">{MONTHS[month]?.substring(0, 3)}</span>
             <span className="font-bold opacity-90 ml-[2px]">/{year}</span>
           </div>
