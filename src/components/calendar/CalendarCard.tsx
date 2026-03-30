@@ -177,11 +177,11 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                                 borderRadius: '14px',
                             }}
                         >
-                            <span className="text-[#D14343] font-black text-base md:text-[18px] leading-none select-none" style={{ textShadow: 'none', WebkitFontSmoothing: 'antialiased' }}>
+                            <span className="text-[#D14343] font-extrabold text-base md:text-[18px] leading-none select-none tracking-[0.2px]" style={{ textShadow: 'none', WebkitFontSmoothing: 'antialiased' }}>
                                 {MONTHS[month]}
                             </span>
                             <span className="text-[#D14343] opacity-20 font-bold select-none">•</span>
-                            <span className="text-[#D14343] font-black text-base md:text-[19px] leading-none select-none" style={{ textShadow: 'none', WebkitFontSmoothing: 'antialiased' }}>
+                            <span className="text-[#D14343] font-extrabold text-base md:text-[19px] leading-none select-none tracking-[0.2px]" style={{ textShadow: 'none', WebkitFontSmoothing: 'antialiased' }}>
                                 {year}
                             </span>
                         </div>
