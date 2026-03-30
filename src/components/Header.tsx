@@ -42,7 +42,7 @@ export const UserMenu = () => {
                         </div>
                     )}
                 </div>
-                <span className="text-[14px] font-medium hidden md:block max-w-[120px] truncate">
+                <span className="text-[16px] font-semibold hidden md:block max-w-[120px] truncate">
                     {profile?.nome?.split(' ')[0] || 'Usuário'}
                 </span>
                 <ChevronDown size={14} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
@@ -133,13 +133,6 @@ const Header = () => {
             >
                 <div className="w-full max-w-[1600px] mx-auto px-8 flex items-center justify-between">
                     <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer relative">
-                        {/* Spot Light Localizado */}
-                        <div 
-                            className="absolute -left-[40px] -top-[20px] w-[260px] h-[120px] pointer-events-none z-0"
-                            style={{ 
-                                background: 'radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)' 
-                            }} 
-                        />
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
@@ -152,23 +145,13 @@ const Header = () => {
                             className="md:font-extrabold font-black md:text-[1.35rem] tracking-wider uppercase leading-none inline-flex items-center pointer-events-auto select-none gap-2 relative z-10"
                             style={{
                                 textShadow: `
-                                    0 1px 0 rgba(255,255,255,0.35),
+                                    0 1px 0 rgba(255,255,255,0.15),
                                     0 2px 6px rgba(0,0,0,0.35)
                                 `
                             }}
                         >
-                            <span style={{ color: '#f87171' }}>CALENDÁRIO</span>
-                            <span 
-                                style={{ 
-                                    background: 'linear-gradient(180deg, #ffffff 40%, #dbeafe 100%)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    backgroundClip: 'text',
-                                    color: 'transparent'
-                                }}
-                            >
-                                AGENDA
-                            </span>
+                            <span style={{ color: '#ffffff' }}>CALENDÁRIO</span>
+                            <span style={{ color: '#ffffff' }}>AGENDA</span>
                         </h1>
                     </div>
 
@@ -184,7 +167,7 @@ const Header = () => {
                                         {isAdmin && (
                                             <button
                                                 onClick={() => navigate('/usuarios')}
-                                                className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[15px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/usuarios')
+                                                className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[17px] font-semibold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/usuarios')
                                                     ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
                                                     : 'text-white hover:bg-white/[0.08]'
                                                     }`}
@@ -198,7 +181,7 @@ const Header = () => {
 
                                         <button
                                             onClick={() => navigate('/admin/calendario')}
-                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[15px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/admin/calendario')
+                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[17px] font-semibold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/admin/calendario')
                                                 ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
                                                 : 'text-white hover:bg-white/[0.08]'
                                                 }`}
@@ -212,7 +195,7 @@ const Header = () => {
                                         {/* Agendamentos */}
                                         <button
                                             onClick={() => navigate('/agendamentos')}
-                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[15px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname === '/agendamentos'
+                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[17px] font-semibold transition-all duration-300 ease-in-out relative group ${location.pathname === '/agendamentos'
                                                 ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
                                                 : 'text-white hover:bg-white/[0.08]'
                                                 }`}

@@ -383,7 +383,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             }
                         }}
                         className={cn(
-                            "flex items-center justify-center rounded-full transition-all text-white shadow-lg active:scale-90",
+                            "flex items-center justify-center rounded-full transition-all text-white shadow-lg active:scale-90 translate-x-[4px] -translate-y-[4px] md:translate-x-0 md:translate-y-0",
                             variant === 'modal' ? "w-7 h-7 md:w-[34px] md:h-[34px] bg-[#E53935] hover:bg-[#C62828]" : (mode === 'create' ? "w-6 h-6 md:w-8 md:h-8 bg-red-500/90 hover:bg-red-600" : "w-7 h-7 md:w-10 md:h-10 bg-[#E53935] hover:bg-[#C62828]")
                         )}
                         title={variant === 'modal' ? "Fechar" : (modoEdicao ? "Voltar" : "Fechar")}
