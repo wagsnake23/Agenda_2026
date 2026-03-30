@@ -47,7 +47,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
         <div className="relative flex items-center justify-between pl-1.5 pr-1.5 md:pl-6 md:pr-4 z-20 w-full">
           <div className="flex items-center gap-2">
             <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none">🎂</span>
-            <h4 className="font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
+            <h4 className="font-semibold text-white text-[14px] lg:text-[17px] uppercase tracking-[0.5px]">
               Aniversariantes
             </h4>
           </div>

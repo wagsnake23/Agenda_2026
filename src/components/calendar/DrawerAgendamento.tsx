@@ -344,7 +344,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                         <div className="flex flex-col justify-center min-w-0">
                             <h2 className={cn(
-                                "leading-tight transition-all font-semibold text-[14px] lg:text-[15px] uppercase tracking-[0.5px]",
+                                "leading-tight transition-all font-semibold text-[14px] lg:text-[17px] uppercase tracking-[0.5px]",
                                 mode === 'create' ? "text-slate-900" : "text-white"
                             )}>
                                 {modoEdicao ? (
