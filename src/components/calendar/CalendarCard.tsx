@@ -121,7 +121,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 // Efeito 3D Mobile Premium (Unificado e Interno)
                 "border-[0.5px] border-blue-400/25 shadow-[inset_0_1px_3px_rgba(255,255,255,0.8),inset_0_-1px_3px_rgba(0,0,0,0.05)]",
                 // Efeito 3D Desktop (REMOCK OUTER SHADOW/BLUR ONLY)
-                "md:border-[0.5px] md:border-slate-300/80 md:shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-2px_6px_rgba(0,0,0,0.06)]",
+                "md:border md:border-blue-800/20 md:shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-2px_6px_rgba(0,0,0,0.06)]",
                 "rounded-2xl md:rounded-[29px] bg-clip-padding",
                 "relative group/card overflow-hidden"
             )}
