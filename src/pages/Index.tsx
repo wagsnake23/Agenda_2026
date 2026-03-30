@@ -79,11 +79,11 @@ const Index = () => {
         <footer className="w-full mt-auto bg-[#0F172A] py-8 border-t border-gray-800 shadow-2xl relative z-10">
           <div className="w-full max-w-[1600px] mx-auto px-0 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
             {/* Lado Esquerdo */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2">
-              <div className="flex items-center gap-3">
-                <img src="/logo.png" alt="Logo" className="w-10 h-10 opacity-90 drop-shadow-md" />
+            <div className="flex flex-col items-center md:items-start text-center md:text-left gap-0">
+              <div className="flex items-center md:items-start gap-3">
+                <img src="/logo.png" alt="Logo" className="w-14 h-14 opacity-90 drop-shadow-md" />
                 <h3
-                  className="font-bold text-base md:text-lg tracking-wider uppercase whitespace-nowrap flex gap-2"
+                  className="font-bold text-base md:text-lg tracking-wider uppercase whitespace-nowrap flex gap-2 leading-none"
                   style={{
                     textShadow: `
                       0 1px 0 rgba(255,255,255,0.25),
@@ -92,38 +92,37 @@ const Index = () => {
                     `
                   }}
                 >
-                  <span style={{ color: '#f87171', filter: 'saturate(1.2)' }}>CALENDÁRIO</span>
                   <span 
                     style={{ 
-                      background: 'linear-gradient(180deg, #ffffff 40%, #dbeafe 100%)',
+                      background: 'linear-gradient(180deg, #eef6ff 10%, #93c5fd 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
                       color: 'transparent'
                     }}
                   >
-                    AGENDA
+                    CALENDÁRIO AGENDA
                   </span>
                 </h3>
               </div>
-              <p className="text-gray-400 text-xs md:text-sm font-medium opacity-80 max-w-[300px]">
+              <p className="text-gray-400 text-xs md:text-[15px] font-medium opacity-80 max-w-[300px] md:ml-[68px] md:-mt-[16px]">
                 Calendário digital de organização de escala operacional
               </p>
             </div>
 
             {/* Lado Direito */}
             <div className="flex flex-col items-center md:items-end gap-1.5">
-              <span className="text-gray-400 text-[10px] font-semibold tracking-wide uppercase">
-                © 2026 — <span style={{ color: '#f87171' }}>CALENDÁRIO</span> <span style={{ 
-                  background: 'linear-gradient(180deg, #ffffff 40%, #dbeafe 100%)',
+              <span className="text-gray-400 text-[10px] md:text-[12px] font-semibold tracking-wide uppercase">
+                © 2026 — <span style={{ 
+                  background: 'linear-gradient(180deg, #eef6ff 10%, #93c5fd 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
                   color: 'transparent'
-                }}>AGENDA</span>
+                }}>CALENDÁRIO AGENDA</span>
               </span>
 
-              <div className="flex items-center gap-1.5 text-xs font-bold text-gray-300">
+              <div className="flex items-center gap-1.5 text-xs md:text-[14px] font-bold text-gray-300">
                 <span>Design by</span>
                 <a
                   href="https://api.whatsapp.com/send?phone=5514991188921&text=Olá!%20Tenho%20interesse%20no%20Calendário%20Prontidão.%20Podemos%20conversar?"
