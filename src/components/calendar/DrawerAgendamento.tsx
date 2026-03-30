@@ -560,7 +560,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             </div>
 
                             {/* Data de Criação Informativa e Status (Não exibir para Doação de Sangue) */}
-                            {agendamentoEditando && !agendamentoEditando.tipo.toLowerCase().includes('doação de sangue') && (
+                            {agendamentoEditando && !agendamentoEditando.tipo.toLowerCase().includes('doação de sangue') && !agendamentoEditando.tipo.toLowerCase().includes('folga aniversário') && (
                                 <div className="mt-2 md:mt-2 flex flex-col gap-2.5">
                                     {/* Exibir Status Atual do Agendamento e Data da Ação */}
                                     <div className="flex flex-col items-start gap-1 md:gap-2 ml-1">
@@ -795,7 +795,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     </div>
 
                                                     {/* Duração (Mobile apenas, no Desktop fica na Col 3) */}
-                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && (
+                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && !tipoNome.toLowerCase().includes('folga aniversário') && (
                                                         <span className="md:hidden text-[10px] font-black text-blue-700 bg-blue-50/50 px-1.5 py-0.5 rounded-md whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] border border-blue-100/50 shrink-0">
                                                             {agenda.totalDias} dias
                                                         </span>
@@ -816,7 +816,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO (DESKTOP APENAS) */}
                                                 <div className="hidden md:block col-start-3 row-start-1 justify-self-end py-0.5">
-                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && (() => {
+                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && !tipoNome.toLowerCase().includes('folga aniversário') && (() => {
                                                         const statusKey = (agenda.status || 'pendente').toLowerCase();
                                                         const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
                                                         return (
@@ -827,7 +827,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     })()}
                                                 </div>
                                                 <div className="hidden md:flex col-start-3 row-start-2 justify-self-end flex items-center">
-                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && (
+                                                    {!isEventSpecial && !tipoNome.toLowerCase().includes('doação de sangue') && !tipoNome.toLowerCase().includes('folga aniversário') && (
                                                         <span className="text-[10px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
                                                             {agenda.totalDias} dias
                                                         </span>
