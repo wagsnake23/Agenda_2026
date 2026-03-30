@@ -98,7 +98,7 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
                         <span className="font-bold opacity-90 ml-[2px] uppercase">/{formattedMonth}</span>
                       </div>
 
-                      <span className={cn("flex items-start gap-1 whitespace-normal", isInfoEvent ? "text-[#475569]" : "text-[#334155]")}>
+                      <span className={cn("flex items-start gap-1 whitespace-normal", isInfoEvent ? "text-slate-700" : "text-slate-900")}>
                         <span className="break-words">
                           {name}
                         </span>

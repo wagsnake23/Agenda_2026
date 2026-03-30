@@ -122,7 +122,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                                 <span className="font-bold opacity-90 ml-[2px]">/{mes}</span>
                                             </div>
                                             <span className={cn(
-                                                "flex gap-1.5 text-[#334155] min-w-0 flex-1 pr-1",
+                                                "flex gap-1.5 text-slate-900 min-w-0 flex-1 pr-1",
                                                 isEventSpecial ? "items-center overflow-hidden" : "items-start whitespace-normal"
                                             )}>
                                                 {emoji && (

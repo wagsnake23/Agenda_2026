@@ -769,7 +769,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <span className="text-[10.5px] md:text-[11px] md:-mt-1.5 font-bold text-slate-500 leading-tight text-center break-words max-w-[60px] md:max-w-[75px] uppercase">
+                                                    <span className="text-[10.5px] md:text-[11px] md:-mt-1.5 font-bold text-slate-700 leading-tight text-center break-words max-w-[60px] md:max-w-[75px] uppercase">
                                                         {displayUserName}
                                                     </span>
                                                 </div>
@@ -778,7 +778,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 <div className="col-start-2 row-start-1 flex items-start justify-between md:justify-start gap-1.5 md:gap-2 py-0.5 -ml-1 md:ml-0 overflow-hidden pr-10 md:pr-0">
                                                     <div className="flex items-start gap-1.5 md:gap-2 overflow-hidden">
                                                         {!isEventSpecial && <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0 mt-0.5">{emoji}</span>}
-                                                        <span className={cn("text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight whitespace-normal break-words leading-tight")}>
+                                                        <span className={cn("text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-900 uppercase tracking-tight whitespace-normal break-words leading-tight")}>
                                                             {tipoNome}
                                                         </span>
                                                     </div>
@@ -787,7 +787,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     <div className="flex items-center gap-1 md:gap-1.5 overflow-hidden">
                                                         {!isEventSpecial && <span className="text-[13px] md:text-[14px] leading-none opacity-70 shrink-0">📋</span>}
                                                         <span className={cn(
-                                                            "text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 flex items-center gap-x-1 flex-wrap md:flex-nowrap", 
+                                                            "text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-800 flex items-center gap-x-1 flex-wrap md:flex-nowrap", 
                                                             "whitespace-nowrap text-ellipsis"
                                                         )}>
                                                             <span>{renderPeriod()}</span>
@@ -811,7 +811,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     
                                                     {agenda.observacao && (
                                                         <div className={cn(
-                                                            "italic text-[9.5px] text-slate-500 leading-tight break-words",
+                                                            "italic text-[9.5px] text-slate-700 leading-tight break-words",
                                                             isEventSpecial ? "md:text-[12px]" : "md:text-[10.5px]"
                                                         )}>
                                                             "{agenda.observacao}"

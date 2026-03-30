@@ -90,7 +90,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
                         <span className="font-bold uppercase tracking-wide">{String(data.day).padStart(2, '0')}</span>
                         <span className="font-bold opacity-90 ml-[2px] uppercase">/{formattedMonth}</span>
                       </div>
-                      <span className="flex items-center gap-1 text-[#334155] truncate">
+                      <span className="flex items-center gap-1 text-slate-900 truncate">
                         <span className="truncate">{data.name.replace(/Bombeiro\s+/i, '')}</span>
                         <span className="text-sm md:text-base transition-transform hover:scale-110 shrink-0 transform -translate-y-[1px]">
                           🎂
