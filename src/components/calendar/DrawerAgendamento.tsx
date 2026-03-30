@@ -344,8 +344,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                         <div className="flex flex-col justify-center min-w-0">
                             <h2 className={cn(
-                                "leading-tight transition-all",
-                                mode === 'create' ? "font-black text-slate-900 text-[1.1rem] md:text-[1.35rem]" : "font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]"
+                                "leading-tight transition-all font-semibold text-[14px] lg:text-[15px] uppercase tracking-[0.5px]",
+                                mode === 'create' ? "text-slate-900" : "text-white"
                             )}>
                                 {modoEdicao ? (
                                     <span>Editar Agendamento</span>
@@ -383,15 +383,15 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             }
                         }}
                         className={cn(
-                            "flex items-center justify-center rounded-full transition-all text-white shadow-lg active:scale-90 translate-x-[4px] -translate-y-[4px] md:translate-x-0 md:translate-y-0",
-                            variant === 'modal' ? "w-7 h-7 md:w-[34px] md:h-[34px] bg-[#E53935] hover:bg-[#C62828]" : (mode === 'create' ? "w-6 h-6 md:w-8 md:h-8 bg-red-500/90 hover:bg-red-600" : "w-7 h-7 md:w-10 md:h-10 bg-[#E53935] hover:bg-[#C62828]")
+                            "flex items-center justify-center rounded-full transition-all text-white shadow-lg active:scale-90 translate-x-[2px] -translate-y-[2px] md:translate-x-0 md:translate-y-0",
+                            variant === 'modal' ? "w-[22px] h-[22px] md:w-[34px] md:h-[34px] bg-[#E53935] hover:bg-[#C62828]" : (mode === 'create' ? "w-[22px] h-[22px] md:w-8 md:h-8 bg-red-500/90 hover:bg-red-600" : "w-[22px] h-[22px] md:w-10 md:h-10 bg-[#E53935] hover:bg-[#C62828]")
                         )}
                         title={variant === 'modal' ? "Fechar" : (modoEdicao ? "Voltar" : "Fechar")}
                     >
                         {variant === 'modal' || !modoEdicao ? (
-                            <X className="w-4 h-4 md:w-[22px] md:h-[22px]" strokeWidth={4} />
+                            <X className="w-3.5 h-3.5 md:w-[22px] md:h-[22px]" strokeWidth={4} />
                         ) : (
-                            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" strokeWidth={4} />
+                            <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" strokeWidth={4} />
                         )}
                     </button>
                 </div>

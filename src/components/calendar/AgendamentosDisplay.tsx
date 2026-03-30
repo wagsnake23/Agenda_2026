@@ -50,7 +50,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
             />
             <div 
                 className="relative w-full h-9 md:h-[52px] flex items-center"
-                style={{ background: 'linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%)' }}
+                style={{ background: 'linear-gradient(180deg, #2a57b3 0%, #1a3a8a 100%)' }}
             >
                 {/* Conteúdo do Header */}
                 <div className="relative flex items-center justify-between pl-1.5 pr-1.5 md:pl-6 md:pr-4 z-20 w-full">
@@ -61,7 +61,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                         </h4>
                     </div>
 
-                    <div className="flex flex-row items-center justify-center py-[4px] md:py-[6px] px-[12px] rounded-[10px] md:rounded-[11px] text-[12px] md:text-[15px] bg-white/20 md:bg-slate-50 text-white md:text-slate-700 leading-[1.1] ml-auto border-[0.5px] border-white/30 md:border-blue-200 shadow-[inset_0_1px_4px_rgba(0,0,0,0.05)]">
+                    <div className="flex flex-row items-center justify-center py-[4px] md:py-[6px] px-[12px] rounded-[10px] md:rounded-[11px] text-[12px] md:text-[15px] bg-white/20 md:bg-slate-50 text-white md:text-[#1a3a8a] leading-[1.1] ml-auto border-[0.5px] border-white/30 md:border-blue-200 shadow-[inset_0_1px_4px_rgba(0,0,0,0.05)]">
                         <span className="font-bold uppercase tracking-wide">{MONTHS[month]?.substring(0, 3)}</span>
                         <span className="font-bold opacity-90 ml-[2px]">/{year}</span>
                     </div>
@@ -115,9 +115,9 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                     >
                                         <div className={cn(
                                             "flex items-start gap-[8px] w-full relative",
-                                            "before:content-[''] before:absolute before:left-[-12px] before:top-[8px] md:before:top-[10px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#3b82f6]"
+                                            "before:content-[''] before:absolute before:left-[-12px] before:top-[8px] md:before:top-[10px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#1a3a8a]"
                                         )}>
-                                            <div className="flex flex-row items-center justify-center py-[3px] md:py-[4px] px-[8px] md:px-[10px] rounded-[8px] md:rounded-[10px] text-[12px] md:text-[13px] bg-[#3b82f6]/15 md:bg-gradient-to-b md:from-blue-400 md:to-blue-500 text-[#2563eb] md:text-white leading-[1.1] border-[0.5px] border-[#3b82f6]/30 md:border-white/30 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] md:shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] shrink-0">
+                                            <div className="flex flex-row items-center justify-center py-[3px] md:py-[4px] px-[8px] md:px-[10px] rounded-[8px] md:rounded-[10px] text-[12px] md:text-[13px] bg-[#1a3a8a]/15 md:bg-gradient-to-b md:from-[#2a57b3] md:to-[#1a3a8a] text-[#1a3a8a] md:text-white leading-[1.1] border-[0.5px] border-[#1a3a8a]/30 md:border-white/30 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06)] md:shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] shrink-0">
                                                 <span className="font-bold uppercase tracking-wide">{dia}</span>
                                                 <span className="font-bold opacity-90 ml-[2px]">/{mes}</span>
                                             </div>
