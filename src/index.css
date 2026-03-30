@@ -77,13 +77,8 @@ All colors MUST be HSL.
 
   @media (min-width: 1024px) {
     body {
-      background:
-        radial-gradient(circle at 0% 0%, hsla(199, 89%, 86%, 0.45) 0%, transparent 50%),
-        radial-gradient(circle at 100% 0%, hsla(214, 94%, 87%, 0.45) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, hsla(199, 89%, 86%, 0.45) 0%, transparent 50%),
-        radial-gradient(circle at 0% 100%, hsla(214, 94%, 87%, 0.45) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, hsla(0, 0%, 100%, 0.6) 0%, transparent 60%),
-        linear-gradient(160deg, hsl(210, 100%, 97%) 0%, hsl(214, 95%, 94%) 40%, hsl(216, 100%, 98%) 100%);
+      background-color: #f8fbff;
+      background-image: none;
       background-attachment: fixed;
     }
   }
@@ -135,7 +130,7 @@ All colors MUST be HSL.
   }
 
   .premium-subheader-bg {
-    background-color: #eaf3fd;
+    background-color: #f8fbff;
     background-image: none;
     background-attachment: fixed;
   }

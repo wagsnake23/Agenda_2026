@@ -312,7 +312,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 className={cn(
                     "bg-white flex flex-col overflow-hidden",
                     variant === 'modal' 
-                        ? "rounded-[24px] shadow-2xl border-2 border-slate-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] w-[99%] md:max-w-[515px] relative z-10 animate-in zoom-in-95 duration-200" 
+                        ? "rounded-[24px] shadow-2xl border-2 border-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_2px_1px_white] w-[99%] md:max-w-[515px] relative z-10 animate-in zoom-in-95 duration-200" 
                         : "rounded-2xl md:rounded-[29px] w-full h-full md:pointer-events-auto border border-[#0F172A]/[0.05] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)]"
                 )}
                 style={variant === 'modal' ? { maxHeight: '95vh' } : {}}
@@ -323,8 +323,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     variant === 'modal'
                         ? (mode === 'create'
                             ? "px-6 md:px-5 py-4 bg-gradient-to-b from-[#facc15] to-[#eab308]"
-                            : "px-6 md:px-5 py-4 bg-[linear-gradient(180deg,#60a5fa_0%,#3b82f6_100%)]")
-                        : "p-2 md:p-3 bg-[linear-gradient(180deg,#60a5fa_0%,#3b82f6_100%)]"
+                            : "px-6 md:px-5 py-4 bg-gradient-to-b from-[#2a57b3] to-[#1a3a8a]")
+                        : "p-2 md:p-3 bg-gradient-to-b from-[#2a57b3] to-[#1a3a8a]"
                 )}>
                     <div className="flex flex-row items-center gap-2.5 md:gap-3.5 pt-0.5 md:pt-0">
                         {(!modoEdicao && mode !== 'create') ? (
@@ -384,7 +384,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                         }}
                         className={cn(
                             "flex items-center justify-center rounded-full transition-all text-white shadow-lg active:scale-90",
-                            variant === 'modal' ? "w-7 h-7 md:w-10 md:h-10 bg-[#E53935] hover:bg-[#C62828]" : (mode === 'create' ? "w-6 h-6 md:w-8 md:h-8 bg-red-500/90 hover:bg-red-600" : "w-7 h-7 md:w-10 md:h-10 bg-[#E53935] hover:bg-[#C62828]")
+                            variant === 'modal' ? "w-7 h-7 md:w-[34px] md:h-[34px] bg-[#E53935] hover:bg-[#C62828]" : (mode === 'create' ? "w-6 h-6 md:w-8 md:h-8 bg-red-500/90 hover:bg-red-600" : "w-7 h-7 md:w-10 md:h-10 bg-[#E53935] hover:bg-[#C62828]")
                         )}
                         title={variant === 'modal' ? "Fechar" : (modoEdicao ? "Voltar" : "Fechar")}
                     >
@@ -618,7 +618,12 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             }
                                         }}
                                         variant="outline"
-                                        className="flex-1 h-10.5 md:h-12 rounded-2xl text-[1.05rem] md:text-[1.15rem] font-black bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200 hover:text-slate-700 transition-all duration-300 shadow-sm"
+                                        className={cn(
+                                            "flex-1 h-10.5 md:h-12 rounded-2xl text-[1.05rem] md:text-[1.15rem] font-black transition-all duration-300",
+                                            variant === 'modal'
+                                                ? "bg-white border border-[#1a3a8a]/40 text-[#1a3a8a] hover:bg-blue-50 hover:text-[#1a3a8a]"
+                                                : "bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200 hover:text-slate-700 shadow-sm"
+                                        )}
                                     >
                                         Cancelar
                                     </Button>
@@ -632,7 +637,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         isFormValid
                                             ? (mode === 'create'
                                                 ? "bg-gradient-to-b from-[#facc15] to-[#eab308] text-[#0B1221] shadow-[0_4px_0_#eab308,inset_0_1.5px_1px_rgba(255,255,255,0.4)] hover:brightness-110 active:translate-y-[2px] active:shadow-none"
-                                                : "bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-[0_4px_0_#1E3A8A,inset_0_1.5px_1px_rgba(255,255,255,0.3)] hover:brightness-110 active:translate-y-[2px] active:shadow-none")
+                                                : "bg-gradient-to-b from-[#2a57b3] to-[#1a3a8a] text-white shadow-[0_4px_0_#0f2a6b,inset_0_1.5px_1px_rgba(255,255,255,0.3)] hover:brightness-110 active:translate-y-[2px] active:shadow-none")
                                             : cn(
                                                 "transition-all grayscale-0 opacity-100",
                                                 mode === 'create' ? "bg-slate-200 text-slate-500 border border-slate-300 shadow-none" : "bg-slate-100 text-slate-400 border border-slate-200 grayscale opacity-60"
